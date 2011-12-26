@@ -1,0 +1,106 @@
+<feed>
+	
+    <Resource>
+	<!-- **********************Entry to Resource ************************************- -->  
+						
+      <ResourceID>789</ResourceID>
+      <ResourceName>ahmed </ResourceName>
+      <ResourceApp>AK</ResourceApp>
+      <ResourceColor>Red</ResourceColor>
+     
+        <link href="http://www.msn.com" />
+        
+    <!-- ****************    Now the Resourceday  entries  ****************************************************** -->   
+           
+ 
+        <DaysEntries>
+        <Entry>
+	        <id>1</id>
+	        <summary>When: 2008-08-18T10:00:00 60</summary> 
+	        <AllDay>true</AllDay>
+	        <Date> 2008-08-18</Date>
+	        <starttime>2008-08-08T10:00:00</starttime>
+	        <endtime>2008-08-18T16:00:00</endtime>
+	        <BusyState>Busy</BusyState>
+        </Entry>
+  
+        <Entry>
+          <id>2</id>
+	        <summary>When: 2008-08-18T10:00:00 60</summary> 
+	        <AllDay>true</AllDay>
+	        <Date> 2008-08-08</Date>
+	        <starttime>2008-08-08T10:00:00</starttime>
+	        <endtime>2008-08-08T16:00:00</endtime>
+	        <BusyState>Busy</BusyState>
+    
+    	</Entry>
+    	 	 <Entry>
+	        <id>3</id>
+	         <summary>When: 2008-08-18T10:00:00 60</summary> 
+	        <AllDay>false</AllDay>
+	        <Date> 2008-08-28</Date>
+	        <starttime>2008-08-28T10:00:00</starttime>
+	        <endtime>2008-09-02T16:00:00</endtime>
+	        <BusyState>Busy</BusyState>
+    
+    	</Entry>
+    	
+   
+    	 <Entry>
+	        <id>4</id>
+	        <summary>When: 2008-08-18T10:00:00 60</summary> 
+	        <AllDay>true</AllDay>
+	        <Date> 2008-08-18</Date>
+	        <starttime>2008-09-03T10:00:00</starttime>
+	        <endtime>2008-09-18T16:00:00</endtime>
+	        <BusyState>Tentive</BusyState>
+    
+    	</Entry>
+        </DaysEntries>
+         </Resource>
+         
+         
+        
+
+    
+        <Holiday>
+	<!-- **********************Entry to hliday  ************************************- -->  
+						
+      <HolidayID>789</HolidayID>
+      <HolidayName> ssss </HolidayName>
+   
+      <HolidayColor>yellow</HolidayColor>
+      <OneDay>false</OneDay>
+      <starttime>2008-08-01T10:00:00</starttime>
+	  <endtime>2008-08-03T16:00:00</endtime>
+     
+    </Holiday>
+        <Holiday>
+	<!-- **********************Entry to hliday  ************************************- -->  
+						
+      <HolidayID>789</HolidayID>
+      <HolidayName> Eid small </HolidayName>
+   
+      <HolidayColor>yellow</HolidayColor>
+      <OneDay>false</OneDay>
+      <starttime>2008-08-28T10:00:00</starttime>
+	  <endtime>2008-08-30T16:00:00</endtime>
+     
+    </Holiday>
+    
+        <Holiday>
+	<!-- **********************Entry to hliday  ************************************- -->  
+						
+      <HolidayID>789</HolidayID>
+      <HolidayName>  aeal </HolidayName>
+   
+      <HolidayColor>yellow</HolidayColor>
+      <OneDay>true</OneDay>
+      <starttime>2008-08-07T00:00:00</starttime>
+	  <endtime>2008-08-18T16:00:00</endtime>
+     
+    </Holiday>
+    
+    
+    
+</feed>

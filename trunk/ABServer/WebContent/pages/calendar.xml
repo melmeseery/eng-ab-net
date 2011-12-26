@@ -1,0 +1,62 @@
+<feed>
+    <entry>
+        <id>1</id>
+        <title>com course</title>
+        <summary>When: 2008-08-28T10:00:00 60</summary>
+        <content>Communication Skills</content>
+        <link href="" />
+    </entry>
+        <entry>
+        <id>7</id>
+        <title>com course</title>
+        <summary>When: 2008-08-29T10:00:00 60</summary>
+        <content>Communication Skills</content>
+        <link href="" />
+    </entry>
+      <entry>
+        <id>17</id>
+        <title>com course</title>
+        <summary>When: 2008-08-02T10:00:00 60</summary>
+        <content>Communication Skills</content>
+        <link href="" />
+    </entry>
+          <entry>
+        <id>17</id>
+        <title>com course</title>
+        <summary>When: 2008-08-30T10:00:00 60</summary>
+        <content>Communication Skills</content>
+        <link href="" />
+    </entry>
+    <entry>
+        <id>2</id>
+        <title>Hand Over</title>
+        <summary>When: 2008-09-9T11:00:00 30</summary>
+        <content>Managment skills</content>
+        <link href="" />
+    </entry>
+
+	<entry>
+        <id>3</id>
+        <title>EJB Course</title>
+        <summary>When: 2008-08-14T10:00:00 30</summary>
+        <content>Administrative and Executive Secretary Skills </content>
+        <link href="" />
+    </entry>
+	
+    <entry>
+        <id>4</id>
+        <title>MTSkill</title>
+        <summary>When: 2008-08-15T10:00:00 30</summary>
+        <content> Effective Motivation Skills  </content>
+        <link href="" />
+    </entry>
+    
+       <entry>
+        <id>5</id>
+        <title>PDM (client Abb)</title>
+        <summary>When: 2008-08-15T10:00:00 90</summary>
+        <content> Production Management </content>
+        <link href="" />
+    </entry>
+    
+</feed>
