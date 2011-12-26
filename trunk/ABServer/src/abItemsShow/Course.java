@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package abItemsShow;
 
@@ -11,46 +11,47 @@ import java.util.ArrayList;
  */
 public class Course {
 
+
 	String starttime = "2008-06-02T15:52:07-08:00";
 	String endtime = "2008-06-02T15:52:07-08:00";
-	
+
 	String ContractID;
-	
+
 	int ID;
 
 	String MainColor = "#EECBAD";
     String MainApp = "MA";
-    
+
     String SecColor = "red";
     String SecApp = "SA";
-    
+
     String resourceColor = "";
     String coordinatorColor = "";
     String clientColor = "";
-    
+
     String resourceApp = "";
     String coordinatorApp = "";
     String clientApp = "";
-    
+
     int funded = 1;
-    
+
     String Name = "";
     String Client = "";
     String type = "reminder";
-  
+
     String ResourceName = "Not Assigned";
     String CoordinatorName = "Not Assigned";
-    String Location = "Not Assigned";    
-    String Details = "What will be written in the tool tip";  
-    String summary = "When: 2008-08-23T10:00:00 60"; 
+    String Location = "Not Assigned";
+    String Details = "What will be written in the tool tip";
+    String summary = "When: 2008-08-23T10:00:00 60";
     String title = "";
     int    RunNo = 0;
     int    Runs = 0;
     int    Days = 0;
     String Period="FD";
-    
-    ArrayList CourseDays;
-  
+
+    ArrayList CourseDays_array;
+
 	/**
 	 * @return the clientColor
 	 */
@@ -145,13 +146,13 @@ public class Course {
 	 * @return the courseDaysXml
 	 */
 	public ArrayList getCourseDays() {
-		return CourseDays;
+		return CourseDays_array;
 	}
 	/**
 	 * @param courseDaysXml the courseDaysXml to set
 	 */
 	public void setCourseDays(ArrayList courseDaysXml) {
-		CourseDays = courseDaysXml;
+		CourseDays_array = courseDaysXml;
 	}
 	/**
 	 * @return the starttime
@@ -165,8 +166,8 @@ public class Course {
 	public void setStarttime(String starttime) {
 		this.starttime = starttime;
 	}
-	
-	
+
+
     /**
 	 * @return the iD
 	 */
@@ -179,7 +180,7 @@ public class Course {
 	public void setID(int id) {
 		ID = id;
 	}
-	
+
 	/**
 	 * @return the endtime
 	 */
@@ -409,6 +410,6 @@ public class Course {
 		Period = period;
 	}
 
-	
-	
+
+
 }

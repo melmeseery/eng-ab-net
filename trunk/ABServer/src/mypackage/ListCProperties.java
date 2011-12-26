@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import abItems.Contracts;
 import abItemsShow.CShow;
 import abItemsShow.PriceShow;
 import tablespackage.Audiencetypes;
@@ -44,18 +46,18 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListCProperties extends org.apache.struts.action.Action {
-    
+	  static Logger logger = Logger.getLogger(ListCProperties.class);
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListCProperties() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	// //////System.out.println("ana goa el action");
+             System.out.println("ana goa el action");
     	/* Retrieve Session Factory */
     	//ServletContext context = request.getSession().getServletContext();
     	Hiber_Courses HC=new Hiber_Courses();
@@ -68,8 +70,8 @@ public class ListCProperties extends org.apache.struts.action.Action {
     	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-  	
 
+		logger.warn(" Inside the main listcproperties...............");
         if(request.getParameter("task").equals("Trainingareas"))
         {
         	ArrayList cTA=HTA.getCourseTA(database);
@@ -77,12 +79,12 @@ public class ListCProperties extends org.apache.struts.action.Action {
 	        // //////System.out.println("ana ba3d el alias");
 	        String returnText = xstream.toXML(cTA);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
         }
         else if(request.getParameter("task").equals("AddCourse"))
-        {	
+        {
         	Courses c=new Courses();
         	if(request.getParameter("courseType").equals("Group"))
         		c.setIdCourseTypes(1);
@@ -99,8 +101,8 @@ public class ListCProperties extends org.apache.struts.action.Action {
         		c.setCourseCompetenceAddressed(null);
         	else
         		c.setCourseCompetenceAddressed(Integer.valueOf(request.getParameter("courseCompetenceAddressed")));
-        	
-        	
+
+
         	Resources r=new Resources();
         	if(request.getParameter("resource") != "")
         	{
@@ -166,78 +168,78 @@ public class ListCProperties extends org.apache.struts.action.Action {
        }
         else if(request.getParameter("task").equals("DELETESELECTIONS"))
         {
-        		
+
               if (request.getParameterValues("ids").length == 1)
               {
             	  try{
-          			
+
           			database.update("delete from courses where idCourses = "+request.getParameterValues("ids")[0]);
-          			
+
           		}
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-            	  
+
               }
               else if (request.getParameterValues("ids").length > 1)
               {
             	  try{
-            			
-            			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+            			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                   	  	{
-            			
+
             				database.update("delete from courses where idCourses = "+request.getParameterValues("ids")[i]);
-                			
+
                   	  	}
             	     }
-            			
+
             		  catch (Exception e) { e.printStackTrace();
-            	          
-            	      }  finally { 
-            	           
+
+            	      }  finally {
+
             	      }
-            	  }  
-             
+            	  }
+
         }
         else if(request.getParameter("task").equals("DELETEPRICE"))
         {
-        		
+
               if (request.getParameterValues("ids").length == 1)
               {
             	  try{
-          			
+
           			////System.out.println("delete from prices where idPrices = "+request.getParameterValues("ids")[0]);
             		  database.update("delete from prices where idPrices = "+request.getParameterValues("ids")[0]);
-          			
+
           		}
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-            	  
+
               }
               else if (request.getParameterValues("ids").length > 1)
               {
             	  try{
-            			
-            			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+            			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                   	  	{
-            			
+
             				database.update("delete from prices where idPrices = "+request.getParameterValues("ids")[i]);
-                			
+
                   	  	}
             	     }
-            			
+
             		  catch (Exception e) { e.printStackTrace();
-            	          
-            	      }  finally { 
-            	           
+
+            	      }  finally {
+
             	      }
-            	  }  
-             
+            	  }
+
         }
         else if(request.getParameter("task").equals("data"))
         {
@@ -299,15 +301,16 @@ public class ListCProperties extends org.apache.struts.action.Action {
              xstream.alias("Course", CShow.class);
              String returnText = xstream.toXML(l);
              // //////System.out.println("return text = "+returnText);
-             response.setContentType("application/xml;charset=UTF-8"); 
+             response.setContentType("application/xml;charset=UTF-8");
              PrintWriter out = response.getWriter();
-     		
+
   			out.write(returnText);
   			// //////System.out.println("ana b3d el out");
          	return mapping.findForward("success");
         }
         else if(request.getParameter("task").equals("EditCourse"))
         {
+        	logger.info("  edit course............");
         	//Session sess = null;
         	Integer id=(Integer)session.getAttribute("courseID");
         	String[] TargAud=request.getParameterValues("audienceName");
@@ -338,7 +341,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
         	      c.setCourseColor(request.getParameter("courseColor"));
         	      c.setCourseDays(new Integer(Integer.parseInt(request.getParameter("courseDays"))));
               	  c.setCourseNameAr(request.getParameter("courseNameAr"));
-              	  c.setCourseNameEng(request.getParameter("courseNameEng")); 
+              	  c.setCourseNameEng(request.getParameter("courseNameEng"));
                	  Competencesaddressed com=new Competencesaddressed();
                	  c.setCourseApp(request.getParameter("courseApp"));
                	  //System.out.println("resource name= "+request.getParameter("resourceName"));
@@ -355,7 +358,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
                	  }
             	 Coursetypes ct=new Coursetypes();
 		    	  if(request.getParameter("courseType").equals("Group"))
-		        	{ 
+		        	{
 		    		  c.setIdCourseTypes(1);
 		        	}
 		        	else if(request.getParameter("courseType").equals("Individual"))
@@ -366,11 +369,11 @@ public class ListCProperties extends org.apache.struts.action.Action {
 		        	{
 		        		c.setIdCourseTypes(3);
 		        	}
-		    	  
+
 		    	  c.setIdTrainingArea(Integer.valueOf(request.getParameter("trainarea")));
         	      HC.updateAllCourse(c, database);
 
-        }
+        }//edit course
         else if(request.getParameter("task").equals("CREATETA"))
         {// //////System.out.println("ana goa add ta");
         	Trainingareas t=new Trainingareas();
@@ -400,7 +403,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
 	        		HC.insertRelationCourses(tc, database);
      			}
         	}
-        }
+        }// add to track
         else if(request.getParameter("task").equals("AddToTrackN"))
         {
         	Tracks t=new Tracks();
@@ -419,7 +422,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
         		tc.setTrackCourses(c.getIdCourses());
         		HC.insertRelationCourses(tc, database);
         	}
-    		
+
         }
         else if(request.getParameter("task").equals("listP"))
         {
@@ -458,7 +461,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
 	        // //////System.out.println("ana ba3d el alias");
 	        String returnText = xstream.toXML(al);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
         }
@@ -476,7 +479,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
         //	// //////System.out.println("valid from= "+request.getParameter("priveValidFrom")+" valid to "+request.getParameter("priceValidTo"));
         	if(!request.getParameter("priceValidFrom").equals("3000-01-01"))
         		date=request.getParameter("priceValidFrom");
-        	
+
         	p.setCurrency(request.getParameter("currency"));
         //	Courses c=new Courses();
         //	c.setIdCourses(id);
@@ -502,7 +505,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
 	        		date=request.getParameter("priceValidFrom");
 	        	p.setCurrency(request.getParameter("currency"));
 	    	    HP.updatePrice(p,date, database);
-    		
+
         }
         else if(request.getParameter("task").equals("checkColor"))
         {
@@ -523,7 +526,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
         	xstream.alias("Course", CShow.class);
             String returnText = xstream.toXML(cs);
              // //////System.out.println("return text = "+returnText);
-             response.setContentType("application/xml;charset=UTF-8"); 
+             response.setContentType("application/xml;charset=UTF-8");
              PrintWriter out = response.getWriter();
      			out.write(returnText);
         }
@@ -534,14 +537,14 @@ public class ListCProperties extends org.apache.struts.action.Action {
         	xstream.alias("Competencesaddressed", Competencesaddressed.class);
             String returnText = xstream.toXML(ca);
              // //////System.out.println("return text = "+returnText);
-            response.setContentType("application/xml;charset=UTF-8"); 
+            response.setContentType("application/xml;charset=UTF-8");
             PrintWriter out = response.getWriter();
      		out.write(returnText);
         }
-        
-        
+
+
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -553,7 +556,7 @@ public class ListCProperties extends org.apache.struts.action.Action {
     	return mapping.findForward("success");
 
     }
-    public Date parseDate(String s) 
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );//System.out.println(s.substring(0,4));

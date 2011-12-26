@@ -18,25 +18,30 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Hiber_Courses 
+import mypackage.ListCourseAction;
+
+import org.apache.log4j.Logger;
+
+public class Hiber_Courses
 {
+	  static Logger logger = Logger.getLogger( Hiber_Courses.class);
 	public Hiber_Courses() {
 		// TODO Auto-generated constructor stub
 	}
-	
 
 
-/*--------------------------------------------------------------------------------------------------*/	
-	public ArrayList<Courses> getCources(DataSourceConnection database, HttpServletRequest request) throws SQLException 
+
+/*--------------------------------------------------------------------------------------------------*/
+	public ArrayList<Courses> getCources(DataSourceConnection database, HttpServletRequest request) throws SQLException
 	{
-		
+
 		String q = "";
 		for (int s = 0; s < 3; s++) {
 			String[] filterType = request.getParameterValues("filter[" + s
 					+ "][data][type]");
 			// ////  //  //  ////System.out.println(filterType+ " "+s+" "+filterType[0]);
 			if (filterType != null) {
-				
+
 					String[] filter = request.getParameterValues("filter[" + s
 							+ "][field]");
 
@@ -44,7 +49,7 @@ public class Hiber_Courses
 
 						String[] values = request.getParameterValues("filter["
 								+ s + "][data][value]");
-						
+
 						if (filter[i].equals("courseNameEng")) {
 							if (!q.equals(""))
 								q = q + " and";
@@ -57,7 +62,7 @@ public class Hiber_Courses
 							}
 							String upperCase = firstLetter.toUpperCase();
 							String lowerCase = firstLetter.toLowerCase();
-							
+
 							q = q + " (courseNameEng like '" + upperCase+remain
 									+ "%' or courseNameEng like '" + lowerCase+remain
 									+ "%')";
@@ -73,11 +78,11 @@ public class Hiber_Courses
 							}
 							String upperCase = firstLetter.toUpperCase();
 							String lowerCase = firstLetter.toLowerCase();
-							
+
 							String taQ = "Select idTrainingAreas from trainingareas where TrainingAreaName like '" + upperCase+remain
 									+ "%' or TrainingAreaName like '" + lowerCase+remain
 									+ "%'";
-							
+
 							ResultSet taRS = database.retrieve(taQ);
 							int j = 0;
 							while(taRS.next()){
@@ -98,10 +103,10 @@ public class Hiber_Courses
 		}
 		if (!q.equals(""))
 			q = " where" + q;
-		
+
 		ArrayList<Courses> c=new ArrayList<Courses>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from courses"+q);
 			while(l.next())
 			 {
@@ -123,88 +128,88 @@ public class Hiber_Courses
 				c.add(courses);
 			 }
 			 l.close();
-			
+
 		}catch(Exception e){
 		}finally{
 			}
 		return c;
 	}
-/*--------------------------------------------------------------------------------------------------*/	
+/*--------------------------------------------------------------------------------------------------*/
 	public String getCourseCT(Integer id,DataSourceConnection database)
 	{
 		String name="";
 		try{
-			
+
 			ResultSet l =database.retrieve("select CourseTypeName from coursetypes where idCourseTypes= "+id);
 		 	while(l.next())
 		 	{
 		 		name=l.getString(1);
-		 		
+
 		 	}
-		 		
+
 		 l.close();
-		
-	     
+
+
 		}catch(Exception e){//e.printStackTrace();
-			
+
 		}finally{
 			}
 		return name;
 	}
-	
-/*--------------------------------------------------------------------------------------------------*/	
-		
+
+/*--------------------------------------------------------------------------------------------------*/
+
 	public String getCourseTA(Integer id,DataSourceConnection database)
 	{
 		String name="";
 		try{
-			
+
 			ResultSet l =database.retrieve("select TrainingAreaName from trainingareas where idTrainingAreas= "+id);
 		 	while(l.next())
 		 	{
 		 		name=l.getString(1);
-		 		
+
 		 	}
-		 		
+
 		 	 l.close();
-			
+
 		}catch(Exception e){//e.printStackTrace();
-			
+
 		}finally{
 			}
 		return name;
 	}
-	
-/*--------------------------------------------------------------------------------------------------*/	
+
+/*--------------------------------------------------------------------------------------------------*/
 	public String getCourseCA(Integer id,DataSourceConnection database)
 	{
 		String name="";
 		try{
-		
+
 			ResultSet l =database.retrieve("select competencesAddressedName from competencesaddressed where idCompetencesAddressed= "+id);
 		 	while(l.next())
 		 	{
 		 		name=l.getString(1);
-		 		
+
 		 	}
 		 	l.close();
-			
-	     
-		}catch(Exception e){			
+
+
+		}catch(Exception e){
 		}finally{
 			}
 		return name;
 	}
-	
-/*--------------------------------------------------------------------------------------------------*/	
-	
+
+/*--------------------------------------------------------------------------------------------------*/
+
 //	public Integer getTAID(String name)
 //	{
 //		//Coursetypes cT=new Coursetypes();
 //		//ArrayList Al=new ArrayList();
 //		Integer id=null;
 //		Session session = null;
-//	
+//
 //		try{
 //			// This step will read hibernate.cfg.xml and prepare hibernate for use
 //			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -219,10 +224,10 @@ public class Hiber_Courses
 //		 	for(Iterator it=l.iterator();it.hasNext();)
 //		 	{
 //		 		Object row = (Object) it.next();
-//		 		id=(Integer)row;						
+//		 		id=(Integer)row;
 //		 	}
-//		 		
-//		 		
+//
+//
 //	        session.close();
 //		}catch(Exception e){
 //			// //////System.out.println(e.getMessage());
@@ -230,15 +235,15 @@ public class Hiber_Courses
 //			}
 //		return id;
 //	}
-///*--------------------------------------------------------------------------------------------------*/	
-//	
+///*--------------------------------------------------------------------------------------------------*/
+//
 //	public Integer getCAID(String name)
 //	{
 //		//Coursetypes cT=new Coursetypes();
 //		//ArrayList Al=new ArrayList();
 //		Integer id=null;
 //		Session session = null;
-//	
+//
 //		try{
 //			// This step will read hibernate.cfg.xml and prepare hibernate for use
 //			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -253,10 +258,10 @@ public class Hiber_Courses
 //		 	for(Iterator it=l.iterator();it.hasNext();)
 //		 	{
 //		 		Object row = (Object) it.next();
-//		 		id=(Integer)row;						
+//		 		id=(Integer)row;
 //		 	}
-//		 		
-//		 		
+//
+//
 //	        session.close();
 //		}catch(Exception e){e.printStackTrace();
 //			// //////System.out.println(e.getMessage());
@@ -264,13 +269,13 @@ public class Hiber_Courses
 //			}
 //		return id;
 //	}
-//	
+//
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void insertCourse(Courses c,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			String outlineAr=null;
 			String outlineEng=null;
 			String courseCode=null;
@@ -297,24 +302,24 @@ public class Hiber_Courses
 				courseApp="'"+c.getCourseApp()+"'";
 			String s="insert into courses (courseCode,courseNameEng,courseNameAr,courseOutlineEng,courseOutlineAr,courseDays,CourseCompetenceAddressed,courseColor,Course_idTrainingAreas,Course_idCourseTypes,CourseDescription,CourseCalender,Course_idResources,CourseApp) values("+courseCode+","+courseNameEng+","+courseNameAr+","+outlineEng+","+outlineAr+","+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+","+courseColor+","+c.getIdTrainingArea()+","+c.getIdCourseTypes()+","+courseDesc+",'',"+c.getCourse()+","+courseApp+")";
 			////System.out.println("s= "+s);
-			
+
 			database.update("insert into courses (courseCode,courseNameEng,courseNameAr,courseOutlineEng,courseOutlineAr,courseDays,CourseCompetenceAddressed,courseColor,Course_idTrainingAreas,Course_idCourseTypes,CourseDescription,CourseCalender,Course_idResources,CourseApp) values("+courseCode+","+courseNameEng+","+courseNameAr+","+c.getCourseOutlineAr()+","+c.getCourseOutlineAr()+","+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+","+courseColor+","+c.getIdTrainingArea()+","+c.getIdCourseTypes()+","+courseDesc+",'',"+c.getCourse()+","+courseApp+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
-	
+
 /*----------------------------------------------------------------------------------------------------------*/
 	public void updateCourse(Courses c,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			//String s="insert into courses values('"+c.getCourseCode()+"','"+c.getCourseNameEng()+"','"+c.getCourseNameAr()+"','"+c.getCourseOutlineEng()+"','"+c.getCourseOutlineAr()+"',"+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+",'"+c.getCourseColor()+"',"+c.getIdTrainingArea()+","+c.getIdCourseTypes()+",'"+c.getCourseDescription()+"','',"+c.getCourse()+",'"+c.getCourseApp()+"')";
 			////System.out.println("s= "+s);
 			String outlineAr=null;
@@ -325,39 +330,39 @@ public class Hiber_Courses
 				outlineEng="'"+c.getCourseOutlineEng()+"'";
 			////System.out.println("update courses set CourseOutlineAr="+outlineAr+", courseOutlineEng="+outlineEng+" where idCourses="+c.getIdCourses());
 			database.update("update courses set CourseOutlineAr="+outlineAr+", courseOutlineEng="+outlineEng+" where idCourses="+c.getIdCourses());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void updateCourseTA(Courses c,DataSourceConnection database)
 	{
-		
+
 		try{
-		
+
 			////System.out.println("update courses set Course_idTrainingAreas="+c.getIdTrainingArea()+" where idCourses="+c.getIdCourses());
 			database.update("update courses set Course_idTrainingAreas="+c.getIdTrainingArea()+" where idCourses="+c.getIdCourses());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
 
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void updateAllCourse(Courses c,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			//String s="insert into courses values('"+c.getCourseCode()+"','"+c.getCourseNameEng()+"','"+c.getCourseNameAr()+"','"+c.getCourseOutlineEng()+"','"+c.getCourseOutlineAr()+"',"+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+",'"+c.getCourseColor()+"',"+c.getIdTrainingArea()+","+c.getIdCourseTypes()+",'"+c.getCourseDescription()+"','',"+c.getCourse()+",'"+c.getCourseApp()+"')";
 			////System.out.println("s= "+s);
 			String outlineAr=null;
@@ -384,23 +389,23 @@ public class Hiber_Courses
 				courseDesc="'"+c.getCourseDescription()+"'";
 			if(c.getCourseApp()!=null)
 				courseApp="'"+c.getCourseApp()+"'";
-			
+
 			database.update("update courses set courseCode="+courseCode+",courseNameAr="+courseNameAr+", courseNameEng="+courseNameEng+", courseColor="+courseColor+", CourseDescription="+courseDesc+",courseApp="+courseApp+",courseDays="+c.getCourseDays()+",CourseCompetenceAddressed="+c.getCourseCompetenceAddressed()+",Course_idTrainingAreas="+c.getIdTrainingArea()+",Course_idCourseTypes="+c.getIdCourseTypes()+",Course_idResources="+c.getCourse()+" where idCourses="+c.getIdCourses());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}	
+
+	}
 /*----------------------------------------------------------------------------------------------------------*/
 	public void updatecourseTA(Courses c,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			String nameEng=null;
 			String code=null;
 			if(c.getCourseNameEng()!=null)
@@ -409,22 +414,22 @@ public class Hiber_Courses
 				code="'"+c.getCourseCode()+"'";
 		//	//System.out.println("update courses set courseNameEng="+nameEng+" and courseCode="+code+" and courseDays= "+c.getCourseDays()+" and Course_idCourseTypes= "+c.getIdCourseTypes()+" where idCourses="+c.getIdCourses());
 			database.update("update courses set courseNameEng="+nameEng+", courseCode="+code+", courseDays= "+c.getCourseDays()+", Course_idCourseTypes= "+c.getIdCourseTypes()+" where idCourses="+c.getIdCourses());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}	
-/*-----------------------------------------------------------------------------*/	
+
+	}
+/*-----------------------------------------------------------------------------*/
 	public Courses getCourseById(Integer id,DataSourceConnection database)
 	{
 		Courses courses=new Courses();
-		
+
 		try{
-				
+
 				ResultSet l =database.retrieve("select * from courses where idCourses="+id);
 				while(l.next())
 				 {
@@ -442,25 +447,25 @@ public class Hiber_Courses
 					courses.setCourseDescription(l.getString(12));
 					courses.setCourse(l.getInt(14));
 					courses.setCourseApp(l.getString(15));
-					
+
 				 }
 				 l.close();
-				
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return courses;
 	}
-	
+
 
 //////////////////////////get MM relation//////////////////////////
 	public ArrayList<TrackCourseShow> getCIDs(Integer id,DataSourceConnection database)
 	{
 		ArrayList<TrackCourseShow> cShow=new ArrayList<TrackCourseShow>();
-		
+
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from trackcourses where TrackCoures_idTracks="+id);
 		 	while(l.next())
 		 	{
@@ -471,63 +476,63 @@ public class Hiber_Courses
          		cNew.setIdCourses(l.getInt(2));
          		cShow.add(cNew);
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 		}
-		
+
 		return cShow;
 	}
-	
+
 /*------------------------insert Relation-----------------------------------*/
-	
+
 	public void insertRelationCourses(Trackcourses tc,DataSourceConnection database)
 	{
 
 		try{
-		
+
 			////System.out.println("insert into Trackcourses (TrackCoures_idTracks,TrackCourses_idCourses,CourseTrackDays) values("+tc.getTrackCoures()+","+tc.getTrackCourses()+","+tc.getCourseTrackDays()+")");
 			database.update("insert into trackcourses (TrackCoures_idTracks,TrackCourses_idCourses,CourseTrackDays) values("+tc.getTrackCoures()+","+tc.getTrackCourses()+","+tc.getCourseTrackDays()+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
 /*--------------------------checkCourseExistance----------------------------*/
 	public Boolean checkCourse(Integer id, Integer id2,DataSourceConnection database)
 	{
 		Boolean flag=true;
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from trackcourses where TrackCoures_idTracks="+id2+ " and TrackCourses_idCourses="+id);
 			if(l.next())
 		 	{
 				flag=false;
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 		}finally{
 			}
-		
+
 		return flag;
 	}
-	
+
 /*----------------------------------------------------------------------------------------------------------*/
-	
+
 	public ArrayList<Courses> getCoursesById(Integer id,DataSourceConnection database)
 	{
-		
+
 		ArrayList<Courses> al=new ArrayList<Courses>();
-		
+
 		try{
-		
+
 			ResultSet l =database.retrieve("select * from courses where Course_idTrainingAreas= "+id);
 		 	while(l.next())
 		 	{
@@ -548,21 +553,21 @@ public class Hiber_Courses
 				al.add(courses);
 		 	}
 		 	l.close();
-		 	
-		 	
+
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return al;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////
 	public ArrayList<Courses> getC(ArrayList ids,DataSourceConnection database)
 	{
 		ArrayList<Courses> al=new ArrayList<Courses>();
-		
+
 		try{
-			
+
 			String s="select * from courses where idCourses Not IN (";
 			for(int i=0;i<ids.size();i++)
 			{
@@ -593,30 +598,30 @@ public class Hiber_Courses
 				courses.setCourseApp(l.getString(15));
 				al.add(courses);
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return al;
-	}	
+	}
 	/*--------------------------checkCourseColor----------------------------*/
 	public Boolean checkCourseColor(String c,DataSourceConnection database)
 	{
 		Boolean flag=true;
-		
+
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from courses where courseColor="+c);
 		 	if(l.next())
 		 	{
 		 		flag=false;
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){
 		}finally{
 			}
@@ -627,72 +632,72 @@ public class Hiber_Courses
 	public Integer getLastOne(DataSourceConnection database)
 	{
 		Integer id=0;
-	
+
 		try{
-			
+
 			ResultSet l =database.retrieve("select idCourses from courses");
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 	
-		 	
+
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return id;
-		
 
-	}	
+
+	}
 /*------------------------insert Relation-----------------------------------*/
-	
+
 	public void insertMMCTP(Integer id,Integer aId,DataSourceConnection database)
 	{
 		try{
-			
-			
+
+
 			database.update("insert into coursesaudience (CoursesAudience_idAudienceTypes,CoursesAudience_idCourses) values("+aId+","+id+")");
-			
+
 		}
 		  catch (Exception e) {// e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
-	
+
 //////////////////////////get MM relation//////////////////////////
 	public ArrayList<Integer> getAudID(Integer id,DataSourceConnection database)
 	{
 		ArrayList<Integer> Al=new ArrayList<Integer>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select CoursesAudience_idAudienceTypes from coursesaudience where CoursesAudience_idCourses="+id);
 		 	while(l.next())
 		 	{
-		 		Integer CAId=0; 
+		 		Integer CAId=0;
 				CAId=l.getInt(1);
 				Al.add(CAId);
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 		}finally{
 			}
 		return Al;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////
 	public Audiencetypes getAud(Integer id,DataSourceConnection database)
 	{
-		//ArrayList<Audiencetypes> Al=new ArrayList<Audiencetypes>(); 
+		//ArrayList<Audiencetypes> Al=new ArrayList<Audiencetypes>();
 		Audiencetypes DS=new Audiencetypes();
-		
+
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from audiencetypes where idAudienceTypes="+id);
 		 	if(l.next())
 		 	{
@@ -700,21 +705,21 @@ public class Hiber_Courses
 				DS.setAudienceName(l.getString(2));
 				//Al.add(DS);
 		 	}
-		 	////System.out.println();	
+		 	////System.out.println();
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 		}finally{
 			}
 		return DS;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////
 	public ArrayList<Audiencetypes> getAudiences(ArrayList ids,DataSourceConnection database)
 	{
 		ArrayList<Audiencetypes> al=new ArrayList<Audiencetypes>();
-		
+
 		try{
-		
+
 			String s="select * from audiencetypes where idAudienceTypes Not IN (";
 			for(int i=0;i<ids.size();i++)
 			{
@@ -731,51 +736,51 @@ public class Hiber_Courses
 		 	{
 		 		Audiencetypes DS=new Audiencetypes();
 				DS.setIdAudienceTypes(l.getInt(1));
-				DS.setAudienceName(l.getString(2));	
+				DS.setAudienceName(l.getString(2));
 		 		al.add(DS);
 		 	}
-		 		
+
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return al;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////
 public void deleteMMCAud(Integer CAid,Integer Cid,DataSourceConnection database)
 	{
 		try{
-			
-			
+
+
 			database.update("delete from coursesaudience where CoursesAudience_idAudienceTypes= "+CAid+" and CoursesAudience_idCourses="+Cid);
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
 	}
 /*----------------------------------------------------------------------------------------------------------*/
 public void updateTrackCourse(Trackcourses c,DataSourceConnection database)
 {
-	
+
 	try{
-		
+
 		//String s="insert into courses values('"+c.getCourseCode()+"','"+c.getCourseNameEng()+"','"+c.getCourseNameAr()+"','"+c.getCourseOutlineEng()+"','"+c.getCourseOutlineAr()+"',"+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+",'"+c.getCourseColor()+"',"+c.getIdTrainingArea()+","+c.getIdCourseTypes()+",'"+c.getCourseDescription()+"','',"+c.getCourse()+",'"+c.getCourseApp()+"')";
 		////System.out.println("s= "+s);
-		
-		
+
+
 		database.update("update trackcourses set CourseTrackDays="+c.getCourseTrackDays()+" where tableId="+c.getTableId());
-		
+
 	}
 	  catch (Exception e) { e.printStackTrace();
-          
-      }  finally { 
-           
+
+      }  finally {
+
       }
-	
+
 }
 }

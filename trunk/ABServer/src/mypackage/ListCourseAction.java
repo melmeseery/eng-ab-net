@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,34 +29,34 @@ import com.thoughtworks.xstream.XStream;
 
 import database.DataSourceConnection;
 public class ListCourseAction extends org.apache.struts.action.Action {
-    
+	  static Logger logger = Logger.getLogger( ListCourseAction.class);
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListCourseAction() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // TODO: Write method body
     	Hiber_Courses HC=new Hiber_Courses();
     	Hiber_CompetenceAddressed HCA=new Hiber_CompetenceAddressed();
     	Hiber_Tracks HT=new Hiber_Tracks();
     	Hiber_Audiencetypes HA=new Hiber_Audiencetypes();
-    	
+
     	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-  	
-    	
+
+
      //   HttpSession session=request.getSession(true);
 /*-----------------------------------list Courses------------------------------------------------*/
     	if(request.getParameter("task").equals("list"))
     	{
     		XStream xstream = new XStream();
-        	
+
 //			String q = "";
 //    		int counter=0;
 //			for (int s = 0; s < 2; s++) {
@@ -103,11 +104,11 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 //    			{
 //    				Integer id=HC.getCAID(q);
 //    				////System.out.println("id= "+id);
-//    				s+="where CourseCompetenceAddressed="+id;  
+//    				s+="where CourseCompetenceAddressed="+id;
 //    				counter=0;
 //    			}
 //    		}
-    		
+
 //    		ArrayList l=HC.getCources(s);
     		ArrayList<CShow> al=new ArrayList<CShow>();
         	ArrayList<Courses> cShow=HC.getCources(database,request);
@@ -135,13 +136,14 @@ public class ListCourseAction extends org.apache.struts.action.Action {
         		c.setCourseType(ct);
         		al.add(c);
         	}
+        	logger.warn("  listing the courses...............");
             xstream.alias("Course", CShow.class);
             String returnText = xstream.toXML(al);
-            response.setContentType("application/xml;charset=UTF-8"); 
+            response.setContentType("application/xml;charset=UTF-8");
             PrintWriter out = response.getWriter();
-    		
 
-    			out.write(returnText);    	
+
+    			out.write(returnText);
     }
 /*---------------------------------list Tracks---------------------------------------------------*/
     	else if(request.getParameter("task").equals("Tracks"))
@@ -152,7 +154,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 	        // //////System.out.println("ana ba3d el alias");
 	        String returnText = xstream.toXML(t);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
         }
@@ -188,7 +190,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 //    			} catch (Exception ex) {
 //
 //    				ex.printStackTrace();
-//    				
+//
 //    			}
 //
 //    		}
@@ -197,7 +199,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 //    			response.getWriter().print("{'success':false,'message':'failure'}");
 //				return null;
 //    		}
-//    			
+//
 //    	}
 /*---------------------------------------list audiences--------------------------------*/
     	else if(request.getParameter("task").equals("listAud"))
@@ -206,10 +208,10 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		XStream xstream = new XStream();
     		xstream.alias("Audiencetypes", Audiencetypes.class);
     	    String returnText = xstream.toXML(a);
-    	    response.setContentType("application/xml;charset=UTF-8"); 
+    	    response.setContentType("application/xml;charset=UTF-8");
     	    PrintWriter out = response.getWriter();
     	    out.write(returnText);
-    	    
+
     	}
 /*------------------------------------add audio--------------------------------------*/
     	else if(request.getParameter("task").equals("AddAudio"))
@@ -233,35 +235,35 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		 if (request.getParameterValues("ids").length == 1)
              {
            	  try{
-         			
+
          			database.update("delete from audiencetypes where idAudienceTypes = "+request.getParameterValues("ids")[0]);
-         			
+
          		}
          		  catch (Exception e) { e.printStackTrace();
-         	          
-         	      }  finally { 
-         	           
+
+         	      }  finally {
+
          	      }
-           	  
+
              }
              else if (request.getParameterValues("ids").length > 1)
              {
            	  try{
-           			
-           			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+           			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                  	  	{
-           				
+
            				database.update("delete from audiencetypes where idAudienceTypes = "+request.getParameterValues("ids")[i]);
-               			
+
                  	  	}
            	     }
-           			
+
            		  catch (Exception e) { e.printStackTrace();
-           	          
-           	      }  finally { 
-           	           
+
+           	      }  finally {
+
            	      }
-           	  }  
+           	  }
 
         }
     	else if(request.getParameter("task").equals("listselectedAud"))
@@ -279,7 +281,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		XStream xstream = new XStream();
     		xstream.alias("Audiencetypes", Audiencetypes.class);
     	    String returnText = xstream.toXML(a);
-    	    response.setContentType("application/xml;charset=UTF-8"); 
+    	    response.setContentType("application/xml;charset=UTF-8");
     	    PrintWriter out = response.getWriter();
     	    out.write(returnText);
     	}
@@ -290,10 +292,10 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		XStream xstream = new XStream();
     		xstream.alias("Competencesaddressed", Competencesaddressed.class);
     	    String returnText = xstream.toXML(a);
-    	    response.setContentType("application/xml;charset=UTF-8"); 
+    	    response.setContentType("application/xml;charset=UTF-8");
     	    PrintWriter out = response.getWriter();
     	    out.write(returnText);
-    	    
+
     	}
 /*------------------------------------add audio--------------------------------------*/
     	else if(request.getParameter("task").equals("AddCA"))
@@ -317,35 +319,35 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		 if (request.getParameterValues("ids").length == 1)
              {
            	  try{
-         			
+
          			database.update("delete from competencesaddressed where idCompetencesAddressed = "+request.getParameterValues("ids")[0]);
-         			
+
          		}
          		  catch (Exception e) { e.printStackTrace();
-         	          
-         	      }  finally { 
-         	           
+
+         	      }  finally {
+
          	      }
-           	  
+
              }
              else if (request.getParameterValues("ids").length > 1)
              {
            	  try{
-           			
-           			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+           			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                  	  	{
-           			
+
            				database.update("delete from competencesaddressed where idCompetencesAddressed = "+request.getParameterValues("ids")[i]);
-               			
+
                  	  	}
            	     }
-           			
+
            		  catch (Exception e) { e.printStackTrace();
-           	          
-           	      }  finally { 
-           	           
+
+           	      }  finally {
+
            	      }
-           	  }  
+           	  }
         }
     	else if(request.getParameter("task").equals("listTA"))
     	{
@@ -357,7 +359,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 //    		//System.out.println("size= "+a.size());
 //    		if(a.size()!=0)
 //    		{
-//	    		
+//
 //	    		for(int i=0;i<a.size();i++)
 //	    		{
 //	    			ids.add(a.get(i).getIdAudienceTypes());
@@ -368,8 +370,8 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 //    		else
 //    		{
 //    			aud=HA.getAudience();
-//    		}	
-//    		
+//    		}
+//
     		Integer id=(Integer)session.getAttribute("courseID");
     		ArrayList<Integer> CAIds=HC.getAudID(id, database);
     		ArrayList<Audiencetypes> aud=new ArrayList<Audiencetypes>();
@@ -381,13 +383,13 @@ public class ListCourseAction extends org.apache.struts.action.Action {
     		////System.out.println("size==="+aud.size());
     		xstream.alias("Audiencetypes", Audiencetypes.class);
     	    String returnText = xstream.toXML(aud);
-    	    response.setContentType("application/xml;charset=UTF-8"); 
+    	    response.setContentType("application/xml;charset=UTF-8");
     	    PrintWriter out = response.getWriter();
     	    out.write(returnText);
     	}
-    	
+
     	try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -396,7 +398,7 @@ public class ListCourseAction extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-    	
+
     	return mapping.findForward("success");
     }
 
