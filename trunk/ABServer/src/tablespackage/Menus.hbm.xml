@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Menus" table="menus" optimistic-lock="none">
+    <id name="idMenus" type="integer" unsaved-value="null">
+      <column name="idMenus" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="menuName" type="string" column="MenuName" length="45"/>
+    <property name="menuDescription" type="string" column="MenuDescription" length="45"/>
+    <property name="menuValidFrom" type="date" column="MenuValidFrom"/>
+    <property name="menuValidTo" type="date" column="MenuValidTo"/>
+    <property name="menuValid" type="boolean" column="MenuValid"/>
+    <many-to-one name="menu" entity-name="tablespackage.Venues" cascade="none" foreign-key="fk_Menus_Venues" not-null="false" column="Menu_idVenues"/>
+    <bag name="menuitems" inverse="true" cascade="none">
+      <key foreign-key="fk_MenuItems_Menus" column="MenuItem_idMenus"/>
+      <one-to-many entity-name="tablespackage.Menuitems"/>
+    </bag>
+  </class>
+</hibernate-mapping>

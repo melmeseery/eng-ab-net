@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Contractcoursestatus" table="contractcoursestatus" optimistic-lock="none">
+    <id name="idContractCourseStatus" type="integer" unsaved-value="null">
+      <column name="idContractCourseStatus" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="contractCourseStatus" type="string" column="ContractCourseStatus" length="45" not-null="true"/>
+  </class>
+</hibernate-mapping>

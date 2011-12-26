@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Courses" table="courses" optimistic-lock="none">
+    <id name="idCourses" type="integer" unsaved-value="null">
+      <column name="idCourses" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="courseCode" type="string" column="CourseCode" length="10"/>
+    <property name="courseNameEng" type="string" column="CourseNameEng" length="145"/>
+    <property name="courseNameAr" type="string" column="CourseNameAr" length="145"/>
+    <property name="courseOutlineEng" type="string" column="CourseOutlineEng" length="200"/>
+    <property name="courseOutlineAr" type="string" column="CourseOutlineAr" length="200"/>
+    <property name="courseDays" type="integer" column="CourseDays" not-null="true"/>
+    <property name="courseColor" type="string" column="CourseColor" length="10"/>
+    <property name="courseDescription" type="string">
+      <column name="CourseDescription"/>
+    </property>
+    <property name="courseCalender" type="string" column="CourseCalender" length="150"/>
+    <property name="courseApp" type="string" column="CourseApp" length="45"/>
+    <many-to-one name="course" entity-name="tablespackage.Resources" cascade="none" foreign-key="FK_courses_4" not-null="false" column="Course_idResources"/>
+    <many-to-one name="courseCompetenceAddressed" entity-name="tablespackage.Competencesaddressed" cascade="none" foreign-key="FK_courses_3" not-null="false" column="CourseCompetenceAddressed"/>
+    <many-to-one name="course_1" entity-name="tablespackage.Trainingareas" cascade="none" foreign-key="fk_Courses_TrainingAreas" column="Course_idTrainingAreas"/>
+    <many-to-one name="course_2" entity-name="tablespackage.Coursetypes" cascade="none" foreign-key="fk_Courses_CourseTypes" column="Course_idCourseTypes"/>
+    <bag name="contractcourse" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourse_Courses" column="Courses_idCourses"/>
+      <one-to-many entity-name="tablespackage.Contractcourse"/>
+    </bag>
+    <bag name="prices" inverse="true" cascade="none">
+      <key foreign-key="fk_Prices_Courses" not-null="true" column="Courses_idCourses"/>
+      <one-to-many entity-name="tablespackage.Prices"/>
+    </bag>
+    <bag name="trackcourses" inverse="true" cascade="none">
+      <key foreign-key="fk_TrackCourses_Courses" not-null="true" column="TrackCourses_idCourses"/>
+      <one-to-many entity-name="tablespackage.Trackcourses"/>
+    </bag>
+    <bag name="resourcecourses" inverse="true" cascade="none">
+      <key foreign-key="fk_ResourceCourses_Courses" not-null="true" column="ResourceCourse_idCourses"/>
+      <one-to-many entity-name="tablespackage.Resourcecourses"/>
+    </bag>
+    <bag name="audiencetypesMany" table="coursesaudience" inverse="true" cascade="none">
+      <key foreign-key="fk_CoursesAudience_Courses" not-null="true" column="CoursesAudience_idCourses"/>
+      <many-to-many entity-name="tablespackage.Audiencetypes" foreign-key="fk_CoursesAudience_AudienceTypes">
+        <column name="CoursesAudience_idAudienceTypes" not-null="true" index="PRIMARY"/>
+      </many-to-many>
+    </bag>
+  </class>
+</hibernate-mapping>

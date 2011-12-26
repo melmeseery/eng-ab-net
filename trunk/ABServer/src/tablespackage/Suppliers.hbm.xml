@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Suppliers" table="suppliers" optimistic-lock="none">
+    <id name="idSupplier" type="integer" unsaved-value="null">
+      <column name="idSupplier" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="supplierName" type="string" column="SupplierName" length="45"/>
+    <property name="supplierMobile" type="string" column="SupplierMobile" length="45"/>
+    <property name="supplierAddress" type="string" column="SupplierAddress" length="400"/>
+    <property name="supplierPhone" type="string" column="SupplierPhone" length="45"/>
+    <many-to-one name="supplier" entity-name="tablespackage.Expensescategories" cascade="none" foreign-key="fk_Supplier_ExpensesCategories" not-null="false" column="Supplier_idExpensesCategories"/>
+    <bag name="supplierexpense" inverse="true" cascade="none">
+      <key foreign-key="FK_supplierexpense_1" column="Supplierid"/>
+      <one-to-many entity-name="tablespackage.Supplierexpense"/>
+    </bag>
+    <bag name="bills" inverse="true" cascade="none">
+      <key foreign-key="fk_Bills_Suppliers" column="BillSuppliers_idSupplier"/>
+      <one-to-many entity-name="tablespackage.Bills"/>
+    </bag>
+  </class>
+</hibernate-mapping>

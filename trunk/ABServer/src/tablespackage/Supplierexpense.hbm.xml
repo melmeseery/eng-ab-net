@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Supplierexpense" table="supplierexpense" optimistic-lock="none">
+    <id name="idSupplierExpense" type="integer" unsaved-value="null">
+      <column name="idSupplierExpense" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="cost" type="string" column="cost" length="45"/>
+    <property name="stock" type="integer" column="stock"/>
+    <property name="validTo" type="date" column="ValidTo"/>
+    <property name="validFrom" type="date" column="ValidFrom"/>
+    <property name="currancy" type="integer" column="Currancy"/>
+    <many-to-one name="categoryid" entity-name="tablespackage.Expensescategories" cascade="none" foreign-key="FK_supplierexpense_3" not-null="false" column="categoryid"/>
+    <many-to-one name="supplierid" entity-name="tablespackage.Suppliers" cascade="none" foreign-key="FK_supplierexpense_1" not-null="false" column="Supplierid"/>
+    <many-to-one name="expenseid" entity-name="tablespackage.Expensesitem" cascade="none" foreign-key="FK_supplierexpense_2" not-null="false" column="Expenseid"/>
+  </class>
+</hibernate-mapping>

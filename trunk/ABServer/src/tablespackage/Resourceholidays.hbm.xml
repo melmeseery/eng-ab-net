@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resourceholidays" table="resourceholidays" optimistic-lock="none">
+    <id name="idResourceHolidays" type="integer" unsaved-value="null">
+      <column name="idResourceHolidays" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceHolidaysIdResources" type="integer" column="ResourceHolidays_idResources"/>
+    <property name="resourceHolidaysIdHolidays" type="integer" column="ResourceHolidays_idHolidays"/>
+  </class>
+</hibernate-mapping>

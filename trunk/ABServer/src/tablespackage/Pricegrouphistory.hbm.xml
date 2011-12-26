@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Pricegrouphistory" table="pricegrouphistory" optimistic-lock="none">
+    <id name="idPriceGroupHistory" type="integer" unsaved-value="null">
+      <column name="idPriceGroupHistory" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="priceGroupHitoryImcCompany" type="string" column="PriceGroupHitoryIMC_Company" length="45"/>
+    <property name="priceGroupHitoryPulicCompany" type="string" column="PriceGroupHitoryPulic_Company" length="45"/>
+    <property name="priceGroupHitoryInternational" type="string" column="PriceGroupHitoryInternational" length="45"/>
+    <property name="priceGroupValidFrom" type="date" column="PriceGroupValidFrom"/>
+    <property name="priceGroupValidTo" type="date" column="PriceGroupValidTo"/>
+    <property name="priceGroupValid" type="boolean" column="PriceGroupValid"/>
+    <property name="currency" type="string" column="Currency" length="45"/>
+    <property name="priceGroupHitoryImcClient" type="string" column="PriceGroupHitoryIMC_Client" length="45"/>
+    <property name="priceGroupHitoryPulicClient" type="string" column="PriceGroupHitoryPulic_Client" length="45"/>
+  </class>
+</hibernate-mapping>

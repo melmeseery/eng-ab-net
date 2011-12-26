@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Datashows" table="datashows" optimistic-lock="none">
+    <id name="idDatashows" type="integer" unsaved-value="null">
+      <column name="idDatashows" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="datashowName" type="string" column="DatashowName" length="45"/>
+    <property name="datashowPrice" type="string" column="DatashowPrice" length="45"/>
+    <property name="datashowPurchaseDate" type="date" column="DatashowPurchaseDate"/>
+    <property name="datashowSalvageDate" type="date" column="DatashowSalvageDate"/>
+    <property name="datashowValid" type="boolean" column="DatashowValid"/>
+    <property name="datashowInfo" type="string" column="DatashowInfo" length="500"/>
+    <bag name="datashowsmaintainance" inverse="true" cascade="none">
+      <key foreign-key="fk_DatashowsHistory_Datashows" not-null="true" column="DatashowsMaintainance_idDatashows"/>
+      <one-to-many entity-name="tablespackage.Datashowsmaintainance"/>
+    </bag>
+  </class>
+</hibernate-mapping>

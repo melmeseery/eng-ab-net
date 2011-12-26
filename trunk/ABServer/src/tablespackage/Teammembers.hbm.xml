@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Teammembers" table="teammembers" optimistic-lock="none">
+    <id name="idTeammembers" type="integer" unsaved-value="null">
+      <column name="idTeammembers" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <many-to-one name="teamid" entity-name="tablespackage.Teams" cascade="none" foreign-key="FK_teammembers_5" column="Teamid"/>
+    <many-to-one name="memberid" entity-name="tablespackage.Trainingcoordinators" cascade="none" foreign-key="FK_teammembers_4" column="Memberid"/>
+  </class>
+</hibernate-mapping>

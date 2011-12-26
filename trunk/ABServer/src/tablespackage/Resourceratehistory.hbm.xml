@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resourceratehistory" table="resourceratehistory" optimistic-lock="none">
+    <id name="idResourceRateHistory" type="integer" unsaved-value="null">
+      <column name="idResourceRateHistory" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceRateHistoryRate" type="integer" column="ResourceRateHistoryRate"/>
+    <property name="resourceRateHistoryValid" type="integer" column="ResourceRateHistoryValid"/>
+    <property name="resourceRateHistoryValidFrom" type="date" column="ResourceRateHistoryValidFrom"/>
+    <property name="resourceRateHistoryValidTo" type="date" column="ResourceRateHistoryValidTo"/>
+    <property name="resourceRateHistoryDevelopment" type="integer" column="ResourceRateHistoryDevelopment"/>
+    <property name="resourceRateHistoryType" type="integer" column="ResourceRateHistoryType"/>
+    <property name="resourceRateHistoryTaxRate" type="integer" column="ResourceRateHistoryTaxRate"/>
+    <property name="resourceRateHistoryTaxType" type="integer" column="ResourceRateHistoryTaxType"/>
+    <property name="resourceRateHistoryTaxExempted" type="boolean" column="ResourceRateHistoryTaxExempted"/>
+    <property name="resourceRateHistoryComment" type="string" column="ResourceRateHistoryComment" length="200"/>
+    <property name="resourceRateHistoryContractualType" type="integer" column="ResourceRateHistoryContractualType"/>
+    <property name="resourceRateHistoryConsultingMdfee" type="integer" column="ResourceRateHistoryConsultingMDFee"/>
+    <property name="resourceRateHistoryConsultingMdpercentage" type="integer" column="ResourceRateHistoryConsultingMDPercentage"/>
+    <property name="resourceRateHistoryTrainingMdrate" type="integer" column="ResourceRateHistoryTrainingMDRate"/>
+    <property name="resourceRateHistoryContractCopy" type="string" column="ResourceRateHistoryContractCopy" length="500"/>
+    <property name="resourceRateHistoryConsultingCurrency" type="string" column="ResourceRateHistoryConsultingCurrency" length="45"/>
+    <property name="resourceRateHistoryTrainingCurrency" type="string" column="ResourceRateHistoryTrainingCurrency" length="45"/>
+    <many-to-one name="resourceRateHistory" entity-name="tablespackage.Resources" cascade="none" foreign-key="fk_ResourceRateHistory_Resources" not-null="false" column="ResourceRateHistory_idResources"/>
+  </class>
+</hibernate-mapping>

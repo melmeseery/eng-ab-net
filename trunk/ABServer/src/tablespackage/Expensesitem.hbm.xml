@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Expensesitem" table="expensesitem" optimistic-lock="none">
+    <id name="idExpensesItem" type="integer" unsaved-value="null">
+      <column name="idExpensesItem" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="expenseItemName" type="string" column="ExpenseItemName" length="45"/>
+    <property name="expenseItemType" type="integer" column="ExpenseItemType"/>
+    <property name="expenseItemCost" type="integer" column="ExpenseItemCost"/>
+    <property name="expenseItemValid" type="boolean" column="ExpenseItemValid"/>
+    <property name="expenseItemCurrentStock" type="string" column="ExpenseItemCurrentStock" length="45"/>
+    <property name="expenseItemValidFrom" type="date" column="ExpenseItemValidFrom"/>
+    <property name="expenseItemValidTo" type="date" column="ExpenseItemValidTo"/>
+    <many-to-one name="expensesItem" entity-name="tablespackage.Expensescategories" cascade="none" foreign-key="fk_ExpensesItem_ExpensesCategories" column="ExpensesItem_idExpensesCategories"/>
+    <bag name="supplierexpense" inverse="true" cascade="none">
+      <key foreign-key="FK_supplierexpense_2" column="Expenseid"/>
+      <one-to-many entity-name="tablespackage.Supplierexpense"/>
+    </bag>
+    <bag name="contractcourseexpense" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourseExpense_ExpensesItem" column="ExpensesItem_idExpensesItem"/>
+      <one-to-many entity-name="tablespackage.Contractcourseexpense"/>
+    </bag>
+  </class>
+</hibernate-mapping>

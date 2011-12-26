@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Contracts" table="contracts" optimistic-lock="none">
+    <id name="idContracts" type="integer" unsaved-value="null">
+      <column name="idContracts" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="contractProposalId" type="string" column="ContractProposalID" length="45"/>
+    <property name="contractNumber" type="string" column="ContractNumber" length="45"/>
+    <property name="contractName" type="string" column="ContractName" length="45"/>
+    <property name="contractProactiveType" type="integer" column="ContractProactiveType"/>
+    <property name="contractFundType" type="integer" column="ContractFundType"/>
+    <property name="contractProposalReceiveDate" type="date" column="ContractProposalReceiveDate"/>
+    <property name="contractAcceptDate" type="date" column="ContractAcceptDate"/>
+    <property name="contractDateOfRequest" type="date" column="ContractDateOfRequest"/>
+    <property name="contractFirstStartDate" type="date" column="ContractFirstStartDate"/>
+    <property name="contractFirstEndDate" type="date" column="ContractFirstEndDate"/>
+    <property name="contractStartDate" type="date" column="ContractStartDate"/>
+    <property name="contractEndDate" type="date" column="ContractEndDate"/>
+    <property name="contractRateType" type="integer" column="ContractRateType"/>
+    <property name="contractRateValue" type="integer" column="ContractRateValue"/>
+    <property name="contractStatus" type="integer" column="ContractStatus"/>
+    <property name="contractFee" type="integer" column="ContractFee"/>
+    <property name="contractCancelClientPercent" type="short">
+      <column name="ContractCancelClientPercent" precision="4" scale="0"/>
+    </property>
+    <property name="contractCancelRecoursePercent" type="short">
+      <column name="ContractCancelRecoursePercent" precision="5" scale="0"/>
+    </property>
+    <property name="contractPreCancelTime" type="integer" column="ContractPreCancelTime"/>
+    <property name="contractGroupPrice" type="integer" column="ContractGroupPrice"/>
+    <property name="contractVenueFeeIncluded" type="byte" column="ContractVenueFeeIncluded"/>
+    <property name="contractDealPerson" type="string" column="ContractDealPerson" length="45"/>
+    <property name="contractPriceNote" type="string" column="ContractPriceNote" length="45"/>
+    <property name="contractCoordinatorTeam" type="integer" column="ContractCoordinatorTeam"/>
+    <property name="contractVenueArrangmentRes" type="integer" column="ContractVenueArrangmentRes"/>
+    <property name="contractVenueCostRes" type="integer" column="ContractVenueCostRes"/>
+    <property name="contractVenueLocation" type="integer" column="ContractVenueLocation"/>
+    <property name="deleted" type="integer" column="Deleted" not-null="true"/>
+    <many-to-one name="contract" entity-name="tablespackage.Clients" cascade="none" foreign-key="fk_Contracts_Clients" column="Contract_idClients"/>
+    <many-to-one name="contract_1" entity-name="tablespackage.Trainingcoordinators" cascade="none" foreign-key="fk_Contracts_TrainingCoordinators" not-null="false" column="Contract_idTrainingCoordinators"/>
+    <bag name="contractcourse" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourse_Contracts" column="Contracts_idContracts"/>
+      <one-to-many entity-name="tablespackage.Contractcourse"/>
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Currancy" table="currancy" optimistic-lock="none">
+    <id name="curancyid" type="integer" unsaved-value="null">
+      <column name="Curancyid" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="currancyName" type="string" column="CurrancyName" length="45"/>
+    <property name="currancyRateLe" type="string" column="CurrancyRateLE" length="45"/>
+    <property name="currancyRateS" type="string" column="CurrancyRateS" length="45"/>
+  </class>
+</hibernate-mapping>

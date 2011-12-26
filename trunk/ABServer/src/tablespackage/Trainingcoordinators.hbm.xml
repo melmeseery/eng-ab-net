@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Trainingcoordinators" table="trainingcoordinators" optimistic-lock="none">
+    <id name="idTrainingCoordinators" type="integer" unsaved-value="null">
+      <column name="idTrainingCoordinators" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="trainingCoordinateFirstName" type="string" column="TrainingCoordinateFirstName" length="45"/>
+    <property name="trainingCoordinateAbb" type="string" column="TrainingCoordinateAbb" length="45"/>
+    <property name="trainingCoordinateLastName" type="string" column="TrainingCoordinateLastName" length="45"/>
+    <property name="trainingCoordinateHireDate" type="date" column="TrainingCoordinateHireDate"/>
+    <property name="trainingCoordinateBirthDate" type="date" column="TrainingCoordinateBirthDate"/>
+    <property name="trainingCoordinateDescription" type="string">
+      <column name="TrainingCoordinateDescription"/>
+    </property>
+    <property name="trainingCoordinateColor" type="string" column="TrainingCoordinateColor" length="45"/>
+    <property name="trainingCoordinateAddress" type="string" column="TrainingCoordinateAddress" length="245"/>
+    <property name="trainingCoordinateEmail" type="string" column="TrainingCoordinateEmail" length="45"/>
+    <property name="trainingCoordinateTelephone" type="string" column="TrainingCoordinateTelephone" length="45"/>
+    <property name="trainingCoordinateMobile" type="string" column="TrainingCoordinateMobile" length="45"/>
+    <property name="trainingCoordinatorResignationDate" type="date" column="TrainingCoordinatorResignationDate"/>
+    <property name="trainingCoordinatorCurrentSalary" type="string" column="TrainingCoordinatorCurrentSalary" length="45"/>
+    <property name="trainingCoordinatorCurrentTitle" type="string" column="TrainingCoordinatorCurrentTitle" length="45"/>
+    <bag name="teammembers" inverse="true" cascade="none">
+      <key foreign-key="FK_teammembers_4" not-null="true" column="Memberid"/>
+      <one-to-many entity-name="tablespackage.Teammembers"/>
+    </bag>
+    <bag name="contractcourse" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourse_TrainingCoordinators" column="TrainingCoordinators_idTrainingCoordinators"/>
+      <one-to-many entity-name="tablespackage.Contractcourse"/>
+    </bag>
+    <bag name="contracts" inverse="true" cascade="none">
+      <key foreign-key="fk_Contracts_TrainingCoordinators" column="Contract_idTrainingCoordinators"/>
+      <one-to-many entity-name="tablespackage.Contracts"/>
+    </bag>
+    <bag name="trainingcoordinatehistory" inverse="true" cascade="none">
+      <key foreign-key="fk_TrainingCoordinateHistory_TrainingCoordinators" not-null="true" column="TrainingCoordinators_idTrainingCoordinators"/>
+      <one-to-many entity-name="tablespackage.Trainingcoordinatehistory"/>
+    </bag>
+  </class>
+</hibernate-mapping>
