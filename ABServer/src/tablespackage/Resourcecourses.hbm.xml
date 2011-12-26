@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resourcecourses" table="resourcecourses" optimistic-lock="none">
+    <id name="idResourceCourse" type="integer" unsaved-value="null">
+      <column name="idResourceCourse" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceCourseAbility" type="integer" column="ResourceCourseAbility"/>
+    <property name="resourceCourseValidFrom" type="date" column="ResourceCourseValidFrom"/>
+    <property name="resourceCourseFiles" type="binary">
+      <column name="ResourceCourseFiles"/>
+    </property>
+    <many-to-one name="resourceCourse" entity-name="tablespackage.Resources" cascade="none" foreign-key="fk_ResourceCourses_Resources" column="ResourceCourse_idResources"/>
+    <many-to-one name="resourceCourse_1" entity-name="tablespackage.Courses" cascade="none" foreign-key="fk_ResourceCourses_Courses" column="ResourceCourse_idCourses"/>
+    <bag name="resourcefiles" inverse="true" cascade="none">
+      <key foreign-key="FK_resourcefiles_2" column="ResourceCourses_idResourcesCourses"/>
+      <one-to-many entity-name="tablespackage.Resourcefiles"/>
+    </bag>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Rooms" table="rooms" optimistic-lock="none">
+    <id name="idRooms" type="integer" unsaved-value="null">
+      <column name="idRooms" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="roomCapacity" type="integer" column="RoomCapacity"/>
+    <property name="roomNumber" type="integer" column="RoomNumber"/>
+    <property name="roomValidity" type="boolean" column="RoomValidity"/>
+    <property name="roomValidFrom" type="date" column="RoomValidFrom"/>
+    <property name="roomValid" type="boolean" column="RoomValid"/>
+    <property name="roomValidTo" type="date" column="RoomValidTo"/>
+    <many-to-one name="room" entity-name="tablespackage.Venues" cascade="none" foreign-key="fk_Rooms_Venues" not-null="false" column="Room_idVenues"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Coursetypes" table="coursetypes" optimistic-lock="none">
+    <id name="idCourseTypes" type="integer" unsaved-value="null">
+      <column name="idCourseTypes" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="courseTypeName" type="string" column="CourseTypeName" length="30"/>
+    <bag name="courses" inverse="true" cascade="none">
+      <key foreign-key="fk_Courses_CourseTypes" not-null="true" column="Course_idCourseTypes"/>
+      <one-to-many entity-name="tablespackage.Courses"/>
+    </bag>
+  </class>
+</hibernate-mapping>

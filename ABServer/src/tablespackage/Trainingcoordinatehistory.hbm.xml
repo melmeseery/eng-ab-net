@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Trainingcoordinatehistory" table="trainingcoordinatehistory" optimistic-lock="none">
+    <id name="idTrainingCoordinateHistory" type="integer" unsaved-value="null">
+      <column name="idTrainingCoordinateHistory" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="trainingCoordinateHistoryType" type="string" column="TrainingCoordinateHistoryType" length="45"/>
+    <property name="trainingCoordinateHistoryValidFrom" type="date" column="TrainingCoordinateHistoryValidFrom"/>
+    <property name="trainingCoordinateHistoryValidTo" type="date" column="TrainingCoordinateHistoryValidTo"/>
+    <property name="trainingCoordinateHistoryValid" type="boolean" column="TrainingCoordinateHistoryValid"/>
+    <property name="trainingCoordinateHistoryValue" type="string" column="TrainingCoordinateHistoryValue" length="45"/>
+    <many-to-one name="trainingCoordinators" entity-name="tablespackage.Trainingcoordinators" cascade="none" foreign-key="fk_TrainingCoordinateHistory_TrainingCoordinators" column="TrainingCoordinators_idTrainingCoordinators"/>
+  </class>
+</hibernate-mapping>

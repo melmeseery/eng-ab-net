@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Expensescategories" table="expensescategories" optimistic-lock="none">
+    <id name="idExpensesCategories" type="integer" unsaved-value="null">
+      <column name="idExpensesCategories" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="categoryName" type="string" column="CategoryName" length="45"/>
+    <property name="categoryType" type="string" column="CategoryType" length="45"/>
+    <property name="categoryParentName" type="string" column="CategoryParentName" length="45"/>
+    <many-to-one name="categoryParentId" entity-name="tablespackage.Expensescategories" cascade="none" foreign-key="FK_expensescategories_1" not-null="false" column="CategoryParentID"/>
+    <bag name="supplierexpense" inverse="true" cascade="none">
+      <key foreign-key="FK_supplierexpense_3" column="categoryid"/>
+      <one-to-many entity-name="tablespackage.Supplierexpense"/>
+    </bag>
+    <bag name="suppliers" inverse="true" cascade="none">
+      <key foreign-key="fk_Supplier_ExpensesCategories" column="Supplier_idExpensesCategories"/>
+      <one-to-many entity-name="tablespackage.Suppliers"/>
+    </bag>
+    <bag name="expensescategories" inverse="true" cascade="none">
+      <key foreign-key="FK_expensescategories_1" column="CategoryParentID"/>
+      <one-to-many entity-name="tablespackage.Expensescategories"/>
+    </bag>
+    <bag name="expensesitem" inverse="true" cascade="none">
+      <key foreign-key="fk_ExpensesItem_ExpensesCategories" not-null="true" column="ExpensesItem_idExpensesCategories"/>
+      <one-to-many entity-name="tablespackage.Expensesitem"/>
+    </bag>
+  </class>
+</hibernate-mapping>

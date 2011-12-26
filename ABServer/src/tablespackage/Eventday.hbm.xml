@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Eventday" table="eventday" optimistic-lock="none">
+    <id name="eventDayid" type="integer" unsaved-value="null">
+      <column name="EventDayid" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="eventDayDate" type="date" column="EventDayDate"/>
+    <property name="eventDayPeriod" type="string" column="EventDayPeriod" length="45"/>
+    <property name="eventDayisFullDay" type="boolean" column="EventDayisFullDay"/>
+    <property name="eventDayDayNo" type="integer" column="EventDayDayNo"/>
+    <many-to-one name="eventDayContract" entity-name="tablespackage.Contractcourse" cascade="none" foreign-key="FK_EventDay_1" not-null="false" column="EventDayContract"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Trackcourses" table="trackcourses" optimistic-lock="none">
+    <id name="tableId" type="integer" unsaved-value="null">
+      <column name="tableId" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="courseTrackDays" type="integer" column="CourseTrackDays"/>
+    <many-to-one name="trackCoures" entity-name="tablespackage.Tracks" cascade="none" foreign-key="fk_TrackCourses_Tracks" column="TrackCoures_idTracks"/>
+    <many-to-one name="trackCourses" entity-name="tablespackage.Courses" cascade="none" foreign-key="fk_TrackCourses_Courses" column="TrackCourses_idCourses"/>
+  </class>
+</hibernate-mapping>

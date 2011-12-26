@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Prices" table="prices" optimistic-lock="none">
+    <id name="idPrices" type="integer" unsaved-value="null">
+      <column name="idPrices" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="priceImcCompany" type="string" column="PriceIMC_Company" length="45"/>
+    <property name="pricePublicCompany" type="string" column="PricePublic_Company" length="45"/>
+    <property name="priceInternational" type="string" column="PriceInternational" length="45"/>
+    <property name="priceValidFrom" type="date" column="PriceValidFrom"/>
+    <property name="priceValid" type="boolean" column="PriceValid" not-null="true"/>
+    <property name="priceValidTo" type="date" column="PriceValidTo"/>
+    <property name="currency" type="string" column="Currency" length="45"/>
+    <property name="priceImcClient" type="string" column="PriceIMC_Client" length="45"/>
+    <property name="pricePublicClient" type="string" column="PricePublic_Client" length="45"/>
+    <many-to-one name="courses" entity-name="tablespackage.Courses" cascade="none" foreign-key="fk_Prices_Courses" column="Courses_idCourses"/>
+  </class>
+</hibernate-mapping>

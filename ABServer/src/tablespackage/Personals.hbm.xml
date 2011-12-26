@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Personals" table="personals" optimistic-lock="none">
+    <id name="idPersonals" type="integer" unsaved-value="null">
+      <column name="idPersonals" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="personFirstName" type="string" column="PersonFirstName" length="45"/>
+    <property name="personLastName" type="string" column="PersonLastName" length="45"/>
+    <property name="personEmail" type="string" column="PersonEmail" length="45"/>
+    <property name="personTitle" type="string" column="PersonTitle" length="45"/>
+    <property name="personTelePhone" type="string" column="PersonTelePhone" length="45"/>
+    <property name="personMobile" type="string" column="PersonMobile" length="45"/>
+    <property name="personAddress" type="string" column="PersonAddress" length="45"/>
+    <bag name="clients" inverse="true" cascade="none">
+      <key foreign-key="fk_Clients_Personals" column="ClientMain_idPersonals"/>
+      <one-to-many entity-name="tablespackage.Clients"/>
+    </bag>
+    <bag name="venues" inverse="true" cascade="none">
+      <key foreign-key="fk_Venues_Personals" column="Personals_idPersonals"/>
+      <one-to-many entity-name="tablespackage.Venues"/>
+    </bag>
+    <bag name="clientsMany" table="clientpersonal" cascade="none">
+      <key foreign-key="fk_ClientPersonal_Personals" not-null="true" column="ClientPersonals_idPersonals"/>
+      <many-to-many entity-name="tablespackage.Clients" foreign-key="fk_ClientPersonal_Clients">
+        <column name="ClientsPersonal_idClients" not-null="true" index="fk_ClientPersonal_Clients"/>
+      </many-to-many>
+    </bag>
+    <bag name="venuesMany" table="venuspersonal" cascade="none">
+      <key foreign-key="fk_VenusPersonal_Personals" not-null="true" column="Personals_idPersonals"/>
+      <many-to-many entity-name="tablespackage.Venues" foreign-key="fk_VenusPersonal_Venues">
+        <column name="Venues_idVenues" not-null="true" index="PRIMARY"/>
+      </many-to-many>
+    </bag>
+  </class>
+</hibernate-mapping>

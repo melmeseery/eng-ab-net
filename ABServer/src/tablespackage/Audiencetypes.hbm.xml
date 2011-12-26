@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Audiencetypes" table="audiencetypes" optimistic-lock="none">
+    <id name="idAudienceTypes" type="integer" unsaved-value="null">
+      <column name="idAudienceTypes" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="audienceName" type="string" column="AudienceName" length="45"/>
+    <bag name="coursesMany" table="coursesaudience" cascade="none">
+      <key foreign-key="fk_CoursesAudience_AudienceTypes" not-null="true" column="CoursesAudience_idAudienceTypes"/>
+      <many-to-many entity-name="tablespackage.Courses" foreign-key="fk_CoursesAudience_Courses">
+        <column name="CoursesAudience_idCourses" not-null="true" index="PRIMARY"/>
+      </many-to-many>
+    </bag>
+  </class>
+</hibernate-mapping>

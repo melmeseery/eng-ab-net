@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Contractcourseexpense" table="contractcourseexpense" optimistic-lock="none">
+    <id name="contractcourseexpenseId" type="integer" unsaved-value="null">
+      <column name="contractcourseexpense_id" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="idContractCourseExpenseActualCount" type="integer" column="idContractCourseExpenseActualCount"/>
+    <property name="idContractCourseExpenseValue" type="byte">
+      <column name="idContractCourseExpenseValue" precision="3" scale="0"/>
+    </property>
+    <property name="contractCourseCoursesIdCourses" type="integer" column="ContractCourse_Courses_idCourses" index="fk_ContractCourseExpense_ContractCourse"/>
+    <property name="contractCourseContractsIdContracts" type="integer" column="ContractCourse_Contracts_idContracts" index="fk_ContractCourseExpense_ContractCourse"/>
+    <many-to-one name="expensesItem" entity-name="tablespackage.Expensesitem" cascade="none" foreign-key="fk_ContractCourseExpense_ExpensesItem" not-null="false" column="ExpensesItem_idExpensesItem"/>
+    <many-to-one name="bills" entity-name="tablespackage.Bills" cascade="none" foreign-key="fk_ContractCourseExpense_Bills" not-null="false" column="Bills_idBills"/>
+  </class>
+</hibernate-mapping>

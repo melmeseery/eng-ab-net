@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Tasks" table="tasks" optimistic-lock="none">
+    <id name="idTask" type="integer" unsaved-value="null">
+      <column name="idTask" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="taskDescription" type="string" column="Task_Description" length="45" not-null="true"/>
+    <property name="taskTableId" type="integer" column="Task_TableID" not-null="true"/>
+    <many-to-one name="userId" entity-name="tablespackage.Users" cascade="none" foreign-key="FK_tasks_1" not-null="false" column="UserId"/>
+  </class>
+</hibernate-mapping>

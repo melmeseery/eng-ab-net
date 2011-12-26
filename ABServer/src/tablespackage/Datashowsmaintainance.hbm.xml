@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Datashowsmaintainance" table="datashowsmaintainance" optimistic-lock="none">
+    <id name="idDatashowsMaintainance" type="integer" unsaved-value="null">
+      <column name="idDatashowsMaintainance" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="datashowsMaintainanceCost" type="string" column="DatashowsMaintainanceCost" length="45"/>
+    <property name="datashowsMaintainanceDate" type="date" column="DatashowsMaintainanceDate"/>
+    <property name="datashowsMaintainanceReason" type="string" column="DatashowsMaintainanceReason" length="500"/>
+    <many-to-one name="datashowsMaintainance" entity-name="tablespackage.Datashows" cascade="none" foreign-key="fk_DatashowsHistory_Datashows" column="DatashowsMaintainance_idDatashows"/>
+  </class>
+</hibernate-mapping>

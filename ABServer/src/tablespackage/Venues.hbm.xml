@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Venues" table="venues" optimistic-lock="none">
+    <id name="idVenues" type="integer" unsaved-value="null">
+      <column name="idVenues" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="venueName" type="string" column="VenueName" length="45"/>
+    <property name="venueAddress" type="string" column="VenueAddress" length="245"/>
+    <property name="venueDistrict" type="string" column="VenueDistrict" length="45"/>
+    <property name="venuMainContact" type="string" column="VenuMainContact" length="45"/>
+    <many-to-one name="personals" entity-name="tablespackage.Personals" cascade="none" foreign-key="fk_Venues_Personals" not-null="false" column="Personals_idPersonals"/>
+    <bag name="menus" inverse="true" cascade="none">
+      <key foreign-key="fk_Menus_Venues" column="Menu_idVenues"/>
+      <one-to-many entity-name="tablespackage.Menus"/>
+    </bag>
+    <bag name="contractcourse" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourse_Venues" column="Venues_idVenues"/>
+      <one-to-many entity-name="tablespackage.Contractcourse"/>
+    </bag>
+    <bag name="rooms" inverse="true" cascade="none">
+      <key foreign-key="fk_Rooms_Venues" column="Room_idVenues"/>
+      <one-to-many entity-name="tablespackage.Rooms"/>
+    </bag>
+    <bag name="personalsMany" table="venuspersonal" inverse="true" cascade="none">
+      <key foreign-key="fk_VenusPersonal_Venues" not-null="true" column="Venues_idVenues"/>
+      <many-to-many entity-name="tablespackage.Personals" foreign-key="fk_VenusPersonal_Personals">
+        <column name="Personals_idPersonals" not-null="true" index="PRIMARY"/>
+      </many-to-many>
+    </bag>
+  </class>
+</hibernate-mapping>

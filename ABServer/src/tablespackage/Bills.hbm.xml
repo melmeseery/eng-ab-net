@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Bills" table="bills" optimistic-lock="none">
+    <id name="idBills" type="integer" unsaved-value="null">
+      <column name="idBills" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="billNo" type="string" column="BillNo" length="45"/>
+    <property name="billDate" type="date" column="BillDate"/>
+    <property name="billCoverStartDate" type="date" column="BillCoverStartDate"/>
+    <property name="billCoverEndDate" type="date" column="BillCoverEndDate"/>
+    <property name="billTotalAmount" type="string" column="BillTotalAmount" length="45"/>
+    <property name="billPayDate" type="date" column="BillPayDate"/>
+    <property name="billPayed" type="boolean" column="BillPayed"/>
+    <many-to-one name="billSuppliers" entity-name="tablespackage.Suppliers" cascade="none" foreign-key="fk_Bills_Suppliers" not-null="false" column="BillSuppliers_idSupplier"/>
+    <bag name="contractcourseexpense" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourseExpense_Bills" column="Bills_idBills"/>
+      <one-to-many entity-name="tablespackage.Contractcourseexpense"/>
+    </bag>
+  </class>
+</hibernate-mapping>

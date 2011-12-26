@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Contractcourse" table="contractcourse" optimistic-lock="none">
+    <id name="idContractCourse" type="integer" unsaved-value="null">
+      <column name="idContractCourse" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="contractCourseCalender" type="string" column="ContractCourseCalender" length="145"/>
+    <property name="contractCourseStatus" type="integer" column="ContractCourseStatus"/>
+    <property name="contractCourseConfirmResource" type="boolean" column="ContractCourseConfirmResource"/>
+    <property name="contractCourseConfirmVenue" type="boolean" column="ContractCourseConfirmVenue"/>
+    <property name="contractCourseConfirmClient" type="boolean" column="ContractCourseConfirmClient"/>
+    <property name="contractCourseConfirmResourceDate" type="date" column="ContractCourseConfirmResourceDate"/>
+    <property name="contractCourseConfirmVenueDate" type="date" column="ContractCourseConfirmVenueDate"/>
+    <property name="contractCourseConfirmClienDate" type="date" column="ContractCourseConfirmClienDate"/>
+    <property name="contractCourseDays" type="integer" column="ContractCourseDays"/>
+    <property name="contractCourseRunNo" type="integer" column="ContractCourseRunNo"/>
+    <property name="contractCourseStartDay" type="date" column="ContractCourseStartDay"/>
+    <property name="contractCourseEndtDay" type="date" column="ContractCourseEndtDay"/>
+    <property name="contractCourseActualAttendance" type="integer" column="ContractCourseActualAttendance"/>
+    <property name="contractCourseLocreceivedDate" type="date" column="ContractCourseLOCReceivedDate"/>
+    <property name="contractCourseFundType" type="integer" column="ContractCourseFundType"/>
+    <property name="contractCoursePriceType" type="integer" column="ContractCoursePriceType"/>
+    <property name="contractCoursePayPrice" type="integer" column="ContractCoursePayPrice"/>
+    <property name="contractCourseIntendedAttendance" type="integer" column="ContractCourseIntendedAttendance"/>
+    <property name="contractCourseEvaluationCourse" type="integer">
+      <column name="ContractCourseEvaluationCourse" precision="10" scale="0"/>
+    </property>
+    <property name="contractCourseEvaluationTrainer" type="integer">
+      <column name="ContractCourseEvaluationTrainer" precision="10" scale="0"/>
+    </property>
+    <property name="contractCourseTrainerTrainingReportRecived" type="boolean" column="ContractCourseTrainerTrainingReportRecived"/>
+    <property name="contractCourseTrainerTrainingReportRecivedDate" type="date" column="ContractCourseTrainerTrainingReportRecivedDate"/>
+    <property name="contractCourseRequestDataShow" type="boolean" column="ContractCourseRequestDataShow"/>
+    <property name="contractCourseLocation" type="string" column="ContractCourseLocation" length="45"/>
+    <property name="contractCourseTime" type="integer" column="ContractCourseTime"/>
+    <property name="contractCoursePrice" type="integer" column="ContractCoursePrice"/>
+    <property name="contractCourseNumberOfRuns" type="integer" column="ContractCourseNumberOfRuns"/>
+    <property name="contractCourseLocreceived" type="boolean" column="ContractCourseLOCReceived"/>
+    <property name="contractCourseLocnumber" type="integer" column="ContractCourseLOCNumber"/>
+    <property name="contractCourseCprreceived" type="boolean" column="ContractCourseCPRReceived"/>
+    <property name="contractCourseCprreceivedDate" type="date" column="ContractCourseCPRReceivedDate"/>
+    <property name="contractCourseCancel" type="boolean" column="ContractCourseCancel"/>
+    <property name="contractCourseCancelDate" type="date" column="ContractCourseCancelDate"/>
+    <many-to-one name="trainingCoordinators" entity-name="tablespackage.Trainingcoordinators" cascade="none" foreign-key="fk_ContractCourse_TrainingCoordinators" not-null="false" column="TrainingCoordinators_idTrainingCoordinators"/>
+    <many-to-one name="resources" entity-name="tablespackage.Resources" cascade="none" foreign-key="fk_ContractCourse_Resources" not-null="false" column="Resources_idResources"/>
+    <many-to-one name="venues" entity-name="tablespackage.Venues" cascade="none" foreign-key="fk_ContractCourse_Venues" not-null="false" column="Venues_idVenues"/>
+    <many-to-one name="courses" entity-name="tablespackage.Courses" cascade="none" foreign-key="fk_ContractCourse_Courses" not-null="false" column="Courses_idCourses"/>
+    <many-to-one name="contracts" entity-name="tablespackage.Contracts" cascade="none" foreign-key="fk_ContractCourse_Contracts" not-null="false" column="Contracts_idContracts"/>
+  </class>
+</hibernate-mapping>

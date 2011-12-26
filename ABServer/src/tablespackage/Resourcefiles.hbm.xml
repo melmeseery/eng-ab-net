@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resourcefiles" table="resourcefiles" optimistic-lock="none">
+    <id name="idResourceFiles" type="integer" unsaved-value="null">
+      <column name="idResourceFiles" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceFileName" type="string" column="ResourceFileName" length="45"/>
+    <property name="resourceFileLocation" type="string" column="ResourceFileLocation" length="545"/>
+    <property name="resourceFileUploadDate" type="date" column="ResourceFileUploadDate"/>
+    <property name="resourceFileType" type="integer" column="ResourceFileType"/>
+    <property name="resourceFileValid" type="boolean" column="ResourceFileValid"/>
+    <many-to-one name="resourceCoursesIdResourcesCourses" entity-name="tablespackage.Resourcecourses" cascade="none" foreign-key="FK_resourcefiles_2" not-null="false" column="ResourceCourses_idResourcesCourses"/>
+    <many-to-one name="resourcesFile" entity-name="tablespackage.Resources" cascade="none" foreign-key="FK_resourcefiles_1" not-null="false" column="ResourcesFile_idResources"/>
+  </class>
+</hibernate-mapping>

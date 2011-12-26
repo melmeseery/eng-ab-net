@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resourceconsultingareas" table="resourceconsultingareas" optimistic-lock="none">
+    <id name="idResourceConsultingArea" type="integer" unsaved-value="null">
+      <column name="idResourceConsultingArea" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceConsultingAreaIdResources" type="integer" column="ResourceConsultingArea_idResources" not-null="true"/>
+    <property name="resourceConsultingAreaIdConsultingArea" type="integer" column="ResourceConsultingArea_idConsultingArea" not-null="true"/>
+  </class>
+</hibernate-mapping>

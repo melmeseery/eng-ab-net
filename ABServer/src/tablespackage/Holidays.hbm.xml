@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Holidays" table="holidays" optimistic-lock="none">
+    <id name="idHolidays" type="integer" unsaved-value="null">
+      <column name="idHolidays" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="holidayName" type="string" column="HolidayName" length="45"/>
+    <property name="holidayColor" type="string" column="HolidayColor" length="45"/>
+    <property name="startDate" type="date" column="StartDate"/>
+    <property name="endDate" type="date" column="EndDate"/>
+    <property name="oneDay" type="boolean" column="OneDay"/>
+    <property name="holidayType" type="string" column="HolidayType" length="45"/>
+    <property name="holidayFlag" type="string" column="HolidayFlag" length="45"/>
+  </class>
+</hibernate-mapping>

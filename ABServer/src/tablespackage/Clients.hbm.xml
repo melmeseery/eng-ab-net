@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Clients" table="clients" optimistic-lock="none">
+    <id name="idClients" type="integer" unsaved-value="null">
+      <column name="idClients" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="clientName" type="string" column="ClientName" length="45"/>
+    <property name="clientApp" type="string" column="ClientApp" length="45"/>
+    <property name="clientColor" type="string" column="ClientColor" length="45"/>
+    <property name="clientApproachDate" type="date" column="ClientApproachDate"/>
+    <property name="clientWorkDate" type="date" column="ClientWorkDate"/>
+    <property name="clientApproachPerson" type="string" column="ClientApproachPerson" length="45"/>
+    <property name="clientInfo" type="string" column="ClientInfo" length="45"/>
+    <property name="clientAddress" type="string" column="ClientAddress" length="45"/>
+    <many-to-one name="clientMain" entity-name="tablespackage.Personals" cascade="none" foreign-key="fk_Clients_Personals" not-null="false" column="ClientMain_idPersonals"/>
+    <bag name="contracts" inverse="true" cascade="none">
+      <key foreign-key="fk_Contracts_Clients" not-null="true" column="Contract_idClients"/>
+      <one-to-many entity-name="tablespackage.Contracts"/>
+    </bag>
+    <bag name="personalsMany" table="clientpersonal" inverse="true" cascade="none">
+      <key foreign-key="fk_ClientPersonal_Clients" not-null="true" column="ClientsPersonal_idClients"/>
+      <many-to-many entity-name="tablespackage.Personals" foreign-key="fk_ClientPersonal_Personals">
+        <column name="ClientPersonals_idPersonals" not-null="true" index="PRIMARY"/>
+      </many-to-many>
+    </bag>
+  </class>
+</hibernate-mapping>

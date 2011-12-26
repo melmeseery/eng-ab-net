@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="tablespackage">
+  <class name="Resources" table="resources" optimistic-lock="none">
+    <id name="idResources" type="integer" unsaved-value="null">
+      <column name="idResources" not-null="true" unique="true" index="PRIMARY"/>
+      <generator class="native"/>
+    </id>
+    <property name="resourceFirstName" type="string" column="ResourceFirstName" length="45" not-null="true"/>
+    <property name="resourceLastName" type="string" column="ResourceLastName" length="45"/>
+    <property name="resourceGender" type="boolean" column="ResourceGender"/>
+    <property name="resourceBirthDate" type="date" column="ResourceBirthDate"/>
+    <property name="resourceNationality" type="string" column="ResourceNationality" length="45"/>
+    <property name="resourceAddress" type="string" column="ResourceAddress" length="200"/>
+    <property name="resourceSecMobile" type="string" column="ResourceSecMobile" length="45"/>
+    <property name="resourceCity" type="string" column="ResourceCity" length="45"/>
+    <property name="resourceDistrict" type="string" column="ResourceDistrict" length="45"/>
+    <property name="resourceFirstLandTelephone" type="string" column="ResourceFirstLandTelephone" length="45"/>
+    <property name="resourceFirstMobile" type="string" column="ResourceFirstMobile" length="45"/>
+    <property name="resourceFirstEmail" type="string" column="ResourceFirstEmail" length="145"/>
+    <property name="resourceImage" type="string" column="ResourceImage" length="500"/>
+    <property name="resourceNationalIdNo" type="string" column="ResourceNationalIdNo" length="45"/>
+    <property name="resourceTaxNo" type="string" column="ResourceTaxNo" length="45"/>
+    <property name="resourceTaxDistrict" type="string" column="ResourceTaxDistrict" length="45"/>
+    <property name="resourceBreifFile" type="string" column="ResourceBreifFile" length="500"/>
+    <property name="resourceCompanyFormatResume" type="string" column="ResourceCompanyFormatResume" length="500"/>
+    <property name="resourceType" type="integer" column="ResourceType"/>
+    <property name="resourceSeniority" type="integer" column="ResourceSeniority"/>
+    <property name="resourceHigherDegree" type="integer" column="ResourceHigherDegree"/>
+    <property name="resourceCvupdate" type="date" column="ResourceCVUpdate"/>
+    <property name="resourceStatus" type="integer" column="ResourceStatus"/>
+    <property name="resourceDelete" type="boolean" column="ResourceDelete"/>
+    <property name="resourceCalender" type="string" column="ResourceCalender" length="150"/>
+    <property name="resourceIdPhotoCopy" type="string" column="ResourceIdPhotoCopy" length="500"/>
+    <property name="resourceTaxPaymentPercent" type="string" column="ResourceTaxPaymentPercent" length="45"/>
+    <property name="resourceTaxFileNumber" type="string" column="ResourceTaxFileNumber" length="45"/>
+    <property name="resourceAbb" type="string" column="ResourceAbb" length="45"/>
+    <property name="resourceImageFile" type="string" column="ResourceImageFile" length="45"/>
+    <property name="resourceSecEmail" type="string" column="ResourceSecEmail" length="145"/>
+    <property name="resourceOwnResume" type="string" column="ResourceOwnResume" length="500"/>
+    <property name="resourceAge" type="integer" column="ResourceAge"/>
+    <property name="resourceContractualType" type="integer" column="ResourceContractualType"/>
+    <property name="resourceSecLandTelephone" type="string" column="ResourceSecLandTelephone" length="45"/>
+    <property name="resourceFax" type="string" column="ResourceFax" length="45"/>
+    <property name="resourceForeignCountry" type="string" column="ResourceForeignCountry" length="45"/>
+    <property name="deleted" type="integer" column="Deleted"/>
+    <bag name="contractcourse" inverse="true" cascade="none">
+      <key foreign-key="fk_ContractCourse_Resources" column="Resources_idResources"/>
+      <one-to-many entity-name="tablespackage.Contractcourse"/>
+    </bag>
+    <bag name="courses" inverse="true" cascade="none">
+      <key foreign-key="FK_courses_4" column="Course_idResources"/>
+      <one-to-many entity-name="tablespackage.Courses"/>
+    </bag>
+    <bag name="resourceratehistory" inverse="true" cascade="none">
+      <key foreign-key="fk_ResourceRateHistory_Resources" column="ResourceRateHistory_idResources"/>
+      <one-to-many entity-name="tablespackage.Resourceratehistory"/>
+    </bag>
+    <bag name="resourcefiles" inverse="true" cascade="none">
+      <key foreign-key="FK_resourcefiles_1" column="ResourcesFile_idResources"/>
+      <one-to-many entity-name="tablespackage.Resourcefiles"/>
+    </bag>
+    <bag name="resourcecourses" inverse="true" cascade="none">
+      <key foreign-key="fk_ResourceCourses_Resources" not-null="true" column="ResourceCourse_idResources"/>
+      <one-to-many entity-name="tablespackage.Resourcecourses"/>
+    </bag>
+  </class>
+</hibernate-mapping>
