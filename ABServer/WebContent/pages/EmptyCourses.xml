@@ -1,0 +1,322 @@
+<feed>
+	
+    <ECourse>
+	<!-- **********************Entry to courses ************************************- -->  
+						
+        <Courseid>1</Courseid>
+        <MainColor>#fde234</MainColor>
+        <MainApp>CS</MainApp>
+
+        <CourseName> course one </CourseName>
+        <Client> client 2 </Client>
+        <type> reminder </type>
+
+        <Location>Venue name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+       <summary>When: 2008-08-23T10:00:00 60</summary> 
+        <title> this is will be wrritten in body  ...</title>
+        <RunNo>1</RunNo>
+           <Runs>6</Runs>
+        <NoOfDays>5</NoOfDays>
+        <link href="" />
+        
+   </ECourse>
+     
+   
+    <ECourse>
+	
+						
+        <Courseid>134</Courseid>
+        <MainColor>red</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>green</SecColor>
+        <SecApp>SM</SecApp>
+        <CourseName>course with it </CourseName>
+        <Client>werwte</Client>
+        <ResourceName>maha </ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+      <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>3</RunNo>
+        <NoOfDays>2</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" ></link>
+ 
+         </ECourse>
+      
+     <!--Entry to course************************************ -->     
+    
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>7</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>9</Runs>
+        <link href="" />
+   
+         </ECourse>
+      
+     <!--Entry to course************************************************************ -->     
+     
+          <!--Entry to course************************************ -->     
+    
+    <ECourse>
+	
+						
+        <Courseid>1674</Courseid>
+        <MainColor>black</MainColor>
+        <MainApp>MS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>LM</SecApp>
+        <type> reminder </type>
+        <CourseName> sss </CourseName>
+        <Client>sss</Client>
+        <ResourceName>ndfsd</ResourceName>
+        <CoordinatorName> ssdfds </CoordinatorName>
+        <Location>sdfdfn </Location>    
+        <content> What will ddddd </content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the dddddt ...</title>
+        <RunNo>3</RunNo>
+        <NoOfDays>7</NoOfDays>
+        <Runs>5</Runs>
+        <link href="" />
+   
+         </ECourse>
+         
+         
+              <!--Entry to course************************************ -->     
+    
+    <ECourse>
+	
+						
+        <Courseid>16548</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>ssssf dfds d </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>1</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>1</Runs>
+        <link href="" />
+   
+         </ECourse>
+     
+        
+    <ECourse>
+	
+						
+        <Courseid>1674</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-09-29T10:00:00 80</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>6</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>8</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>6</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>7</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>4</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>7</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>6</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>2</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>3</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>5</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+   
+         </ECourse>
+            
+    <ECourse>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>blue</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>black</SecColor>
+        <SecApp>SM</SecApp>
+        <type> reminder </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-08-23T10:00:00 60</summary> 
+           <title> this is the tile of the coures with the client ...</title>
+        <RunNo>4</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+   
+         </ECourse>
+</feed>

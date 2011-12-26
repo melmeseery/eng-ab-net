@@ -1,0 +1,198 @@
+<feed>
+	
+    <Course>
+	<!-- **********************Entry to courses ************************************- -->  
+						
+        <Courseid>1</Courseid>
+        <MainColor>#FFC0CB</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>#7EC0EE</SecColor>
+        <SecApp>SML</SecApp>
+        <CourseName> course one </CourseName>
+        <Client> client 2 </Client>
+        <type> reminder </type>
+        <ResourceName>maha </ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venue name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+       <summary>When: 2008-09-23T10:00:00 60</summary> 
+        <title> Course Title</title>
+        <RunNo>1</RunNo>
+           <Runs>6</Runs>
+        <NoOfDays>5</NoOfDays>
+        <link href="http://www.google.com" />
+        
+    <!-- ****************    Now the courses entries  ****************************************************** -->   
+           
+ 
+        <DaysEntries>
+        <Entry>
+	        <id>1</id>
+	        <summary>When: 2008-09-18T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-10-18T10:00:00</Date>
+        </Entry>
+  
+        <Entry>
+	        <id>2</id>
+	        <summary>When: 2008-09-23T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-10-23T10:00:00</Date>
+    
+    	</Entry>
+    	 	 <Entry>
+	        <id>3</id>
+	        <summary>When: 2008-09-24T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-08-24T11:00:00</Date>
+    
+    	</Entry>
+    	
+   
+    	 <Entry>
+	        <id>4</id>
+	        <summary>When: 2008-09-28T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-09-28T10:00:00</Date>
+    
+    	</Entry>
+        </DaysEntries>
+         </Course>
+      
+     <!--Entry to course************************************-->     
+     
+   
+    <Course>
+	
+						
+        <Courseid>134</Courseid>
+        <MainColor>#98F5FF</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>red</SecColor>
+        <SecApp>SMLL</SecApp>
+          <type> reminder </type>
+        <CourseName>course with</CourseName>
+        <Client>werwte</Client>
+        <ResourceName>maha </ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+      <summary>When: 2008-09-23T10:00:00 60</summary> 
+           <title> Name </title>
+        <RunNo>3</RunNo>
+        <NoOfDays>2</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" ></link>
+    <!-- -    Now the coureses entriesy  ************************************ -->   
+           
+ 
+        <DaysEntries>
+        
+             <Entry>
+	        <id>1</id>
+	        <summary>When: 2008-09-3T11:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-09-03T10:20:00</Date>
+    
+    	</Entry>
+        <Entry>
+	        <id>2</id>
+	        <summary>When: 2008-09-8T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-09-08T10:40:00</Date>
+        </Entry>
+  
+   
+    	 	 <Entry>
+	        <id>3</id>
+	        <summary>When: 2008-09-23T10:00:00 60</summary> 
+	     	<Period>MP</Period>
+	        <AllDay>false</AllDay>
+	        <Date> 2008-09-23T10:40:00</Date>
+    
+    	</Entry>
+    	
+   
+    	 <Entry>
+	        <id>4</id>
+	        <summary>When: 2008-09-28T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-09-28T10:00:00</Date>
+    
+    	</Entry>
+        </DaysEntries>
+         </Course>
+      
+     <!--Entry to course************************************ -->     
+    
+    <Course>
+	
+						
+        <Courseid>1654</Courseid>
+        <MainColor>black</MainColor>
+        <MainApp>CS</MainApp>
+        <SecColor>#FFFACD</SecColor>
+        <SecApp>SUO</SecApp>
+          <type> Appointment </type>
+        <CourseName>werwerwega sfsagreta </CourseName>
+        <Client>sdgwe twert</Client>
+        <ResourceName>noha</ResourceName>
+        <CoordinatorName> samir </CoordinatorName>
+        <Location>Venu name or location </Location>    
+        <content> What will be written in the tool tip</content>  
+ <summary>When: 2008-09-23T10:00:00 60</summary> 
+           <title> tsm </title>
+        <RunNo>7</RunNo>
+        <NoOfDays>4</NoOfDays>
+        <Runs>6</Runs>
+        <link href="" />
+    <!-- -    Now the coureses entriesy  ************************************ -->   
+           
+ 
+        <DaysEntries>
+        <Entry>
+	        <id>1</id>
+	        <summary>When: 2008-09-17T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-09-17T03:30:00</Date>
+        </Entry>
+  
+        <Entry>
+	        <id>2</id>
+	        <summary>When: 2008-10-18T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-10-18</Date>
+    
+    	</Entry>
+    	 	 <Entry>
+	        <id>3</id>
+	        <summary>When: 2008-10-19T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-10-19T11:00:00</Date>
+    
+    	</Entry>
+    	
+   
+    	 <Entry>
+	        <id>4</id>
+	        <summary>When: 2008-10-25T10:00:00 60</summary> 
+	     	<Period>FD</Period>
+	        <AllDay>true</AllDay>
+	        <Date> 2008-10-25T12:00:00</Date>
+    
+    	</Entry>
+        </DaysEntries>
+         </Course>
+      
+     <!--Entry to course************************************************************ -->     
+</feed>

@@ -1,0 +1,60 @@
+<list>
+  <CalendarConflictDay>
+    <day>2009-02-10T15:52:07-08:00</day>
+    <vFirstCourseName>Business Managment</vFirstCourseName>
+    <vSecCourseName>Business Managment</vSecCourseName>
+    <vFirstCourseRunNo>2</vFirstCourseRunNo>
+    <vSecCourseRunNo>3</vSecCourseRunNo>
+    <rFirstCourseRunNo>0</rFirstCourseRunNo>
+    <rSecCourseRunNo>0</rSecCourseRunNo>
+    <conflictReason>2</conflictReason>
+  </CalendarConflictDay>
+  <CalendarConflictDay>
+    <day>2009-02-11T15:52:07-08:00</day>
+    <vFirstCourseName>Business Managment</vFirstCourseName>
+    <vSecCourseName>Business Managment</vSecCourseName>
+    <vFirstCourseRunNo>2</vFirstCourseRunNo>
+    <vSecCourseRunNo>3</vSecCourseRunNo>
+    <rFirstCourseRunNo>0</rFirstCourseRunNo>
+    <rSecCourseRunNo>0</rSecCourseRunNo>
+    <conflictReason>2</conflictReason>
+  </CalendarConflictDay>
+  <CalendarConflictDay>
+    <day>2009-02-22T15:52:07-08:00</day>
+    <vFirstCourseName>Business Managment</vFirstCourseName>
+    <vSecCourseName>training</vSecCourseName>
+    <vFirstCourseRunNo>2</vFirstCourseRunNo>
+    <vSecCourseRunNo>1</vSecCourseRunNo>
+    <rFirstCourseName>Business Managment</rFirstCourseName>
+    <rSecCourseName>newcourse</rSecCourseName>
+    <rFirstCourseRunNo>1</rFirstCourseRunNo>
+    <rSecCourseRunNo>2</rSecCourseRunNo>
+    <conflictReason>4</conflictReason>
+    <ResourceName>Maha El Meseery</ResourceName>
+  </CalendarConflictDay>
+  <CalendarConflictDay>
+    <day>2009-02-24T15:52:07-08:00</day>
+    <vFirstCourseName>Business Managment</vFirstCourseName>
+    <vSecCourseName>Business Managment</vSecCourseName>
+    <vFirstCourseRunNo>2</vFirstCourseRunNo>
+    <vSecCourseRunNo>1</vSecCourseRunNo>
+    <rFirstCourseName>Business Managment</rFirstCourseName>
+    <rSecCourseName>newcourse</rSecCourseName>
+    <rFirstCourseRunNo>1</rFirstCourseRunNo>
+    <rSecCourseRunNo>2</rSecCourseRunNo>
+    <conflictReason>4</conflictReason>
+    <ResourceName>Maha El Meseery</ResourceName>
+  </CalendarConflictDay>
+  <CalendarConflictDay>
+    <day>2009-02-26T15:52:07-08:00</day>
+    <vFirstCourseRunNo>0</vFirstCourseRunNo>
+    <vSecCourseRunNo>0</vSecCourseRunNo>
+    <rFirstCourseName>Business Managment</rFirstCourseName>
+    <rSecCourseName>newcourse</rSecCourseName>
+    <rFirstCourseRunNo>1</rFirstCourseRunNo>
+    <rSecCourseRunNo>2</rSecCourseRunNo>
+    <conflictReason>1</conflictReason>
+    <ResourceName>Maha El Meseery</ResourceName>
+  </CalendarConflictDay>
+ 
+</list>
