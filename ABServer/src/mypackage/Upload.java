@@ -13,6 +13,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.apache.commons.fileupload.*;
+import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,8 +36,9 @@ import HibernatePackage.Hiber_ResourcesFiles;
 
 public class Upload extends Action {
 	/**
-	 * 
+	 *
 	 */
+	  static Logger logger = Logger.getLogger(Upload.class);
 	private static final long serialVersionUID = 7440302204266787092L;
 
 	// private static String uploadPath = "d:\\ABServerFiles\\resource_files\\";
@@ -52,8 +54,8 @@ public class Upload extends Action {
 
 	public ActionForward execute(ActionMapping arg0, ActionForm arg1,
 			HttpServletRequest arg2, HttpServletResponse arg3) throws Exception {
-		// ////////System.out.println("task= "+arg2.getParameter("task"));
-
+	System.out.println("task= "+arg2.getParameter("task"));
+    logger.info(" In the upload instruction     ");
 	//	SessionFactory factory = new Configuration().configure()
 		//		.buildSessionFactory();
 
@@ -99,13 +101,13 @@ public class Upload extends Action {
 		}
 
 		try {
-			
+
 			// create and intialize the database connection////////////
 			DataSourceConnection database = new DataSourceConnection();
 			database.initializeConnecton(this.servlet);
 
-			
-			
+
+
 			// ////System.out.println("ana fe el execute");
 
 			DiskFileUpload fu = new DiskFileUpload();
@@ -120,9 +122,9 @@ public class Upload extends Action {
 
 			if (arg2.getParameter("resID") != null) {
 				resId = Integer.parseInt(arg2.getParameter("resID"));
-				
+
 			} else
-				resId = Resources.getTheLastResourceId(database) + 1;		
+				resId = Resources.getTheLastResourceId(database) + 1;
 
 			Hiber_Courses HC = new Hiber_Courses();
 			Integer courseID = HC.getLastOne(database);
@@ -162,15 +164,15 @@ public class Upload extends Action {
 								fileName = resId + "_cv" + extfile;
 
 							} else if (counter == 6) {
-								
+
 								if(arg2.getParameter("brief") != null)
-								
+
 								fileName = resId + "_brief" + extfile;
-								
+
 								else
-									
+
 									fileName = resId + "_idphoto" + extfile;
-									
+
 
 							}
 							else if (counter == 2) {
@@ -184,8 +186,9 @@ public class Upload extends Action {
 							// fmt.format(now).toString().trim();
 							//System.out.println("file name = "+fileName);
 						} else if (arg2.getParameter("task").equals("outline")) {
+							logger.info(" upload the outline............");
 						//	tx = session.beginTransaction();
-							//System.out.println("file name = "+fileName);
+							System.out.println("file name = "+fileName);
 							String extfile = fileName.substring(fileName
 									.indexOf("."));
 							////System.out.println("counter= "+counter2);
@@ -201,8 +204,9 @@ public class Upload extends Action {
 
 						}
 						fi.write(new File(uploadPath + fileName));
+				   logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+            System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
 
-						
 						if (counter2 == 7) {
 							if(c.getCourseOutlineAr()!=null)
 							{
@@ -211,7 +215,7 @@ public class Upload extends Action {
 							}
 							else
 								c.setCourseOutlineAr(fileName);
-							
+
 						} else if (counter2 == 8) {
 							if(c.getCourseOutlineEng()!=null)
 							{
@@ -220,7 +224,7 @@ public class Upload extends Action {
 							}
 							else
 								c.setCourseOutlineEng(fileName);
-							
+
 						}
 						HC.updateCourse(c, database);
 					}
@@ -235,7 +239,7 @@ public class Upload extends Action {
 			arg3.getWriter().print(
 					"{'success':true,'message':'upload success'}");
 
-			
+
 //			try {
 //
 //				database.finalize();
@@ -247,15 +251,15 @@ public class Upload extends Action {
 //				e.printStackTrace();
 //			}
 
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			arg3.getWriter().print("{'success':false,'message':'failure'}");
 
 		}
 
-		
-		
+
+
 		return null;
 	}
 

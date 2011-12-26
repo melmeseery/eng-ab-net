@@ -46,6 +46,8 @@ import org.apache.log4j.Logger;
 
 
 public class Contracts {
+
+
   static Logger logger = Logger.getLogger(Contracts.class);
 	SimpleDateFormat s = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
 
@@ -1226,20 +1228,23 @@ public class Contracts {
 		return Show;
 
 	}
-    public void DisplayColumnNames(	ResultSetMetaData  rsdata){
-    	for (int j = 1; j < 16; j++) {
-			try {
-				System.out.println("   "+ j +"  =" +rsdata.getColumnName(j));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    static public void DisplayColumnNames(	ResultSetMetaData  rsdata){
+	try {
+    	for (int j = 1; j < rsdata.getColumnCount(); j++) {
+
+				System.out.println(" static public int  COLUMN_NAMES_"+rsdata.getColumnName(j) +" = " +j+"  ; ");
+
 		}
 
 
+    	System.out.println();
+} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
 
-    public void insertContractCourse(DataSourceConnection database, int RunStarts,int MaxCourseRuns ,String contractID ,String CourseID, int  contractCoursePrice,
+    private void insertContractCourse(DataSourceConnection database, int RunStarts,int MaxCourseRuns ,String contractID ,String CourseID, int  contractCoursePrice,
     		int courseType, int contractTotalPrice, String idTrainingCoordinators, String CourseDays)
     {
 
@@ -1273,11 +1278,190 @@ public class Contracts {
 		}
 
     }
+
+    private void UpdateContractCourseRuns(DataSourceConnection database, int idContractCourse , int MaxRuns ){
+
+
+    	database
+		.update("UPDATE contractcourse SET ContractCourseNumberOfRuns = "
+				+ MaxRuns
+				+ " where idContractCourse = "
+				+ idContractCourse + ";");
+
+
+    }
+
+    class cost{
+    	int  contractTotalPrice;
+    	int  contractCoursePrice;
+
+    }
+
+    private cost reteriveContractPrice(DataSourceConnection database, ResultSet rs, ResultSet contract_rs,String courseId,int courseType)throws SQLException{
+
+		int contractCoursePrice = 0;
+		int contractTotalPrice = 0;
+
+    	if (courseType == 1) {
+
+
+			if (contract_rs.next()){
+		     contractCoursePrice = contract_rs.getInt(23);
+		 	 DisplayColumnNames(contract_rs.getMetaData());
+			}
+             contractTotalPrice = contractCoursePrice * rs.getInt(7);
+
+		}  //
+		else {
+
+			if (contract_rs.next()) {
+				DisplayColumnNames(contract_rs.getMetaData());
+             logger.info(" there is data in the contract (there is courses in contract) ");
+				if (contract_rs.getInt(16) == 1)
+
+					contractCoursePrice = Integer
+							.parseInt(retreiveCoursePrice(database,
+									"E", courseId+ ""));
+				else if (contract_rs.getInt(16) == 2)
+
+				{
+					if (contract_rs.getInt(30) == 1)
+
+						contractCoursePrice = Integer
+								.parseInt(retreiveCoursePrice(
+										database,
+										"C",
+										courseId
+												+ ""));
+					else if (contract_rs.getInt(30) == 2)
+
+						contractCoursePrice = Integer
+								.parseInt(retreiveCoursePrice(
+										database,
+										"D",
+										courseId
+												+ ""));
+					else if (contract_rs.getInt(30) == 3) {
+						if (contract_rs.getInt(28) == 1)
+							contractCoursePrice = Integer
+									.parseInt(retreiveCoursePrice(
+											database,
+											"D",
+											courseId
+													+ ""));
+						else if (contract_rs.getInt(28) == 2)
+							if (contract_rs.getInt(29) == 1)
+								contractCoursePrice = Integer
+										.parseInt(retreiveCoursePrice(
+												database,
+												"D",
+												courseId
+														+ ""));
+							else if (contract_rs.getInt(29) == 1)
+								contractCoursePrice = 0;
+
+					}
+				} else if (contract_rs.getInt(16) == 0)
+
+				{
+					if (contract_rs.getInt(30) == 1)
+
+						contractCoursePrice = Integer
+								.parseInt(retreiveCoursePrice(
+										database,
+										"A",
+										courseId
+												+ ""));
+					else if (contract_rs.getInt(30) == 2)
+
+						contractCoursePrice = Integer
+								.parseInt(retreiveCoursePrice(
+										database,
+										"B",
+										courseId
+												+ ""));
+					else if (contract_rs.getInt(30) == 3) {
+						if (contract_rs.getInt(28) == 1)
+							contractCoursePrice = Integer
+									.parseInt(retreiveCoursePrice(
+											database,
+											"B",
+											courseId
+													+ ""));
+						else if (contract_rs.getInt(28) == 2)
+							if (contract_rs.getInt(29) == 1)
+								contractCoursePrice = Integer
+										.parseInt(retreiveCoursePrice(
+												database,
+												"B",
+												courseId
+														+ ""));
+							else if (contract_rs.getInt(29) == 1)
+								contractCoursePrice = 0;
+
+					}
+				}
+
+			}
+			contractTotalPrice = contractCoursePrice * 0;
+		}
+
+
+
+          cost temp=new cost();
+          temp.contractTotalPrice=	contractTotalPrice ;
+          temp.contractCoursePrice=contractCoursePrice;
+          return temp;
+
+
+    }
+    private void InsertContractToCourses(DataSourceConnection database, ResultSet rs,ResultSet contract_rs, int CourseRuns,int contractCoursePrice,
+  		  int courseType, int  contractTotalPrice) throws SQLException
+    {
+    	logger.info("  I want to check if there is same  coures in contract with the same id.. or not... ");
+
+		int NewMaxRunNo=CourseRuns;//Integer.parseInt(request .getParameter("courseRuns"));
+		int oldMaxRun=0;
+		int CurrentRunNo=0;
+		ResultSet contract_Courses_rs = database
+				.retrieve("select* from contractcourse where Contracts_idContracts="
+						+ contract_rs.getString(1) + " AND Courses_idCourses="+ rs.getString(1)+";");
+
+
+		if ( contract_Courses_rs.next()){
+			DisplayColumnNames(contract_Courses_rs.getMetaData());
+			// now get maximum Run number...
+			oldMaxRun=contract_Courses_rs.getInt(33);
+			System.out.println("  alll the old max run is   "+oldMaxRun);
+			int newMaxRuns=NewMaxRunNo+oldMaxRun;
+            /// no i need to update all the current..
+			int kk=0;
+			do {
+				kk++;
+			UpdateContractCourseRuns(database,contract_Courses_rs.getInt(1),newMaxRuns);
+			logger.info("  updating the contract course ...."+kk);
+			}while (contract_Courses_rs.next());
+
+
+			insertContractCourse( database, oldMaxRun+1,newMaxRuns,contract_rs.getString(1) ,rs.getString(1),  contractCoursePrice,
+		    		  courseType,   contractTotalPrice, contract_rs.getString(15),  rs.getString(7));
+
+			System.out.println("  alll the newMaxRuns     "+newMaxRuns);
+//
+		}
+		else{
+			insertContractCourse( database, 1,CourseRuns,contract_rs.getString(1) ,rs.getString(1),  contractCoursePrice,
+		    		  courseType,   contractTotalPrice, contract_rs.getString(15),  rs.getString(7));
+
+		}
+
+		contract_Courses_rs.close();
+    }
 	////////////////////////////////////////////////////////////////////////////
 	public void addNewContractCourse(DataSourceConnection database,
 			HttpServletRequest request) throws SQLException {
 		//logger.setLevel(Level.DEBUG  );
-		logger.info("  addding an new contract course ");
+
         //System.out.println(" contractt.; lllllllllllllllllllllll            ");
 		if (request.getParameter("courseId") != null) {
 
@@ -1285,7 +1469,7 @@ public class Contracts {
 					.retrieve("select* from courses where idCourses = "
 							+ request.getParameter("courseId") + ";");
            ////   get all courses with this id ,,,
-			if (rs.next()) {
+			if (rs.next()) {   // from courses..............
 				 DisplayColumnNames( rs.getMetaData());
 
 
@@ -1301,175 +1485,18 @@ public class Contracts {
 
 				int courseType = rs.getInt(11);
 
-				if (courseType == 1) {
 
-                logger.info(" course type == 1  group type ");
-					if (contract_rs.next()){
-				     contractCoursePrice = contract_rs.getInt(23);
-				 	 DisplayColumnNames(contract_rs.getMetaData());
-					}
-                     contractTotalPrice = contractCoursePrice * rs.getInt(7);
-
-
-					// }
-				} else {
-				    logger.info(" course type not equal to both or individual");
-					if (contract_rs.next()) {
-						DisplayColumnNames(contract_rs.getMetaData());
-                     logger.info(" there is data in the contract (there is courses in contract) ");
-						if (contract_rs.getInt(16) == 1)
-
-							contractCoursePrice = Integer
-									.parseInt(retreiveCoursePrice(database,
-											"E", request
-													.getParameter("courseId")
-													+ ""));
-						else if (contract_rs.getInt(16) == 2)
-
-						{
-							if (contract_rs.getInt(30) == 1)
-
-								contractCoursePrice = Integer
-										.parseInt(retreiveCoursePrice(
-												database,
-												"C",
-												request
-														.getParameter("courseId")
-														+ ""));
-							else if (contract_rs.getInt(30) == 2)
-
-								contractCoursePrice = Integer
-										.parseInt(retreiveCoursePrice(
-												database,
-												"D",
-												request
-														.getParameter("courseId")
-														+ ""));
-							else if (contract_rs.getInt(30) == 3) {
-								if (contract_rs.getInt(28) == 1)
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"D",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(28) == 2)
-									if (contract_rs.getInt(29) == 1)
-										contractCoursePrice = Integer
-												.parseInt(retreiveCoursePrice(
-														database,
-														"D",
-														request
-																.getParameter("courseId")
-																+ ""));
-									else if (contract_rs.getInt(29) == 1)
-										contractCoursePrice = 0;
-
-							}
-						} else if (contract_rs.getInt(16) == 0)
-
-						{
-							if (contract_rs.getInt(30) == 1)
-
-								contractCoursePrice = Integer
-										.parseInt(retreiveCoursePrice(
-												database,
-												"A",
-												request
-														.getParameter("courseId")
-														+ ""));
-							else if (contract_rs.getInt(30) == 2)
-
-								contractCoursePrice = Integer
-										.parseInt(retreiveCoursePrice(
-												database,
-												"B",
-												request
-														.getParameter("courseId")
-														+ ""));
-							else if (contract_rs.getInt(30) == 3) {
-								if (contract_rs.getInt(28) == 1)
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"B",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(28) == 2)
-									if (contract_rs.getInt(29) == 1)
-										contractCoursePrice = Integer
-												.parseInt(retreiveCoursePrice(
-														database,
-														"B",
-														request
-																.getParameter("courseId")
-																+ ""));
-									else if (contract_rs.getInt(29) == 1)
-										contractCoursePrice = 0;
-
-							}
-						}
-
-					}
-					contractTotalPrice = contractCoursePrice * 0;
-				}
+          cost costcontract=reteriveContractPrice(database,rs,contract_rs,request.getParameter("courseId"),courseType);
+          contractCoursePrice=costcontract.contractCoursePrice;
+          contractTotalPrice=costcontract.contractTotalPrice;
 
 
 
-				logger.info("  I want to check if there is same  coures in contract with the same id.. or not... ");
 
-				int NewMaxRunNo=Integer.parseInt(request .getParameter("courseRuns"));
-				int oldMaxRun=0;
-				int CurrentRunNo=0;
-				ResultSet contract_Courses_rs = database
-						.retrieve("select* from contractcourse where Contracts_idContracts="
-								+ contract_rs.getString(1) + " AND Courses_idCourses="+ rs.getString(1)+";");
+          InsertContractToCourses(database,rs,contract_rs,Integer.parseInt(request .getParameter("courseRuns")),contractCoursePrice,courseType,contractCoursePrice);
 
 
-				if ( contract_Courses_rs.next()){
-					DisplayColumnNames(contract_Courses_rs.getMetaData());
-					// now get maximum Run number...
-					oldMaxRun=contract_Courses_rs.getInt(33);
-					System.out.println("  alll the old max run is   "+oldMaxRun);
-
-				}
-				else{
-					insertContractCourse( database, 1,Integer.parseInt(request
-							.getParameter("courseRuns")),contract_rs.getString(1) ,rs.getString(1),  contractCoursePrice,
-				    		  courseType,   contractTotalPrice, contract_rs.getString(15),  rs.getString(7));
-//				for (int i = 1; i <= Integer.parseInt(request
-//						.getParameter("courseRuns")); i++) {
-//
-//					database
-//							.update("INSERT INTO contractcourse (Contracts_idContracts,ContractCourseIntendedAttendance,"
-//									+ "ContractCourseStatus,TrainingCoordinators_idTrainingCoordinators,"
-//									+ "ContractCoursePrice,ContractCoursePriceType,"
-//									+ "ContractCourseNumberOfRuns,ContractCourseRunNo,"
-//									+ "Courses_idCourses,ContractCourseDays,"
-//									+ "ContractCoursePayPrice,ContractCourseTime) VALUES ("
-//									+ contract_rs.getString(1)
-//									+ ",0,1,"
-//									+ contract_rs.getString(15)
-//									+ ","
-//									+ contractCoursePrice
-//									+ ","
-//									+ courseType
-//									+ ","
-//									+ request.getParameter("courseRuns")
-//									+ ","
-//									+ i
-//									+ ","
-//									+ rs.getString(1)
-//									+ ","
-//									+ rs.getString(7)
-//									+ ","
-//									+ contractTotalPrice + ",1" + ");");
-//
-//				}
-				}
-			}
+			}  /// select * from courses...........
 
 		} else {
 			logger.debug( "  no courese with same id ");
@@ -1493,149 +1520,14 @@ public class Contracts {
 					int contractTotalPrice = 0;
 					int courseType = course_rs.getInt(11);
 
-					if (courseType == 1) {
 
-						if (contract_rs.next())
-							contractCoursePrice = contract_rs.getInt(23);
-						contractTotalPrice = contractCoursePrice
-								* course_rs.getInt(7);
-						// }
-					} else {
-						if (contract_rs.next()) {
+			          cost costcontract=reteriveContractPrice(database,rs,contract_rs,request.getParameter("courseId"),courseType);
+			          contractCoursePrice=costcontract.contractCoursePrice;
+			          contractTotalPrice=costcontract.contractTotalPrice;
 
-							if (contract_rs.getInt(16) == 1)
+			          InsertContractToCourses(database,rs,contract_rs,Integer.parseInt(request .getParameter("courseRuns")),contractCoursePrice,courseType,contractCoursePrice);
 
-								contractCoursePrice = Integer
-										.parseInt(retreiveCoursePrice(
-												database,
-												"E",
-												request
-														.getParameter("courseId")
-														+ ""));
-							else if (contract_rs.getInt(16) == 2)
 
-							{
-								if (contract_rs.getInt(30) == 1)
-
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"C",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(30) == 2)
-
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"D",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(30) == 3) {
-									if (contract_rs.getInt(28) == 1)
-										contractCoursePrice = Integer
-												.parseInt(retreiveCoursePrice(
-														database,
-														"D",
-														request
-																.getParameter("courseId")
-																+ ""));
-									else if (contract_rs.getInt(28) == 2)
-										if (contract_rs.getInt(29) == 1)
-											contractCoursePrice = Integer
-													.parseInt(retreiveCoursePrice(
-															database,
-															"D",
-															request
-																	.getParameter("courseId")
-																	+ ""));
-										else if (contract_rs.getInt(29) == 1)
-											contractCoursePrice = 0;
-
-								}
-							} else if (contract_rs.getInt(16) == 0)
-
-							{
-								if (contract_rs.getInt(30) == 1)
-
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"A",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(30) == 2)
-
-									contractCoursePrice = Integer
-											.parseInt(retreiveCoursePrice(
-													database,
-													"B",
-													request
-															.getParameter("courseId")
-															+ ""));
-								else if (contract_rs.getInt(30) == 3) {
-									if (contract_rs.getInt(28) == 1)
-										contractCoursePrice = Integer
-												.parseInt(retreiveCoursePrice(
-														database,
-														"B",
-														request
-																.getParameter("courseId")
-																+ ""));
-									else if (contract_rs.getInt(28) == 2)
-										if (contract_rs.getInt(29) == 1)
-											contractCoursePrice = Integer
-													.parseInt(retreiveCoursePrice(
-															database,
-															"B",
-															request
-																	.getParameter("courseId")
-																	+ ""));
-										else if (contract_rs.getInt(29) == 1)
-											contractCoursePrice = 0;
-
-								}
-							}
-
-						}
-						contractTotalPrice = contractCoursePrice * 0;
-					}
-					insertContractCourse( database, 1,Integer.parseInt(request
-								.getParameter("courseRuns")),contract_rs.getString(1) ,rs.getString(1),  contractCoursePrice,
-					    		  courseType,   contractTotalPrice, contract_rs.getString(15),  rs.getString(7));
-//
-//					for (int i = 1; i <= Integer.parseInt(request
-//							.getParameter("courseRuns")); i++) {
-//
-//						database
-//								.update("INSERT INTO contractcourse (Contracts_idContracts,ContractCourseIntendedAttendance,"
-//										+ "ContractCourseStatus,TrainingCoordinators_idTrainingCoordinators,"
-//										+ "ContractCoursePrice,ContractCoursePriceType,"
-//										+ "ContractCourseNumberOfRuns,ContractCourseRunNo,"
-//										+ "Courses_idCourses,ContractCourseDays,"
-//										+ "ContractCoursePayPrice,ContractCourseTime) VALUES ("
-//										+ contract_rs.getString(1)
-//										+ ",0,1,"
-//										+ contract_rs.getString(15)
-//										+ ","
-//										+ contractCoursePrice
-//										+ ","
-//										+ courseType
-//										+ ","
-//										+ request.getParameter("courseRuns")
-//										+ ","
-//										+ i
-//										+ ","
-//										+ course_rs.getString(1)
-//										+ ","
-//										+ course_rs.getString(7)
-//										+ ","
-//										+ contractTotalPrice + ",1" + ");");
-//
-//					}
 				}
 				course_rs.close();
 				contract_rs.close();
