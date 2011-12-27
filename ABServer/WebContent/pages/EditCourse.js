@@ -2,13 +2,13 @@
  * Ext JS Library 2.1
  * Copyright(c) 2006-2008, Ext JS, LLC.
  * licensing@extjs.com
- * 
+ *
  * http://extjs.com/license
  */
 Ext.apply(Ext.form.VTypes, {
   daterange: function(val, field) {
     var date = field.parseDate(val);
-    
+
     // We need to force the picker to update values to recaluate the disabled dates display
      if(!date){
             return;
@@ -18,14 +18,14 @@ Ext.apply(Ext.form.VTypes, {
             start.maxValue = date;
            // start.validate();
             this.dateRangeMax = date;
-        } 
+        }
         if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = Ext.getCmp(field.endDateField);
             end.minValue = date;
             //end.validate();
             this.dateRangeMin = date;
         }
-		
+
     /* Always return true since we're only using this vtype
      * to set the min/max allowed values (these are tested
      * for after the vtype test)
@@ -36,19 +36,19 @@ Ext.apply(Ext.form.VTypes, {
 
 Ext.onReady(function(){
 
-  	
+
 	Ext.QuickTips.init();
     // turn on validation errors beside the field globally
     Ext.form.Field.prototype.msgTarget = 'side';
 
     var bd = Ext.getBody();
-    
+
     /////////////////////////////////////////////////////////////////////
-    
-     
+
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCProperties.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
@@ -71,11 +71,11 @@ Ext.onReady(function(){
       {name: 'idCourseCompetenceAddressed',type:'int'}
 
      ]);
-	
+
 	 var Cds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-      baseParams:{task: "data"},   
+      baseParams:{task: "data"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
@@ -86,77 +86,77 @@ Ext.onReady(function(){
       });
   dataProxy = new Ext.data.HttpProxy({
      	url: '../listCProperties.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
-    
+
     var col = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "colors"},   
+       baseParams:{task: "colors"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Course"},           // The repeated element which contains row information
    		[{name: 'courseColor', type: 'string'}]
-        
+
         )
       });
     col.load();
  /*------------------------------------------------------------------------------*/
   dataProxy = new Ext.data.HttpProxy({
      	url: '../listCProperties.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
 var CAds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "CompetenceAdd"},   
+       baseParams:{task: "CompetenceAdd"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Competencesaddressed"},           // The repeated element which contains row information
    		[{name: 'competencesAddressedName', type: 'string'},{name: 'idCompetencesAddressed', type: 'int'}]
-        
+
         )
       });
-    
+
  var Resources  = Ext.data.Record.create([
       {name: 'resourceName', type: 'string'},
       {name: 'idResources', type: 'int'}
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listResources.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
 
-      
+
       var Rds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "listR"},   
+       baseParams:{task: "listR"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Resources"},           // The repeated element which contains row information
    		[{name: 'resourceName', type: 'string'},{name: 'idResources', type: 'int'}]
-        
+
         )
       });
-      
+
  // Rds.load();
-    
-    
-/*------------------------------------------------------------------------------*/    
-     
+
+
+/*------------------------------------------------------------------------------*/
+
 Cds.load();
 var idResources;
 var idTrainingArea;
@@ -227,7 +227,7 @@ jQuery(function($)
 //	            	}
 //	            }
 	            });
-	            
+
 	        });
 
 });
@@ -236,25 +236,25 @@ jQuery(function($)
     var ds=[['Individual','Individual'],['Group','Group'],['Both','Both']];
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCProperties.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
-    
+
     var Tds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "Trainingareas"},   
+       baseParams:{task: "Trainingareas"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Trainingareas"},           // The repeated element which contains row information
    		[{name: 'trainingAreaName', type: 'string'},{name: 'idTrainingAreas', type: 'int'}]
-        
+
         )
       });
-    
-    
+
+
       var Prices  = Ext.data.Record.create([
       {name: 'idPrices', type: 'int'},
       {name: 'priceImcClient', type: 'string'},
@@ -267,17 +267,17 @@ jQuery(function($)
       {name: 'currency', type: 'string'}
 
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCProperties.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
     var Pds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-      baseParams:{task: "listP"},   
+      baseParams:{task: "listP"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
@@ -286,7 +286,7 @@ jQuery(function($)
         },Prices
         )
       });
-  
+
     // example of custom renderer function
     function italic(value){
         return '' + value + '';
@@ -314,8 +314,8 @@ jQuery(function($)
     // the DefaultColumnModel expects this blob to define columns. It can be extended to provide
     // custom or reusable ColumnModels
       var colModel = new Ext.grid.ColumnModel([
-      	{header: "IMC Rate @ Company Premises", width: 180, sortable: true, locked:false, dataIndex: 'priceImcCompany'}, 
-        {header: "IMC Rate @ Client Premises", width: 160, sortable: true, locked:false, dataIndex: 'priceImcClient'}, 
+      	{header: "IMC Rate @ Company Premises", width: 180, sortable: true, locked:false, dataIndex: 'priceImcCompany'},
+        {header: "IMC Rate @ Client Premises", width: 160, sortable: true, locked:false, dataIndex: 'priceImcClient'},
         {header: "Local Rate @ Company Premises", width: 180, sortable: true, dataIndex: 'pricePublicCompany'},
         {header: "Local Rate @ Client Premises", width: 160, sortable: true, dataIndex: 'pricePublicClient'},
         {header: "International Rate", width: 150, sortable: true, dataIndex: 'priceInternational'},
@@ -324,7 +324,7 @@ jQuery(function($)
     ]);
 
 
- 
+
     var myGrid = new Ext.grid.GridPanel({
         ds: Pds,
         cm: colModel,
@@ -343,7 +343,7 @@ jQuery(function($)
               })
               ],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 
    myGrid.on("rowdblclick", function(myGrid) {
@@ -360,7 +360,7 @@ jQuery(function($)
 		EValidFromField.setValue(seldata.priceValidFrom);
 		//EValidToField.setValue(seldata.priceValidTo);
 		ECurrFields.setValue(seldata.currency);
-		
+
 });
 Pds.load();
  var valid;
@@ -380,78 +380,78 @@ Pds.load();
 	Pds.reload();
 myGrid.getView().refresh();
   });
-    
+
     /////////////////////////////////////////////////////////////////////
  var Audiencetypes  = Ext.data.Record.create([
       {name: 'audienceName', type: 'string'},
       {name: 'idAudienceTypes', type: 'int'}
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCourses.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
 
-      
+
       var TPds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "listTA"},   
+       baseParams:{task: "listTA"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Audiencetypes"},           // The repeated element which contains row information
    		[{name: 'audienceName', type: 'string'},{name: 'idAudienceTypes', type: 'int'}]
-        
+
         )
       });
-      
+
   TPds.load();
   dataProxy = new Ext.data.HttpProxy({
      	url: '../listCourses.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
   var selectedAudDS = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "listselectedAud"},   
+       baseParams:{task: "listselectedAud"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Audiencetypes"},           // The repeated element which contains row information
    		[{name: 'audienceName', type: 'string'},{name: 'idAudienceTypes', type: 'int'}]
-        
+
         )
       });
-      
+
   selectedAudDS.load();
     /*
      * ================  Simple form  =======================
      */
     bd.createChild({tag: 'h2', html: ''});
-    
+
     /*======================== Form Fields=========================*/
-    
+
        var CourseNameArField = new Ext.form.TextField({
       		fieldLabel: 'Course Name in Arabic <html><font color=red> *</font></html>',
       		allowBlank: false,
     		id:'courseNameAr',
     		width:250
      		});
-     		
+
      var CourseNameEngField = new Ext.form.TextField({
       		fieldLabel: 'Course Name in English <html><font color=red> *</font></html>',
       		allowBlank: false,
     		id:'courseNameEng',
     		width:250,
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
-     		
+     		});
+
      var CourseTypeField = new Ext.form.ComboBox({
                        store: ds,
                        id: 'courseType',
@@ -466,7 +466,7 @@ myGrid.getView().refresh();
 					    selectOnFocus:true,
 					    listeners: {
 	     				select: function (combo, record, index) {
-	    	
+
 	    				type = this.getValue();
 	    				if(type=='Individual')
 	    					price.enable();
@@ -475,9 +475,9 @@ myGrid.getView().refresh();
 	    				else if(type=='Both')
 	    					price.enable();
 	    			 }}
-					   
-		    });	
-		    
+
+		    });
+
 	var CourseTAField = new Ext.form.ComboBox({
                        store: Tds,
                        id: 'trainArea',
@@ -493,12 +493,12 @@ myGrid.getView().refresh();
 					    selectOnFocus:true,
 					    listeners: {
 						     select: function (combo, record, index) {
-						    	
+
 						    	idTrainingArea = this.getValue();
 						     }}
 		    });
-	 
-     		
+
+
       var CourseDaysField = new Ext.form.TextField({
 		    id: 'courseDays',
 		    fieldLabel: 'Course Duration <html><font color=red> *</font></html>',
@@ -506,10 +506,10 @@ myGrid.getView().refresh();
 		    width:250,
 		    allowNegative: false,
 		    allowBlank: false,
-		 //   anchor : '95%'    
+		 //   anchor : '95%'
 		    maskRe: /([0-9\s]+)$/
 		      });
-		      
+
 	  var CourseCodeField = new Ext.form.TextField({
 		    id: 'courseCode',
 		    fieldLabel: 'Course Code <html><font color=red> *</font></html>',
@@ -518,7 +518,7 @@ myGrid.getView().refresh();
 		  //  maxLength: 4,
 		    allowNegative: false,
 		    allowBlank: false,
-		  //  anchor : '95%'    
+		  //  anchor : '95%'
 		   maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
 	 var CourseAppField = new Ext.form.TextField({
@@ -528,10 +528,10 @@ myGrid.getView().refresh();
 		    maxLength: 5,
 		   // allowNegative: false,
 		    allowBlank: false,
-		  //  anchor : '95%'    
+		  //  anchor : '95%'
 		   maskRe: /([a-zA-Z0-9\s]+)$/
-		      });	      
-		      
+		      });
+
 	 var CourseColorField =new Ext.form.TextField({
 	fieldLabel: 'Course Color Legend <html><font color=red> *</font></html>',
 	id: 'picker1',
@@ -540,10 +540,10 @@ myGrid.getView().refresh();
 //	disable:true
 //	allowBlank: false
 });
- 
-    
+
+
 	var checkds=[['Yes','Yes'],['No','No']];
-    
+
 		var checkField = new Ext.form.ComboBox({
                        store: checkds,
                      //  id: 'courseType',
@@ -557,20 +557,20 @@ myGrid.getView().refresh();
 					    selectOnFocus:true,
 					    listeners: {
 	     				select: function (combo, record, index) {
-	    	
+
 	    				type = this.getValue();
 	    				if(type=='Yes')
 	    				{
 	    					ResourcesField.disable();
 	    					ResourcesField.reset();
-	    				}	    				
+	    				}
 	    				else if(type=='No')
 	    				{
 	    					ResourcesField.enable();
-	    				}	    				
+	    				}
 	    			 }}
-					   
-		    });	    
+
+		    });
 	var ResourcesField = new Ext.form.ComboBox({
                        store: Rds,
                        id: 'resources',
@@ -585,10 +585,10 @@ myGrid.getView().refresh();
 					    selectOnFocus:true,
 					    listeners: {
 						     select: function (combo, record, index) {
-						    	
+
 						    	idResources = this.getValue();
 						     }}
-		    }); 	
+		    });
      var CourseDescField = new Ext.form.ComboBox({
                        store: CAds,
                        id: 'idCompetencesAddressed',
@@ -603,7 +603,7 @@ myGrid.getView().refresh();
 					    selectOnFocus:true,
 					    listeners: {
 						     select: function (combo, record, index) {
-						    	
+
 						    	idCompetencesAdd = this.getValue();
 						     }}
 		    });
@@ -616,21 +616,21 @@ myGrid.getView().refresh();
        var uploadOutlineEngField = new Ext.form.TextField({
       		fieldLabel: 'English Outline',
       		width:250,
-    		inputType: 'file'   
+    		inputType: 'file'
 
      		});
-    var EngoutLink = new Ext.form.Label({html:'<font size=2><a href="../files/outlines_files/"'+Engoutline+'" target="_blank">Open/Download English Outline</a></font>'});      
-	var AroutLink = new Ext.form.Label({html:'<font size=2><a href="../files/outlines_files/"'+Aroutline+'" target="_blank">Open/Download Arabic Outline</a></font>'});      
+    var EngoutLink = new Ext.form.Label({html:'<font size=2><a href="../files/outlines_files/"'+Engoutline+'" target="_blank">Open/Download English Outline</a></font>'});
+	var AroutLink = new Ext.form.Label({html:'<font size=2><a href="../files/outlines_files/"'+Aroutline+'" target="_blank">Open/Download Arabic Outline</a></font>'});
 	EngoutLink.setVisible(false);
-	AroutLink.setVisible(false);	
+	AroutLink.setVisible(false);
 	 var tab=new Ext.TabPanel({
                     region:'center',
                     deferredRender:false,
                     activeTab:0,
-                    items:[myGrid]});   
-                    
+                    items:[myGrid]});
+
      var price=new Ext.FormPanel({
-    
+
                 title:'Prices',
                 defaults: {width: 1230},
                 defaultType: 'textfield',
@@ -639,7 +639,7 @@ myGrid.getView().refresh();
      });
        var msg = function(title, msg){
         Ext.Msg.show({
-            title: title, 
+            title: title,
             msg: msg,
             minWidth: 200,
             modal: true,
@@ -647,15 +647,15 @@ myGrid.getView().refresh();
             buttons: Ext.Msg.OK
         });
     };
-    
+
     var TargetedParticipants = new Ext.ux.ItemSelector({
-           
+
             name:"itemselector",
           //  iconCls: 'demo-ct',
-            
+
            // title:"Targeted Participants",
             title:"Targeted Participants",
-            
+
             frame: true,
             dataFields:["idAudienceTypes", "audienceName"],
             toStore: selectedAudDS,
@@ -667,22 +667,22 @@ myGrid.getView().refresh();
             imagePath:"../JSP/images/",
             toLegend:"Selected",
             fromLegend:"Available",
-         
+
             toTBar:[{
                 text:"Clear",
                 handler:function(){
 
 				//	var i=simple.getForm().findField("itemselector");
                  //   i.reset.call(i);
-                    
+
                     for(var index=0; index<selectedAudDS.getCount(); index++) {
 						TPds.add(selectedAudDS.getAt(index));
 					}
 					selectedAudDS.removeAll();
-                   
+
                 }
             }]
- });     	    
+ });
     /*=================================================================*/
    var simple = new Ext.FormPanel({
     	fileUpload: true,
@@ -692,7 +692,7 @@ myGrid.getView().refresh();
      //   width: 600,
         frame: true,
    		autoHeight : true,
-    	autoScroll : true, 
+    	autoScroll : true,
    		layout:'table',
    		layoutConfig: {columns:2},
         labelWidth: 150,
@@ -751,8 +751,8 @@ myGrid.getView().refresh();
                 items: [EngoutLink]}
 		                   ]
             })
-                		
-                		
+
+
                 		//uploadOutlineArField,
                 		//uploadOutlineEngField
         		 		]
@@ -776,19 +776,19 @@ myGrid.getView().refresh();
                 		CourseDescField,
                 		checkField,
                 ResourcesField
-                
+
                 		]
-           
+
          })]
 
 
 
     });
- // ////console.log("ana henaaaa")  
- 
+ // ////console.log("ana henaaaa")
+
  /*------------------------------------add price-----------------------------*/
   var Currds=[['EGP','EGP'],['USD','USD'],['Euro','Euro']];
-    
+
     var CurrFields = new Ext.form.ComboBox({
                        store: Currds,
                        id: 'currency',
@@ -801,8 +801,8 @@ myGrid.getView().refresh();
 					    triggerAction: 'all',
 					    emptyText:'Select Currency ...',
 					    selectOnFocus:true
-		    });	
- 
+		    });
+
  var ImcField_Com = new Ext.form.NumberField({
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -816,14 +816,14 @@ myGrid.getView().refresh();
       		width:200,
     		id:'priceImc_client',
     	//	maskRe: /([0-9\s]+)$/
-     		});   		
+     		});
      var InternationalField = new Ext.form.NumberField({
       		fieldLabel: 'International Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
     		id:'priceInternational',
     	//	maskRe: /([0-9\s]+)$/
-     		});	
+     		});
      var PuplicField_Comp = new Ext.form.NumberField({
 		    id: 'pricePulic_comp',
 		    fieldLabel: 'Local Common Rate <html><font color=red> *</font></html>',
@@ -832,7 +832,7 @@ myGrid.getView().refresh();
 		//    allowNegative: false,
 		    allowBlank: false,
 		 //   maskRe: /([0-9\s]+)$/
-		      });		
+		      });
 	 var PuplicField_Client = new Ext.form.NumberField({
 		    id: 'pricePulic_client',
 		    fieldLabel: 'Local Common Rate <html><font color=red> *</font></html>',
@@ -841,7 +841,7 @@ myGrid.getView().refresh();
 		//    allowNegative: false,
 		    allowBlank: false,
 		 //   maskRe: /([0-9\s]+)$/
-		      });	     
+		      });
 	 var ValidFromField = new Ext.form.DateField({
 			fieldLabel: 'Valid From <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
@@ -862,9 +862,9 @@ myGrid.getView().refresh();
                 vtype: 'daterange',
              //   disabledDays: [5, 6],
                 startDateField:'priceValidFrom'
-               
-            });      
-            
+
+            });
+
       //////////////************adding form****************/////////////////
    // var valid='Salary';
    // var flag=true;
@@ -889,24 +889,24 @@ myGrid.getView().refresh();
                 title: '@ Client Premises',
                 autoHeight: true,
                 defaultType: 'textfield',
-                items:[ImcField_Client,PuplicField_Client]}),                	   
+                items:[ImcField_Client,PuplicField_Client]}),
 					   InternationalField,
 					   CurrFields,
 					   ValidFromField
-					   					   
+
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:AddPriceForm
             },{text:'Cancel',
             	handler:function(){AddPriceWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddPriceWindow= new Ext.Window({
       id: 'AddPriceWindow',
@@ -919,8 +919,8 @@ myGrid.getView().refresh();
       items: fs
     });
 
- //////////////********display edit form functions********************/////////////////   
-    
+ //////////////********display edit form functions********************/////////////////
+
    // reset the Form before opening it
   function resetPriceForm(){
     ImcField_Client.setValue(0);
@@ -932,12 +932,12 @@ myGrid.getView().refresh();
    // PuplicField.setValue(0);
     ValidFromField.reset();
   }
-  
+
   // check if the form is valid
   function isPriceFormValid(){
   return(ImcField_Client.isValid() && ImcField_Com.isValid() && PuplicField_Comp.isValid() && InternationalField.isValid() && PuplicField_Client.isValid() && ValidFromField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayFormWindow(){
   if(!AddPriceWindow.isVisible()){
@@ -946,15 +946,15 @@ myGrid.getView().refresh();
   } else {
     AddPriceWindow.toFront();
   }
-  
-  
+
+
   }
-  
+
   /////////////////adding price function/////////////////////
   function AddPriceForm(){
   var vF='3000-01-01';
   var vT='3000-01-01';
-  
+
   if(ValidFromField.getValue()!='')
   {
   	vF=ValidFromField.getValue().format('Y-m-d');
@@ -964,49 +964,49 @@ myGrid.getView().refresh();
   	vT=ValidToField.getValue().format('Y-m-d');
   }
    if(ImcField_Client.isValid() && ImcField_Com.isValid() && PuplicField_Comp.isValid() && InternationalField.isValid() && PuplicField_Client.isValid() && ValidFromField.isValid() && CurrFields.isValid()){
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listCProperties.do',
         params: {
           task: "AddPrice",
           priceImcCompany:		 	 ImcField_Com.getValue(),
-		  priceImcClient:		 	 ImcField_Client.getValue(),		
+		  priceImcClient:		 	 ImcField_Client.getValue(),
 		  priceValidFrom:   		 vF,
 		  priceInternational:        InternationalField.getValue(),
 		  pricePublicCompany:        PuplicField_Comp.getValue(),
 		  pricePublicClient:		 PuplicField_Client.getValue(),
 		  currency:					 CurrFields.getValue()
         },
-        method:'POST', 
-        success: function(response){        
+        method:'POST',
+        success: function(response){
 			if(ValidFromField.getValue()!='')
                  				vF=ValidFromField.getValue().format('d-M-Y');
                  			else
                  				vF='';
-                 				
-                 			
+
+
 			 var record = new Ext.data.Record({
 						    	  priceImcCompany:		 	 ImcField_Com.getValue(),
-		  						  priceImcClient:		 	 ImcField_Client.getValue(),		
+		  						  priceImcClient:		 	 ImcField_Client.getValue(),
 		  						  priceValidFrom:   		 vF,
 		  						  priceInternational:        InternationalField.getValue(),
 		  						  pricePublicCompany:        PuplicField_Comp.getValue(),
 		  						  pricePublicClient:		 PuplicField_Client.getValue(),
 		  						  currency:					 CurrFields.getValue()
-						    });  
-						    Pds.reload();  
+						    });
+						    Pds.reload();
 						    AddPriceWindow.hide();
-              
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -1014,11 +1014,11 @@ myGrid.getView().refresh();
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  
+
+
   }
-  
-///////////////////////////////////////////////////////////////////////////////////  
+
+///////////////////////////////////////////////////////////////////////////////////
   /*------------------------------------edit price-----------------------------*/
       var ECurrFields = new Ext.form.ComboBox({
                        store: Currds,
@@ -1032,8 +1032,8 @@ myGrid.getView().refresh();
 					    triggerAction: 'all',
 					    emptyText:'Select Currency ...',
 					    selectOnFocus:true
-		    });	
- 
+		    });
+
  var EImcField_Com = new Ext.form.NumberField({
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -1047,14 +1047,14 @@ myGrid.getView().refresh();
       		width:200,
     		id:'EpriceImc_client',
     	//	maskRe: /([0-9\s]+)$/
-     		});   		
+     		});
      var EInternationalField = new Ext.form.NumberField({
       		fieldLabel: 'International Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
     		id:'EpriceInternational',
     	//	maskRe: /([0-9\s]+)$/
-     		});	
+     		});
      var EPuplicField_Comp = new Ext.form.NumberField({
 		    id: 'EpricePulic_comp',
 		    fieldLabel: 'Local Common Rate <html><font color=red> *</font></html>',
@@ -1063,7 +1063,7 @@ myGrid.getView().refresh();
 		//    allowNegative: false,
 		    allowBlank: false,
 		 //   maskRe: /([0-9\s]+)$/
-		      });		
+		      });
 	 var EPuplicField_Client = new Ext.form.NumberField({
 		    id: 'EpricePulic_client',
 		    fieldLabel: 'Local Common Rate <html><font color=red> *</font></html>',
@@ -1072,7 +1072,7 @@ myGrid.getView().refresh();
 		//    allowNegative: false,
 		    allowBlank: false,
 		 //   maskRe: /([0-9\s]+)$/
-		      });	     
+		      });
 	 var EValidFromField = new Ext.form.DateField({
 			fieldLabel: 'Valid From <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
@@ -1084,7 +1084,7 @@ myGrid.getView().refresh();
             //    disabledDays: [5, 6],
              //   endDateField:'priceValidTo'
             });
-    
+
       //////////////************adding form****************/////////////////
    var valid=1;
    // var flag=true;
@@ -1109,24 +1109,24 @@ var Efs = new Ext.FormPanel({
                 title: '@ Client Premises',
                 autoHeight: true,
                 defaultType: 'textfield',
-                items:[EImcField_Client,EPuplicField_Client]}),                	   
+                items:[EImcField_Client,EPuplicField_Client]}),
 					   EInternationalField,
 					   ECurrFields,
 					   EValidFromField
-					   					   
+
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:EditPriceForm
             },{text:'Cancel',
             	handler:function(){EditPriceWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   EditPriceWindow= new Ext.Window({
       id: 'EditPriceWindow',
@@ -1139,8 +1139,8 @@ var Efs = new Ext.FormPanel({
       items: Efs
     });
 
- //////////////********display edit form functions********************/////////////////   
-    
+ //////////////********display edit form functions********************/////////////////
+
    // reset the Form before opening it
   function resetEPriceForm(){
     EImcField_Client.setValue(0);
@@ -1152,12 +1152,12 @@ var Efs = new Ext.FormPanel({
     EValidFromField.reset();
     ECurrFields.reset();
   }
-  
+
   // check if the form is valid
    function isEPriceFormValid(){
   return(EImcField_Client.isValid() && EImcField_Com.isValid() && EPuplicField_Comp.isValid() && EInternationalField.isValid() && EPuplicField_Client.isValid() && EValidFromField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayEFormWindow(){
   if(!EditPriceWindow.isVisible()){
@@ -1166,13 +1166,13 @@ var Efs = new Ext.FormPanel({
   } else {
     EditPriceWindow.toFront();
   }
-  
-  
+
+
   }
-  
+
   /////////////////adding price function/////////////////////
   function EditPriceForm(){
-  
+
    if(EImcField_Client.isValid() && EImcField_Com.isValid() && EPuplicField_Comp.isValid() && EInternationalField.isValid() && EPuplicField_Client.isValid() && EValidFromField.isValid() && ECurrFields.isValid()){
    	var EvF='3000-01-01';
    var selections = myGrid.selModel.getSelections();
@@ -1181,39 +1181,39 @@ var Efs = new Ext.FormPanel({
           selectedCourse.push(selections[i].id);}
           if(EValidFromField.getValue()!='')
                  EvF=EValidFromField.getValue().format('Y-m-d');
-                 			
-                 			
-      Ext.Ajax.request({   
+
+
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listCProperties.do',
         params: {
           task: "EditPrice",
           id:selections[0].id,
           priceImcCompany:		 	 EImcField_Com.getValue(),
-		  priceImcClient:		 	 EImcField_Client.getValue(),		
+		  priceImcClient:		 	 EImcField_Client.getValue(),
 		  priceValidFrom:   		 EvF,
 		  priceInternational:        EInternationalField.getValue(),
 		  pricePublicCompany:        EPuplicField_Comp.getValue(),
 		  pricePublicClient:		 EPuplicField_Client.getValue(),
 		  currency:					 ECurrFields.getValue()
         },
-        method:'POST', 
-        success: function(response){        
+        method:'POST',
+        success: function(response){
 
-			 
-						    Pds.reload(); 
+
+						    Pds.reload();
 						    EditPriceWindow.hide();
-              
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -1221,32 +1221,32 @@ var Efs = new Ext.FormPanel({
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  
+
+
   }
-  
-//////////////////////////////////////////////////////////////////////////////////////  
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 var pan= new Ext.TabPanel({
                     region:'center',
-                     height:495, 
+                     height:495,
                            /* width:980,*/
         			renderTo: 'binding-example',
                     deferredRender:false,
                     buttonAlign:'center',
                     activeTab:0,
-                    items:[simple,TargetedParticipants,price],      
-                    buttons:[{ 
+                    items:[simple,TargetedParticipants,price],
+                    buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){// alert(idCompetencesAdd);
                 var selectedTA = [];
 					  for(i = 0; i< selectedAudDS.getCount(); i++){
 					    selectedTA.push(selectedAudDS.getAt(i).get('idAudienceTypes'));
 					  }
 					//  alert(idCompetencesAdd);
-					if(CourseCodeField.isValid() && 
+					if(CourseCodeField.isValid() &&
                 		CourseAppField.isValid() &&
                 		CourseNameEngField.isValid() &&
                 		CourseNameArField.isValid() &&
@@ -1255,7 +1255,7 @@ var pan= new Ext.TabPanel({
                 		CourseTAField.isValid()&&
                 		CourseColorField.isValid())
                 		{
-                    	      Ext.Ajax.request({   
+                    	      Ext.Ajax.request({
         						waitMsg: 'Please wait...',
         						url: '../listCProperties.do',
 								params: {
@@ -1276,35 +1276,35 @@ var pan= new Ext.TabPanel({
 								  idResources:		idResources,
 								  len:				selectedTA.length
 								},
-						        method:'POST', 
+						        method:'POST',
 						        success: function(response){
 		                           simple.getForm().submit({
-	                	
+
 	              		url: '../upload.do?task='+'outline',
 	                    waitMsg: 'Uploading your Files...',
-	                   
+
 	                    success: function(fp, o){
 	                        msg('Success', 'Processed your files on the server');
 	                      	//addTab();
-	                    var redirect = '../pages/cources.jsp'; 
+	                    var redirect = '../pages/cources.jsp';
 			 			window.location = redirect;
-	                        
-	                        
+
+
 	                    }
                    }
-	              
+
                  );
 						        },
 						        failure: function(response){////console.log("faaaaaaaaaail");
-						        	simple.getForm().reset(); 
-						       }                      
-						      }); 
+						        	simple.getForm().reset();
+						       }
+						      });
                 		}
                 		else
                 		{
                 			var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -1312,7 +1312,7 @@ var pan= new Ext.TabPanel({
 							        buttons: Ext.Msg.OK
 								 });
                 		}
-                } 
+                }
             },{text:'Cancel',
             	handler:function(){window.location='cources.jsp';}
             	}
@@ -1323,8 +1323,8 @@ var pan= new Ext.TabPanel({
   for(i = 0; i< myGrid.selModel.getCount(); i++){
     selectedCourse.push(selections[i].xml.idPrices);
   }
- 
-  
+
+
   function confirmDeleteCourses(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -1335,7 +1335,7 @@ var pan= new Ext.TabPanel({
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected huh?');
     }
   }
-  
+
   function deleteCourses(btn){
     if(btn=='yes'){
          var selections = myGrid.selModel.getSelections();
@@ -1345,15 +1345,15 @@ var pan= new Ext.TabPanel({
           		selectedCourse.push(selections[i].id);
         //  alert("ssssssssssssss>>>>>> "+selections[i].id);
         else
-        	Ext.MessageBox.alert('error','You can not delete the valid price'); 
+        	Ext.MessageBox.alert('error','You can not delete the valid price');
          }
         if(selectedCourse.length != 0)
-        {  
-         Ext.Ajax.request({  
+        {
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
-            url: '../listCProperties.do?', 
-            params: { 
-               task: "DELETEPRICE", 
+            url: '../listCProperties.do?',
+            params: {
+               task: "DELETEPRICE",
                ids:  selectedCourse
               }, method:'POST',
             success: function(response){
@@ -1369,18 +1369,18 @@ var pan= new Ext.TabPanel({
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
         }
-      }  
+      }
   }
-  
-  
+
+
   //////////////////////////FINISH DELETING//////////////////////////////////////////
-           
+
 //function stcCallBack1001(record, opts, success) {
-//if (success) 
+//if (success)
 //// do whatever
 //alert("the sucess ");
 // alert (" number of records "+Cds.getCount() +"  recourd "+Cds.getAt(0)) ;
@@ -1388,7 +1388,7 @@ var pan= new Ext.TabPanel({
 
 //};
 //loadtest=   Cds.load({callback :  stcCallBack1001});
-   
-     
+
+
     simple.render(document.body);
 });
