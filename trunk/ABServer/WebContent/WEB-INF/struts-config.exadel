@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS ENTITY="StrutsProcess">
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="start" NAME="forward0"
+  PATH="/pages/Login.jsp" SHAPE="24,41,93,27" TARGET="page2"
+  TITLE="start" TYPE="forward"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#login" NAME="action0"
+  PATH="/login" SHAPE="368,41,123,43" TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page1"
+  PATH="/pages/greeting.jsp" SHAPE="568,42,56,30" SUBTYPE="jsp"
+  TITLE="greeting.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" NAME="page2"
+  PATH="/pages/Login.jsp" SHAPE="232,153,0,0" SUBTYPE="jsp"
+  TITLE="Login.jsp" TYPE="page"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#ContractsAction"
+  NAME="action2" PATH="/ContractsAction" SHAPE="32,241,0,0"
+  TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#ResourcesAction"
+  NAME="action3" PATH="/ResourcesAction" SHAPE="240,257,0,0"
+  TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#GeneralRetreivingAction"
+  NAME="action4" PATH="/GeneralRetreivingAction" SHAPE="448,241,0,0"
+  TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#upload" NAME="action5"
+  PATH="/upload" SHAPE="656,257,0,0" TITLE="upload" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#CalendarAction"
+  NAME="action6" PATH="/CalendarAction" SHAPE="864,241,0,0"
+  TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#HolidaysAction"
+  NAME="action7" PATH="/HolidaysAction" SHAPE="1072,257,0,0"
+  TITLE="ActionsForm" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listCourses"
+  NAME="action1" PATH="/listCourses" SHAPE="32,353,0,0" TITLE="lCourses" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listTraingAreas"
+  NAME="action8" PATH="/listTraingAreas" SHAPE="240,369,0,0"
+  TITLE="lTraingArea" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listTracks"
+  NAME="action9" PATH="/listTracks" SHAPE="448,353,0,0" TITLE="lTracks" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listUsers"
+  NAME="action10" PATH="/listUsers" SHAPE="656,369,0,0" TITLE="lUsers" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listDataShows"
+  NAME="action11" PATH="/listDataShows" SHAPE="864,353,0,0"
+  TITLE="lDataShows" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listResources"
+  NAME="action12" PATH="/listResources" SHAPE="1072,369,0,0"
+  TITLE="lResources" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listCoordinators"
+  NAME="action13" PATH="/listCoordinators" SHAPE="32,465,0,0"
+  TITLE="lCoordinators" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listExpenses"
+  NAME="action14" PATH="/listExpenses" SHAPE="240,481,0,0"
+  TITLE="lExpenses" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listCProperties"
+  NAME="action15" PATH="/listCProperties" SHAPE="448,465,0,0"
+  TITLE="lCProperties" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listPriceHistory"
+  NAME="action16" PATH="/listPriceHistory" SHAPE="656,481,0,0"
+  TITLE="lPriceHistory" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listVenus"
+  NAME="action17" PATH="/listVenus" SHAPE="864,465,0,0" TITLE="lVenus" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listSuppliers"
+  NAME="action18" PATH="/listSuppliers" SHAPE="1072,481,0,0"
+  TITLE="lSuppliers" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listClients"
+  NAME="action19" PATH="/listClients" SHAPE="32,577,0,0"
+  TITLE="lClients" TYPE="action"/>
+ <PROCESS-ITEM ENTITY="StrutsProcessItem" ID="#listExpCategories"
+  NAME="action20" PATH="/listExpCategories" SHAPE="240,593,0,0"
+  TITLE="lExpCategories" TYPE="action"/>
+</PROCESS>
