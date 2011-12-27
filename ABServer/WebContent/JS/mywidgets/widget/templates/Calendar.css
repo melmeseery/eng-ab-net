@@ -1,0 +1,828 @@
+/******  This is the log of changes done to this file . 
+ * Maha
+ * Edit and change made on 9 and 10 -8 
+ * 1. 
+ *
+ *
+ **/ /**
+General 
+
+TABLE OF CONTENTS
+
+HEADER - Site name, logo, main menu
+SIDEBAR - Submenu, searchbar, shortlists
+MAINCONTENT - Articles, search results
+FOOTER - Copyright
+
+CALENDAR HEADER 
+CALENDAR BODY
+	EVENTS LIST
+	   
+	TOOL TIP BODY
+	MONTH VIEW 
+	WEEK VIEW 
+	ICAL ITEMS	
+COURSE LIST 
+
+
+
+**/ /*
+COLOR PALETTE
+
+#FF6103    cadmiumorange   ==> user message 
+#4E9FFE  - bright blue ==> for selected days 
+#6782a8  - dark blue ==> nexxt or previous month 
+	#CAE1FF        lightsteelblue 1  ==>  courses  
+  	#BCD2EE          lightsteelblue 2 ==> selected courses  
+ 
+*/ /*******************************************
+CALENDAR HEADER 
+**/
+.calendarContainer {
+	font-family: arial;
+	width: 100%;
+	background-color: white; /* #CCCCCC;*/
+	height: 100%;
+}
+
+.calendarContainer thead tr td {
+	color: #000000;
+	/*font-size: 0.75em;*/
+	padding: 0.25em;
+	height: 45px;
+	text-transform: capitalize;
+	white-space: nowrap;
+}
+
+.labelsRow {
+	
+}
+
+.labelsRow td { /*    width:20%;*/
+	max-width: 50px;
+}
+
+.prevLabel {
+	text-align: left;
+	cursor: pointer;
+	padding-left: 18px !important;
+	background: url(calimages/prev.gif) no-repeat left;
+}
+
+.nextLabel { /*text-align:left;*/
+	cursor: pointer;
+	padding-right: 18px !important;
+	background: url(calimages/next.gif) no-repeat center;
+}
+
+.currentMonthLabel { /*text-align:right;*/
+	text-align: right;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.currentYearLabel {
+	text-align: left;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.fillCell {
+	width: 25%;
+}
+
+.selecticon {
+	width: 16px;
+	height: 16px;
+	/*cursor:pointer;*/
+	text-align: center;
+}
+.Conflicticon{
+background: url(calimages/conflict.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+/**
+NOHA CODE
+*/
+.colorresource{
+background: url(calimages/resource.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+.colorclient{
+background: url(calimages/client.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+.colorcoordinator{
+background: url(calimages/coordinator.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+.colorfunding{
+background: url(calimages/funds.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+.colorcourses{
+background: url(calimages/course.gif) no-repeat center;
+	width: 26px;
+	height: 26px;
+}
+
+.dayicon {
+	background: url(calimages/calendar_view_day.gif) no-repeat center;
+}
+
+.weekicon {
+	background: url(calimages/calendar_view_week.gif) no-repeat center;
+}
+
+.monthicon {
+	background: url(calimages/calendar_view_month.gif) no-repeat center;
+}
+
+.todayicon {
+	background: url(calimages/calendar_view_today.gif) no-repeat center;
+}
+
+.newentryicon {
+	background: url(calimages/calendar_add.gif) no-repeat center;
+}
+
+.timezoneicon {
+	background: url(calimages/timezone.gif) no-repeat center;
+}
+
+.AddCourseicon {
+	background: url(calimages/calendar_view_Multi_month.gif) no-repeat center;
+}
+
+/**************************8888
+CALENDAR BODY
+*****************************************8
+*/
+.calendarBodyContainer {
+	width: 100%;
+	/*background-color: #7591bc;*/
+	height: 100%;
+}
+
+.calendarBodyContainer thead tr td {
+	color: #000000;
+	font-size: 0.75em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	/*	width:14.28%;*/
+	width: 3.28%;
+}
+
+.calendarBodyContainer tbody tr td {
+	font-size: 0.7em;
+	/*text-align:center;
+	padding:0.4em;*/ /*height:16%;*/
+	vertical-align: top;
+	/*cursor:pointer;
+	cursor:hand;*/
+}  /*
+
+
+.calendarBodyContainer   td:hover{
+		/*color: yellow;
+		background: white; 
+
+}*/ /*.calendarBodyContainer tbody tr td {
+
+	
+}
+.calendarBodyContainer:hover{
+	color: yellow;
+		background: white;
+}*/ /*******************************
+EVENT LIST 
+**********************************/
+.calendarItems { /**for multi month view **/ /*clear: both;*/
+	/*padding: 0px 0px 0px 3px;*/
+	height: 80%;
+	max-height: 90px;
+	width: 90%;
+	min-width: 35px;
+	/*clip: rect(auto, auto, auto, auto);
+	
+	overflow: hide;*/
+}
+
+.calendarItemsDay { /*clear: both;*/ /*	padding: 0px 0px 0px 3px;*/
+	height: auto;
+	/*height: 90px;*/
+	width: auto;
+	clip: rect(auto, auto, auto, auto);
+	/*	overflow: hide;*/
+}
+
+.calendarItemsWeek { /*clear: both;*/
+	padding: 0px 0px 0px 3px;
+	height: auto;
+	/*	max-height:190px;	
+	/*height: 90px;*/
+	width: 100%;
+	clip: rect(auto, auto, auto, auto);
+	/*	overflow: hide;*/
+}
+
+.calendarItemsMonth { /*clear: both;*/
+	padding: 0px 0px 0px 3px;
+	/*height: 90%;*/
+	height: 90%;
+	max-height: 90px;
+	width: 100%;
+	min-width: 180px;
+	/*	clip: rect(auto, auto, auto, auto);
+	
+	overflow: hide;*/
+}
+
+.allDayEvent {
+	border: 1px solid #6782a8;
+	/*padding: 2px;*/
+	margin-bottom: 3px;
+	/*background-color: #FFFFFF; black color */
+}
+
+.MultiDay { /*  position: absolute;*/
+	
+}
+
+.UpperEventLabel {
+	height: 5%;
+	font-size: 35% !important;
+}
+
+.RightEventLabel {
+	font-weight: bold;
+	/*  font-size: 35% !important;*/
+	width: 17px;
+	/*  -moz-border-radius: 12px 0px 0px 10px;*/
+}
+
+.listItems { /*height:10%;*/
+	
+}
+
+ul.listItems { /*font-size:0.5em;*/ /*margin: 0;
+	padding: 0;
+*/
+	min-height: 10px;
+	height: auto !important;
+	/*height:20px;*/
+}
+
+div.listItem {
+	position: relative;
+	/*width: 100px;*/
+	width: 95%;
+	border: 0px solid #6782a8;
+	/*-moz-border-radius: 12px 12px 12px 12px;
+	font-weight: small;*/
+	cursor: move;
+	margin: 1px;
+	padding: 1px;
+}
+
+li.listItem {
+	position: relative;
+	list-style: none;
+	border: 0px solid #6782a8;
+	/*-moz-border-radius: 12px 12px 12px 12px;
+	font-weight: small;
+	cursor: move;*/
+}
+
+li.listItem span {
+	padding-right: 5px;
+}
+
+li.listItem span.timetext {
+	cursor: move;
+}
+
+li.listItem span.titletext {
+	cursor: default;
+}
+
+li.listItem span a:link,li.listItem span a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+li.listItem span a:hover {
+	text-decoration: underline;
+}
+
+.eventDiv {
+	width: 100%;
+	/*	border: 1px solid #6782a8;
+		-moz-border-radius: 12px 12px 12px 12px;
+		height:10%;*/
+}
+
+.EventSmallDiv { /*clip: rect(auto, auto, auto, auto);
+ 	 /* height:25%;
+ 	 overflow:hidden;
+ 	 
+ 	 */ /*width:90%;*/
+	border: 1px solid #6782a8;
+	/*	-moz-border-radius: 10px 10px 10px 10px;*/
+}
+
+.eventTable {
+	z-index: 2;
+	height: 10%;
+	width: 100%;
+	border: 1px solid #6782a8;
+	/*	-moz-border-radius: 10px 0px 0px 10px; -moz-border-radius: 0px 0px 0px 0px; */
+	/*height: 32px;
+  height:10%;
+  width:180px;
+  margin: 0;
+	padding: 0;*/
+}
+
+.border {
+	border-width: 2px;
+	border-style: double;
+	border-color: #FFFFFF;
+}
+
+.eventTextsmall {
+	font-size: smaller;
+	/*	font-weight: bold;
+-moz-border-radius: 8px 8px 8px 8px;*/
+}
+
+.eventText { /*font-weight: bold;
+ white-space:nowrap;*/
+	
+}
+
+.lightfont {
+	color: white;
+}
+
+.ExtraEvents {
+	text-align: left;
+	cursor: pointer;
+	padding-right: 18px !important;
+	background: url(calimages/next.gif) no-repeat right;
+}
+
+/************************
+TOOL TIP BODY
+************************/
+.toolkittime {
+	margin-top: 3px;
+}
+
+.toolkittitle {
+	font-weight: bold;
+	font-size: 1.5em;
+	margin-top: 3px;
+}
+
+.toolkitbody {
+	margin-top: 3px;
+	padding-top: 2px;
+	border-top: 1px solid #6782a8;
+	width: 300px;
+}
+
+.toolkitattributes {
+	font-style: italic;
+	margin-top: 3px;
+	width: 300px;
+}
+.toolkitattributes3 {
+	font-style: italic;
+	margin-bottom: 3px;
+	width: 300px;
+}
+.toolkitattributes2 {
+	font-style: italic;
+ 
+	width: 300px;
+}
+/***************************
+MONTH VIEW 
+*******************************************/
+.clickDate { /*border: 1px solid #6782a8;*/
+	cursor: pointer;
+}
+
+.OtherMonthMulti {
+	height: 30%;
+	max-width: 20px;
+	background-color: #6782a8;
+}
+
+.MultiView {
+	height: 25%;
+	max-width: 50px;
+	background-color: #CFDBE9; /* #E2EEFC;*/
+}
+
+td.MultiView { /*width:45px;*/
+	max-width: 50px;
+}
+
+td.MultiView:hover {
+	background-color: white;
+}
+
+.MonthDay { /*background-color: #E2EEFC;*/
+	
+}
+
+.currentMonth {
+	background-color: #E2EEFC;
+	/*width:154.28px;*/
+}
+
+.currentMonth td {
+	background-color: #E2EEFC;
+}
+
+td.currentMonth:hover {
+	background-color: white;
+}
+
+.DayDate {
+	background-color: #E2EEFC;
+}
+
+.otherMonth {
+	background-color: #6782a8;
+	/*width:154.28px;*/
+}
+
+.currentDate {
+	background-color: #fff !important;
+	font-weight: bold;
+}
+
+.weekDay { /* this is the class for the holidays day */
+	height: 100px;
+	max-height: 120px;
+	background-color: #EEF3F7;
+}
+
+/* 	this is the holdiay class */
+td.weekDay:hover {
+	background-color: #EEF3F7;
+}
+
+/*
+this is the class for set of selected days 
+**/
+.TrainerBusyDay {
+	background-color: #E1D8C0;
+	/*paleturquoise 1   #BBFFFF;    #E1D8C0*/ /*
+	background-image: url(calimages/stripe_Busy.png);
+	background-repeat: repeat;*/
+}
+
+.TrainerTentiveDay {
+	background-color: #FBE3CB;
+	/*#C1FFC1;/*darkseagreen 1  	#C1FFC1    #E1D8C0*/
+	/*	background: url(calimages/stripe_Tentive.png) repeat;*/
+}
+
+.Holiday {
+	background-color:   #EEF3F7;/* #EDEDED;EDEDED slategray 1  	*/
+}
+
+.SelectedDay {
+	background-color: #4E9FFE; /*#EEF3F7;*/
+}
+
+td.SelectedDay:hover {
+	background-color: #4E9FFE; /*#EEF3F7;*/
+}
+
+/**************
+
+WEEK VIEW 
+***************/
+.weekRow {
+	vertical-align: top;
+}
+
+.weekRow td {
+	width: 50%;
+	max-width: 470px;
+}
+
+.weekDate {
+	color: #000000;
+	font-size: 2em;
+	font-weight: bold;
+	padding: 3px 3px 0px 3px;
+	float: left;
+}
+
+.weekMonth {
+	color: #000000;
+	font-size: 0.8em;
+	line-height: 1.0em;
+	font-weight: normal;
+	text-transform: capitalize;
+	padding: 5px 5px 0px 5px;
+	/*float: left;*/
+}
+
+/**********
+ICAL ITEMS 
+
+*******/ /*.weekDay {
+	vertical-align: top;
+	width: 50%;
+	height:33%;
+}*/ /******************
+COURSE LIST 
+
+***********************************/
+.CoursesContainer {
+	width: 100%;
+	height: 100%;
+}
+
+.CoursesContainer thead tr td { /*color:#000000;
+	font-size: 0.75em;
+	
+	padding:0.25em;
+	height:10px;*/
+	border: 0px;
+	font-weight: bold;
+	text-align: center;
+}
+
+/*replaced with cell pading 
+.CoursesContainer tbody{
+	border-collapse: collapse;
+	border-width: 0px 0px 0px 0px;
+	border-spacing: 0px;
+}*/
+.CoursesContainer tbody tr td { /*text-align:center;
+	padding:0.4em;*/ /*height:16%;*/
+	vertical-align: top;
+	/*cursor:pointer;
+	cursor:pointer;*/
+	text-align: center;
+	/*width:100.0%;*/
+	width: 14.28%;
+	/* cellspacing="2" cellpadding="2"*/
+}
+
+.courseDisplay {
+	background-color: #CAE1FF;
+	/*border:0px;*/
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #6782a8;
+	font-size: 0.75em;
+	/*-moz-border-radius: 12px 12px 12px 12px;*/
+	cursor: pointer;
+	height: 30px;
+}
+
+.courseDisplayClicked {
+	background-color: #BCD2EE;
+	/*border:0px;*/
+	border: 1px solid #6782a8;
+	font-size: 0.75em;
+	-moz-border-radius: 12px 12px 12px 12px;
+}
+
+/*
+.courseDisplay tr{
+background-color:#CAE1FF    ;
+border:0px;
+	border: 1px solid #6782a8;
+	-moz-border-radius: 12px 12px 12px 12px;
+
+}
+*/
+tr.courseDisplay {
+	border: 1px solid #6782a8;
+	-moz-border-radius: 12px 12px 12px 12px;
+}
+
+/*.courseDisplayList{
+background-color:white;
+border:0px;
+
+border-width: 0px 0px 0px 0px;
+border-style: none none none none;
+/*border:0px;
+	border: 1px solid #6782a8;
+	-moz-border-radius: 12px 12px 12px 12px;
+	width:auto;
+
+}*/
+ul.courseDisplay {
+	margin: 0;
+	padding: 0;
+	min-height: 20px;
+	height: auto !important;
+	height: 20px;
+}
+
+li.courseDisplay {
+	position: relative;
+	list-style: none;
+	border: 1px solid #6782a8;
+	-moz-border-radius: 12px 12px 12px 12px;
+	font-weight: normal;
+	cursor: move;
+}
+
+li.courseDisplay span {
+	padding-right: 5px;
+}
+
+/*  try to delet next two. **/
+.calendarCourseAddList {
+	width: 50%;
+	/*background-color: #7591bc;*/
+	height: 50%;
+}
+
+.calendarCourseAddList thead tr td {
+	color: #000000;
+	font-size: 0.75em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	width: 14.28%;
+}
+
+.calendarCourseAddList thead tr td {
+	color: #000000;
+	font-size: 0.75em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	width: 14.28%;
+	background-color: Red;
+}
+
+/**
+the display info for the legend 
+*/
+.LegendContainer {
+	
+}
+
+#UserMessage {
+	font-size: 14pt; /*2.0em;*/
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	width: 14.28%;
+	color: #FF6103;
+	/*
+	background-color: Red;
+	     
+	      **/
+}
+
+#SaveButtonDiv {
+	font-size: 14pt; /*2.0em;*/
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+	color: #FF6103;
+	border: 2px solid #6782a8;
+	-moz-border-radius: 12px 12px 12px 12px;
+	background-color: white;
+	cursor: pointer;
+}
+
+/****************************
+DOJO TOOLTIP will be replaced 
+************************************/
+.dojoTooltip { /* We override the class from the tooltip template */
+	border: solid #6782a8 2px;
+	background: white;
+	color: black;
+	position: absolute;
+	font-size: small;
+	padding: 3px 3px 3px 3px;
+	z-index: 10;
+	display: block;
+}
+
+.ExtraItems { /*  height:350px;
+     width:200px;*/ /*padding: 0px 3px 0px 3px;*/
+	background-color: #E2EEFC;
+	/*currenlty ligth blue.  try it using white **/
+}
+
+.countSpan { /*background: white;*/
+	color: black;
+	text-align: right;
+	font-weight: bold;
+	border: solid #6782a8 2px;
+}
+
+.fillcell {
+	width: 65%;
+	text-align: right;
+	padding: 2px 3px 2px 3px;
+}
+
+.LegendSmallTitle {
+	font-size: 10pt; /*2.0em;*/
+	font-weight: bold;
+	text-align: left;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	color: #FF6103;
+}
+
+.LegendRows {
+	padding-right: 3px;
+}
+
+.LegendTitle {
+	font-size: 14pt; /*2.0em;*/
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
+	height: 10px;
+	text-transform: capitalize;
+	width: 14.28%;
+	color: #FF6103;
+}
+.ConflictLegend{
+font-weight: bold;
+	width: 24.28%;
+		text-align: center;
+			padding: 0.25em;
+			padding-right: 3px;
+}
+.ResourceConflict{
+/*color: white*/
+background:red;
+
+
+}
+.VenueConflict{
+	
+	/*color: white
+	background: yellow;
+	*/	
+	background:  #FF7F24;/*yellow;  FFA500 orange*/
+	 
+}
+.ResourceVenueConflict{
+
+	background: grey;
+ 
+ 
+}
+
+
+
+.ResourceConflictL{
+/*color: white*/
+background:red;
+color: white;
+
+
+}
+.VenueConflictL{
+	
+	/*color: white
+	background: yellow;
+	*/	
+	background: #FF7F24;/*yellow;  FFA500  orange*/
+	color: white;
+	 
+}
+.ResourceVenueConflictL{
+
+	background: grey;
+	color: white;
+ 
+ 
+}

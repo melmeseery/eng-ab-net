@@ -1,0 +1,142 @@
+<table cellspacing="0" cellpadding="0" class="calendarContainer">
+	<thead>
+		<tr class="labelsRow">
+			<td class="prevLabel" dojoAttachPoint="prevLabelNode"
+				dojoAttachEvent="onClick: onIncrementCalendar;"></td>
+			<td dojoAttachPoint="SaveButtonNode"></td>
+			<td class="currentMonthLabel"><span class="currentMonthLabel"
+				dojoAttachPoint="currentMonthLabelNode"
+				dojoAttachEvent="onClick: showMenu;"></span></td>
+			<td class="currentYearLabel"><span class="currentYearLabel"
+				dojoAttachPoint="currentYearLabelNode"
+				dojoAttachEvent="onClick: showMenu;"></span></td>
+
+			<td align="center">
+
+			<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td class="selecticon dayicon" dojoAttachPoint="dayLabelNode"
+							dojoAttachEvent="onClick: onSetCalendarType;"></td>
+						<td class="selecticon weekicon" dojoAttachPoint="weekLabelNode"
+							dojoAttachEvent="onClick: onSetCalendarType;"></td>
+						<td class="selecticon monthicon" dojoAttachPoint="monthLabelNode"
+							dojoAttachEvent="onClick: onSetCalendarType;"></td>
+						<td class="selecticon todayicon" dojoAttachPoint="todayLabelNode"
+							dojoAttachEvent="onClick: onMoveToDate;"></td>
+
+						
+							
+							
+							
+						    <td class="selecticon AddCourseicon"
+							dojoAttachPoint="multiLabelNode"
+							dojoAttachEvent="onClick: onSetCalendarType;">
+							</td>
+							
+							<td class="selecticon Conflicticon"
+							dojoAttachPoint="ConflictIconNode"
+							dojoAttachEvent="onClick: checkConflict"></td>
+							
+							<td class="selecticon colorresource"
+							dojoAttachPoint="ResourceColloringLabelNode"
+							dojoAttachEvent="onClick: changeColorToResourceState"></td>
+							
+							<td class="selecticon colorcoordinator"
+							dojoAttachPoint="CoordinatorColloringLabelNode"
+							dojoAttachEvent="onClick: changeColorToCoordinatorState"></td>
+							
+							<td class="selecticon colorclient"
+							dojoAttachPoint="ClientColloringLabelNode"
+							dojoAttachEvent="onClick: changeColorToClientState"></td>
+							
+							<td class="selecticon colorfunding"
+							dojoAttachPoint="FundingColloringLabelNode"
+							dojoAttachEvent="onClick: changeColorToFundingState"></td>
+							
+							<td class="selecticon colorcourses"
+							dojoAttachPoint="CoursesColloringLabelNode"
+							dojoAttachEvent="onClick: changeColorToCourseState"></td>
+
+						   <td class="selecticon timezoneicon"
+							dojoAttachPoint="timezoneLabelNode"
+							dojoAttachEvent="onClick: showTimeZone;"></td>
+							
+						    <td class="selecticon newentryicon"
+							dojoAttachPoint="newEntryLabelNode"
+							dojoAttachEvent="onClick: createNewEntry;"></td>
+							
+							
+							
+							
+					</tr>
+				</tbody>
+			</table>
+			</td>
+
+			<td class="nextLabel" dojoAttachPoint="nextLabelNode"
+				dojoAttachEvent="onClick: onIncrementCalendar;"></td>
+		</tr>
+		<tr id="UserMessage">
+			<td colspan="6" align="center" dojoAttachPoint="UserMessageNode"
+				id="UserMessage"></td>
+		</tr>
+		<tr>
+			<td colspan="6" align="center">
+			<table dojoAttachPoint="CoursesNode" class="CoursesContainer"
+				cellspacing="2" cellpadding="2">
+				<thead dojoAttachPoint="CoursesHeadNode">
+				</thead>
+				<tbody dojoAttachPoint="CoursesBodyNode">
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+
+		<tr>
+			<td colspan="6">
+
+			<table dojoAttachPoint="calendarNode" class="calendarBodyContainer"
+				cellspacing="2" cellpadding="2" border="0">
+				<thead dojoAttachPoint="calendarHeadNode">
+				</thead>
+				<tbody dojoAttachPoint="calendarBodyNode">
+				</tbody>
+			</table>
+			</td>
+
+
+		</tr>
+		<tr>
+
+			<td colspan="6" dojoAttachPoint="LegendNode" class="LegendContainer">
+
+
+			</td>
+		</tr>
+		<tr>
+		   <td colspan="6" align="center"  dojoAttachPoint="ConflictLegendNode" class="LegendContainer"  >
+		   
+		   	 <table   >
+		   	 <tr   class="LegendTitle" >
+		   	 <td colspan="3" >
+		   	 The Conflicts Legend
+		   	 </td>
+		   	 </tr>
+		 <tr>
+		 
+		 <td class="ResourceConflictL ConflictLegend"  ><div  >  Resource Conflicts   </div></td>
+		<td class="VenueConflictL ConflictLegend"  ><div >    Venue Conflicts    </div></td>
+		
+		<td   class="ResourceVenueConflictL ConflictLegend"><div>    Resource and Venue Conflicts       </div></td>
+ 
+		 </tr>
+		 </table>
+		       </td>
+		</tr>
+
+	</tbody>
+	<tfoot dojoAttachPoint="calendarFootNode"></tfoot>
+</table>
