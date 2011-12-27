@@ -1,0 +1,56 @@
+.body {
+	background-color: #00548F;
+}
+
+/*
+changes done by maha 25 -9 to widden the screen. 
+**/
+.wide {
+	width: 1250px;
+	/*width:100%;*/ /*height:300px;*/
+}
+
+.NotWide { /*width: 1250px;*/
+	width: 100%;
+	height: 300px;
+}
+
+.top-links-visited {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFBA00;
+	text-decoration: underline;
+}
+
+.top-links-notvisited {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: normal;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.login-text {
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: normal;
+	color: #D7D7D7;
+	text-decoration: none;
+}
+
+.text-field {
+	background-color: #83C2E9;
+	border-bottom: inherit;
+	border-bottom: #1386CE;
+	border-bottom-style: solid;
+	border-right: inherit;
+	border-right: #1386CE;
+	border-right-style: solid;
+	border-left: inherit;
+	border-left: #1386CE;
+	border-left-style: solid;
+	border-top: inherit;
+	border-top: #1386CE;
+	border-top-style: solid;
+}
