@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+                               "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+ <data-sources>
+  <data-source key="abDB" type="org.apache.commons.dbcp.BasicDataSource">
+   <set-property property="url" value="jdbc:mysql://localhost:3306/abdatabase"/>
+   <set-property property="driverClassName" value="com.mysql.jdbc.Driver"/>
+   <set-property property="username" value="root"/>
+    <set-property property="password" value="root"/>
+  </data-source>
+ </data-sources>
+ <form-beans>
+  <form-bean name="ActionsForm" type="actions.ActionsForm"/>
+ </form-beans>
+ <global-exceptions/>
+ <global-forwards>
+  <forward name="start" path="/pages/Login.jsp"/>
+ </global-forwards>
+ <action-mappings>
+
+
+
+   <action name="lCourses" path="/listCourses" scope="session" type="mypackage.ListCourseAction"/>
+  <action name="lTraingArea" path="/listTraingAreas" scope="session" type="mypackage.ListTrainingArea"/>
+  <action name="lTracks" path="/listTracks" scope="session" type="mypackage.ListTracks"/>
+  <action name="lUsers" path="/listUsers" scope="session" type="mypackage.ListUsers"/>
+  <action name="lDataShows" path="/listDataShows" scope="session" type="mypackage.ListDataShows"/>
+  <action name="lResources" path="/listResources" scope="session" type="mypackage.ListResources"/>
+  <action name="lCoordinators" path="/listCoordinators" scope="session" type="mypackage.ListCoordinators"/>
+  <action name="lExpenses" path="/listExpenses" scope="session" type="mypackage.ListExpenses"/>
+  <action name="lCProperties" path="/listCProperties" scope="session" type="mypackage.ListCProperties"/>
+  <action name="upload" path="/upload" scope="session" type="mypackage.Upload"/>
+
+  <action name="lPriceHistory" path="/listPriceHistory" scope="session" type="mypackage.ListPriceHistory"/>
+  <action name="lVenus" path="/listVenus" scope="session" type="mypackage.ListVenus"/>
+  <action name="lSuppliers" path="/listSuppliers" scope="session" type="mypackage.ListSuppliers"/>
+  <action name="lClients" path="/listClients" scope="session" type="mypackage.ListClients"/>
+  <action name="lExpCategories" path="/listExpCategories"
+   scope="session" type="mypackage.ListExpCategories"/>
+
+
+
+
+
+
+  <action name="ActionsForm" path="/login" scope="session" type="actions.LoginAction"/>
+  <action name="ActionsForm" path="/ContractsAction" scope="session" type="actions.ContractsAction"/>
+  <action name="ActionsForm" path="/ResourcesAction" scope="session" type="actions.ResourcesAction"/>
+  <action name="ActionsForm" path="/GeneralRetreivingAction"
+   scope="session" type="actions.GeneralRetreivingAction"/>
+
+  <action name="ActionsForm" path="/CalendarAction" scope="session" type="actions.CalendarAction"/>
+  <action name="ActionsForm" path="/HolidaysAction" scope="session" type="actions.HolidaysAction"/>
+ </action-mappings>
+ <controller/>
+ <message-resources parameter="actions.applResorces"/>
+ <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+  <set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validation.xml"/>
+ </plug-in>
+</struts-config>
