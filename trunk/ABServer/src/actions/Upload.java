@@ -35,7 +35,7 @@ import HibernatePackage.Hiber_ResourcesFiles;
 
 public class Upload extends Action {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7440302204266787092L;
 
@@ -99,13 +99,13 @@ public class Upload extends Action {
 		}
 
 		try {
-			
+
 			// create and intialize the database connection////////////
 			DataSourceConnection database = new DataSourceConnection();
 			database.initializeConnecton(this.servlet);
 
-			
-			
+
+
 			// //  //System.out.println("ana fe el execute");
 
 			DiskFileUpload fu = new DiskFileUpload();
@@ -120,9 +120,9 @@ public class Upload extends Action {
 
 			if (arg2.getParameter("resID") != null) {
 				resId = Integer.parseInt(arg2.getParameter("resID"));
-				
+
 			} else
-				resId = Resources.getTheLastResourceId(database) + 1;		
+				resId = Resources.getTheLastResourceId(database) + 1;
 
 			Hiber_Courses HC = new Hiber_Courses();
 			Integer courseID = HC.getLastOne(database);
@@ -162,15 +162,15 @@ public class Upload extends Action {
 								fileName = resId + "_cv" + extfile;
 
 							} else if (counter == 6) {
-								
+
 								if(arg2.getParameter("brief") != null)
-								
+
 								fileName = resId + "_brief" + extfile;
-								
+
 								else
-									
+
 									fileName = resId + "_idphoto" + extfile;
-									
+
 
 							}
 							else if (counter == 2) {
@@ -186,8 +186,7 @@ public class Upload extends Action {
 						} else if (arg2.getParameter("task").equals("outline")) {
 						//	tx = session.beginTransaction();
 		  //  //System.out.println("file name = "+fileName);
-							String extfile = fileName.substring(fileName
-									.indexOf("."));
+							String extfile = fileName.substring(fileName 	.indexOf("."));
 							//  //System.out.println("counter= "+counter2);
 							if (counter2 == 7) {  //System.out.println("counter AR= "+counter2);
 								fileName = courseID + "_outlineAr" + extfile;
@@ -202,13 +201,13 @@ public class Upload extends Action {
 						}
 						fi.write(new File(uploadPath + fileName));
 
-						
+
 						if (counter2 == 7) {
 							c.setCourseOutlineAr(fileName);
-							
+
 						} else if (counter2 == 8) {
 							c.setCourseOutlineEng(fileName);
-							
+
 						}
 						HC.updateCourse(c, database);
 					}
@@ -223,7 +222,7 @@ public class Upload extends Action {
 			arg3.getWriter().print(
 					"{'success':true,'message':'upload success'}");
 
-			
+
 //			try {
 //
 //				database.finalize();
@@ -235,15 +234,15 @@ public class Upload extends Action {
 //				e.printStackTrace();
 //			}
 
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			arg3.getWriter().print("{'success':false,'message':'failure'}");
 
 		}
 
-		
-		
+
+
 		return null;
 	}
 

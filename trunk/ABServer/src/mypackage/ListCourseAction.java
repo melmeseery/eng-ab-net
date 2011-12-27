@@ -29,6 +29,22 @@ import com.thoughtworks.xstream.XStream;
 
 import database.DataSourceConnection;
 public class ListCourseAction extends org.apache.struts.action.Action {
+	 static public int  COLUMN_NAMES_idCourses = 1  ;
+	 static public int  COLUMN_NAMES_CourseCode = 2  ;
+	 static public int  COLUMN_NAMES_CourseNameEng = 3  ;
+	 static public int  COLUMN_NAMES_CourseNameAr = 4  ;
+	 static public int  COLUMN_NAMES_CourseOutlineEng = 5  ;
+	 static public int  COLUMN_NAMES_CourseOutlineAr = 6  ;
+	 static public int  COLUMN_NAMES_CourseDays = 7  ;
+	 static public int  COLUMN_NAMES_CourseCompetenceAddressed = 8  ;
+	 static public int  COLUMN_NAMES_CourseColor = 9  ;
+	 static public int  COLUMN_NAMES_Course_idTrainingAreas = 10  ;
+	 static public int  COLUMN_NAMES_Course_idCourseTypes = 11  ;
+	 static public int  COLUMN_NAMES_CourseDescription = 12  ;
+	 static public int  COLUMN_NAMES_CourseCalender = 13  ;
+	 static public int  COLUMN_NAMES_Course_idResources = 14  ;
+
+
 	  static Logger logger = Logger.getLogger( ListCourseAction.class);
     // Global Forwards
     public static final String GLOBAL_FORWARD_start = "start";
