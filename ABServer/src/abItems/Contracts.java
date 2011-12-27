@@ -46,7 +46,81 @@ import org.apache.log4j.Logger;
 
 
 public class Contracts {
+	static public int  COLUMN_NAMES_idContracts = 1  ;
+	 static public int  COLUMN_NAMES_ContractProposalID = 2  ;
+	 static public int  COLUMN_NAMES_ContractNumber = 3  ;
+	 static public int  COLUMN_NAMES_ContractName = 4  ;
+	 static public int  COLUMN_NAMES_Contract_idClients = 5  ;
+	 static public int  COLUMN_NAMES_ContractProactiveType = 6  ;
+	 static public int  COLUMN_NAMES_ContractFundType = 7  ;
+	 static public int  COLUMN_NAMES_ContractProposalReceiveDate = 8  ;
+	 static public int  COLUMN_NAMES_ContractAcceptDate = 9  ;
+	 static public int  COLUMN_NAMES_ContractDateOfRequest = 10  ;
+	 static public int  COLUMN_NAMES_ContractFirstStartDate = 11  ;
+	 static public int  COLUMN_NAMES_ContractFirstEndDate = 12  ;
+	 static public int  COLUMN_NAMES_ContractStartDate = 13  ;
+	 static public int  COLUMN_NAMES_ContractEndDate = 14  ;
+	 static public int  COLUMN_NAMES_Contract_idTrainingCoordinators = 15  ;
+	 static public int  COLUMN_NAMES_ContractRateType = 16  ;
+	 static public int  COLUMN_NAMES_ContractRateValue = 17  ;
+	 static public int  COLUMN_NAMES_ContractStatus = 18  ;
+	 static public int  COLUMN_NAMES_ContractFee = 19  ;
+	 static public int  COLUMN_NAMES_ContractCancelClientPercent = 20  ;
+	 static public int  COLUMN_NAMES_ContractCancelRecoursePercent = 21  ;
+	 static public int  COLUMN_NAMES_ContractPreCancelTime = 22  ;
+	 static public int  COLUMN_NAMES_ContractGroupPrice = 23  ;
+	 static public int  COLUMN_NAMES_ContractVenueFeeIncluded = 24  ;
+	 static public int  COLUMN_NAMES_contractDealPersonType = 25  ;
+	 static public int  COLUMN_NAMES_ContractPriceNote = 26  ;
+	 static public int  COLUMN_NAMES_ContractCoordinatorTeam = 27  ;
+	 static public int  COLUMN_NAMES_ContractVenueArrangmentRes = 28  ;
+	 static public int  COLUMN_NAMES_ContractVenueCostRes = 29  ;
+	 static public int  COLUMN_NAMES_ContractVenueLocation = 30  ;
+	 static public int  COLUMN_NAMES_Deleted = 31  ;
+	 static public int  COLUMN_NAMES_contractDealPersonTypeId = 32  ;
 
+
+	 static public int  COLUMN_NAMES_idContractCourse = 1  ;
+	 static public int  COLUMN_NAMES_Courses_idCourses = 2  ;
+	 static public int  COLUMN_NAMES_Contracts_idContracts = 3  ;
+	 static public int  COLUMN_NAMES_Venues_idVenues = 4  ;
+	 static public int  COLUMN_NAMES_Resources_idResources = 5  ;
+	 static public int  COLUMN_NAMES_TrainingCoordinators_idTrainingCoordinators = 6  ;
+	 static public int  COLUMN_NAMES_ContractCourseCalender = 7  ;
+	 static public int  COLUMN_NAMES_ContractCourseStatus = 8  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmResource = 9  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmVenue = 10  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmClient = 11  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmResourceDate = 12  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmVenueDate = 13  ;
+	 static public int  COLUMN_NAMES_ContractCourseConfirmClienDate = 14  ;
+	 static public int  COLUMN_NAMES_ContractCourseDays = 15  ;
+	 static public int  COLUMN_NAMES_ContractCourseRunNo = 16  ;
+	 static public int  COLUMN_NAMES_ContractCourseStartDay = 17  ;
+	 static public int  COLUMN_NAMES_ContractCourseEndtDay = 18  ;
+	 static public int  COLUMN_NAMES_ContractCourseActualAttendance = 19  ;
+	 static public int  COLUMN_NAMES_ContractCourseLOCReceivedDate = 20  ;
+	 static public int  COLUMN_NAMES_ContractCourseFundType = 21  ;
+	 static public int  COLUMN_NAMES_ContractCoursePriceType = 22  ;
+	 static public int  COLUMN_NAMES_ContractCoursePayPrice = 23  ;
+	 static public int  COLUMN_NAMES_ContractCourseIntendedAttendance = 24  ;
+	 static public int  COLUMN_NAMES_ContractCourseEvaluationCourse = 25  ;
+	 static public int  COLUMN_NAMES_ContractCourseEvaluationTrainer = 26  ;
+	 static public int  COLUMN_NAMES_ContractCourseTrainerTrainingReportRecived = 27  ;
+	 static public int  COLUMN_NAMES_ContractCourseTrainerTrainingReportRecivedDate = 28  ;
+	 static public int  COLUMN_NAMES_ContractCourseRequestDataShow = 29  ;
+	 static public int  COLUMN_NAMES_ContractCourseLocation = 30  ;
+	 static public int  COLUMN_NAMES_ContractCourseTime = 31  ;
+	 static public int  COLUMN_NAMES_ContractCoursePrice = 32  ;
+	 static public int  COLUMN_NAMES_ContractCourseNumberOfRuns = 33  ;
+	 static public int  COLUMN_NAMES_ContractCourseLOCReceived = 34  ;
+	 static public int  COLUMN_NAMES_ContractCourseLOCNumber = 35  ;
+	 static public int  COLUMN_NAMES_ContractCourseCPRReceived = 36  ;
+	 static public int  COLUMN_NAMES_ContractCourseCPRReceivedDate = 37  ;
+	 static public int  COLUMN_NAMES_ContractCourseCancel = 38  ;
+	 static public int  COLUMN_NAMES_ContractCourseCancelDate = 39  ;
+	 static public int  COLUMN_NAMES_ContractCourseVenueDetail = 40  ;
+	 static public int  COLUMN_NAMES_ContractCoursePriceRole = 41  ;
 
   static Logger logger = Logger.getLogger(Contracts.class);
 	SimpleDateFormat s = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
@@ -1235,6 +1309,11 @@ public class Contracts {
 				System.out.println(" static public int  COLUMN_NAMES_"+rsdata.getColumnName(j) +" = " +j+"  ; ");
 
 		}
+       	for (int j = 1; j < rsdata.getColumnCount(); j++) {
+
+    			logger.warn(" static public int  COLUMN_NAMES_"+rsdata.getColumnName(j) +" = " +j+"  ; ");
+
+    		}
 
 
     	System.out.println();
@@ -1683,8 +1762,8 @@ public class Contracts {
 			}
 
 		}
-		database
-				.update("UPDATE contractcourse SET ContractCourseIntendedAttendance = "
+
+		database.update("UPDATE contractcourse SET ContractCourseIntendedAttendance = "
 						+ request.getParameter("courseParticipants")
 						+ ",ContractCoursePrice = "
 						+ request.getParameter("coursePrice")

@@ -12,6 +12,8 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import org.GNOME.Accessibility.Application;
+import org.apache.catalina.core.ApplicationContext;
 import org.apache.commons.fileupload.*;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
@@ -33,8 +35,10 @@ import tablespackage.Resourcefiles;
 
 import HibernatePackage.Hiber_Courses;
 import HibernatePackage.Hiber_ResourcesFiles;
+import org.apache.log4j.Logger;
 
 public class Upload extends Action {
+	static String RootPathForApplication="";
 	/**
 	 *
 	 */
@@ -46,16 +50,26 @@ public class Upload extends Action {
 	// private static String tempPath =
 	// "d:\\ABServerFiles\\resource_files_tmp\\";
 
-	public static String uploadPath = getmainPath()
-			+ "\\Webapps\\ABServer\\files\\resource_files\\";
-
-	public static String tempPath = getmainPath()
-			+ "\\Webapps\\ABServer\\files\\resource_files_tmp\\";
+	public static String uploadPath = getPathForUpload()+"resource_files"+File.separator;
+//		+ "\\Webapps\\ABServer\\files\\resource_files\\";
+//
+	public static String tempPath =  getPathForUpload()+"resource_files_temp"+File.separator;
+//			+ "\\Webapps\\ABServer\\files\\resource_files_tmp\\";
 
 	public ActionForward execute(ActionMapping arg0, ActionForm arg1,
 			HttpServletRequest arg2, HttpServletResponse arg3) throws Exception {
+		RootPathForApplication=arg2.getSession().getServletContext().getRealPath( "/");
 	System.out.println("task= "+arg2.getParameter("task"));
+	System.out.println("test is "+RootPathForApplication);
+
     logger.info(" In the upload instruction     ");
+
+	uploadPath =getPathForUpload()+"resource_files"+File.separator;
+
+
+        tempPath =getPathForUpload()+"resource_files_temp"+File.separator;
+
+
 	//	SessionFactory factory = new Configuration().configure()
 		//		.buildSessionFactory();
 
@@ -66,38 +80,46 @@ public class Upload extends Action {
 		//System.out.println("task= "+arg2.getParameter("task"));
 		if (arg2.getParameter("task") == null) {
 
-			uploadPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\resource_files\\";
+			uploadPath =getPathForUpload()+"resource_files"+File.separator;
+					//getmainPath()+ "\\Webapps\\ABServer\\files\\resource_files\\";
 
-			tempPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\resource_files_tmp\\";
+			tempPath =getPathForUpload()+"resource_files_temp"+File.separator;// getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\resource_files_tmp\\";
 
 		} else if (arg2.getParameter("task").equals("ADDHANDOUT")) {
-			uploadPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\handouts\\";
+			uploadPath =getPathForUpload()+"handouts"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\handouts\\";
 
-			tempPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\handouts_tmp\\";
+			tempPath =getPathForUpload()+"handouts_tmp"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\handouts_tmp\\";
 		} else if (arg2.getParameter("task").equals("ADDCERTIFICATE")) {
-			uploadPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\certificates\\";
+			uploadPath =getPathForUpload()+"certificates"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\certificates\\";
 
-			tempPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\certificates_tmp\\";
+			tempPath =getPathForUpload()+"certificates_tmp"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\certificates_tmp\\";
 		} else if (arg2.getParameter("task").equals("outline")) {// ////////System.out.println("ana
 			// goa el
 			// if");
-			uploadPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\outlines_files\\";
-			tempPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\outlines_files_tmp\\";
+			uploadPath =getPathForUpload()+"outlines_files"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\outlines_files\\";
+			tempPath =getPathForUpload()+"outlines_files_tmp"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\outlines_files_tmp\\";
 		} else if (arg2.getParameter("task").equals("CONTRACTS")) {// ////////System.out.println("ana
 			// goa el
 			// if");
-			uploadPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\contracts\\";
-			tempPath = getmainPath()
-					+ "\\Webapps\\ABServer\\files\\contracts_tmp\\";
+			uploadPath = getPathForUpload()+"contracts"+File.separator;
+				//	getmainPath()
+				//	+ "\\Webapps\\ABServer\\files\\contracts\\";
+			tempPath =getPathForUpload()+"contracts_tmp"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\contracts_tmp\\";
 		}
 
 		try {
@@ -127,8 +149,11 @@ public class Upload extends Action {
 				resId = Resources.getTheLastResourceId(database) + 1;
 
 			Hiber_Courses HC = new Hiber_Courses();
-			Integer courseID = HC.getLastOne(database);
+        	Integer courseID=(Integer)arg2.getSession().getAttribute("courseID");
+			//Integer courseID = HC.getLastOne(database);
+
 			Courses c = HC.getCourseById(courseID, database);
+
 			//c.setIdCourses(courseID);
 			List fileItems = fu.parseRequest(arg2);
 			Iterator i = fileItems.iterator();
@@ -203,9 +228,10 @@ public class Upload extends Action {
 							}
 
 						}
+						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+            //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
 						fi.write(new File(uploadPath + fileName));
-				   logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
-            System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+
 
 						if (counter2 == 7) {
 							if(c.getCourseOutlineAr()!=null)
@@ -263,11 +289,22 @@ public class Upload extends Action {
 		return null;
 	}
 
+	public static String getPathForUpload(){
+//		String temp=	getmainPath()
+//				+ File.separator+"Webapps"+File.separator+"ABServer"+File.separator+"files"+File.separator;
+
+	   String temp=	getmainPath()	+"files"+File.separator;
+
+          return temp;
+	}
+
 	public static String getmainPath() {
+		return RootPathForApplication;
 
-		File temp = new File("");
-		temp.getAbsolutePath();
-
-		return temp.getAbsolutePath();
+//		File temp = new File("");
+//		temp.getAbsolutePath();
+//
+//
+//		return temp.getAbsolutePath();
 	}
 }

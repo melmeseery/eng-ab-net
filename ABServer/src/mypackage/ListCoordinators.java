@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,22 +32,23 @@ import HibernatePackage.Hiber_CoordinateHistory;
 import HibernatePackage.Hiber_Coordinators;
 //import HibernatePackage.HibernateUtil;
 
+
 import com.mysql.jdbc.Statement;
 import com.thoughtworks.xstream.XStream;
 
 import database.DataSourceConnection;
 
 public class ListCoordinators extends org.apache.struts.action.Action {
-    
+	  static Logger logger = Logger.getLogger(ListCoordinators.class);
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
     private static Serializable serObj;
     // Local Forwards
    // Session session = null;
-    
+
     public ListCoordinators() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_Coordinators HC=new Hiber_Coordinators();
     	Hiber_CoordinateHistory HCH=new Hiber_CoordinateHistory();
@@ -55,12 +58,12 @@ public class ListCoordinators extends org.apache.struts.action.Action {
     	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-  	  
-    	
-    	
+
+
+
     	if(request.getParameter("task").equals("list"))
     	{
-	    	ArrayList coordinators=HC.getCoordinators(database); 
+	    	ArrayList coordinators=HC.getCoordinators(database);
 	    	ArrayList<CoordinatorShow> coo=new ArrayList<CoordinatorShow>();
 	    	for(int i=0;i<coordinators.size();i++)
 	    	{
@@ -120,7 +123,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	        xstream.alias("Trainingcoordinators", CoordinatorShow.class);
 	        String returnText = xstream.toXML(coo);
 	        // //System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -142,7 +145,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
     		String trainingCoordinateHireDate=null;
             if(!request.getParameter("trainingCoordinateHireDate").equals("3000-01-01"))
             	trainingCoordinateHireDate=request.getParameter("trainingCoordinateHireDate");
-            
+
             String trainingCoordinateBirthDate=null;
             if(!request.getParameter("trainingCoordinateBirthDate").equals("3000-01-01"))
            	trainingCoordinateBirthDate=request.getParameter("trainingCoordinateBirthDate");
@@ -162,7 +165,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	    			// //////System.out.println(request.getParameterValues("validFroms")[i]);
 	    			String x=request.getParameterValues("validFroms")[i]+"x";
 	    			String validFrom=null;
-	                
+
 	    			if(x.equals("x"))
 	    			{
 	    				validFrom=null;
@@ -171,7 +174,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	    			{
 	    				validFrom=request.getParameterValues("validFroms")[i];
 	    			}
-	
+
 	        	//	t.setIdTrainingCoordinators(id);
 	        		tH.setTrainingCoordinators(id);
 	        		t.setIdTrainingCoordinators(id);
@@ -203,15 +206,15 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	        		}
 	        		HC.update(t,b, database);
 	    		}
-        		
+
     		}
     	}
 		 else if(request.getParameter("task").equals("listHistory"))
 		 {
-		    	
+
 		 ArrayList AL=new ArrayList();
 		 xstream.alias("Trainingcoordinatehistory", CoordinateHistoryShow.class);
-		 String returnText = xstream.toXML(AL); 
+		 String returnText = xstream.toXML(AL);
 		 // //////System.out.println(AL.size());
 		 // //////System.out.println("return text = "+returnText);
 		 response.setContentType("application/xml;charset=UTF-8");
@@ -232,7 +235,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 		 PrintWriter out = response.getWriter();
 		 out.write(returnText);
 		 }
-    	
+
 		 else if(request.getParameter("task").equals("Cdata"))
 		 {
 		 Integer id=(Integer)session.getAttribute("coordinatorID");
@@ -263,13 +266,13 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 		 SimpleDateFormat s=new SimpleDateFormat("dd-MMM-yyyy",Locale.US);
 		 String d=s.format(t.getTrainingCoordinateHistoryValidTo());
 		 CHS.setTrainingCoordinateHistoryValidTo(d);
-		    			
+
 		 }
 		 else
 		 CHS.setTrainingCoordinateHistoryValidTo(null);
 		 //CHS.setTrainingCoordinateHistoryValid(t.getTrainingCoordinateHistoryValid());
 		 CHS.setTrainingCoordinateHistoryValue(t.getTrainingCoordinateHistoryValue());
-		    			
+
 		 for(int j=0;j<coordinators.size();j++)
 		 {
 		 Trainingcoordinators tC=(Trainingcoordinators)coordinators.get(j);
@@ -311,23 +314,23 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 String trainingCoordinateHireDate=null;
 		            if(!request.getParameter("trainingCoordinateHireDate").equals("3000-01-01"))
 		            	trainingCoordinateHireDate=request.getParameter("trainingCoordinateHireDate");
-		            
+
 		            String trainingCoordinateBirthDate=null;
 		            if(!request.getParameter("trainingCoordinateBirthDate").equals("3000-01-01"))
 		            	trainingCoordinateBirthDate=request.getParameter("trainingCoordinateBirthDate");
-		            
+
 		            String trainingCoordinatorResignationDate=null;
 		            if(!request.getParameter("trainingCoordinatorResignationDate").equals("3000-01-01"))
 		            	trainingCoordinatorResignationDate=request.getParameter("trainingCoordinatorResignationDate");
 				//System.out.println("resign= "+trainingCoordinatorResignationDate);
-		            HC.updateCoordinator(Tc,trainingCoordinateBirthDate,trainingCoordinateHireDate,trainingCoordinatorResignationDate, database); 
+		            HC.updateCoordinator(Tc,trainingCoordinateBirthDate,trainingCoordinateHireDate,trainingCoordinatorResignationDate, database);
 		 }
 			 else if(request.getParameter("task").equals("AddHistory"))
 			 {// //////System.out.println("ana goa add history");
 				 Integer id=(Integer)session.getAttribute("coordinatorID");
 				 Trainingcoordinatehistory tH=new Trainingcoordinatehistory();
 				// Trainingcoordinators t=new Trainingcoordinators();
-				 
+
 				 tH.setTrainingCoordinateHistoryType(request.getParameter("trainingCoordinateHistoryType"));
 				 tH.setTrainingCoordinateHistoryValid(true);
 				 Date d1=new Date();
@@ -366,9 +369,9 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 	Tc.setTrainingCoordinatorCurrentTitle(request.getParameter("trainingCoordinateHistoryValue"));
 				 	HC.update(Tc,false, database);
 				 }
-				    		
-			    		
-			  	    		
+
+
+
 			 }
 			 else if(request.getParameter("task").equals("EditHistory"))
 			 {
@@ -401,7 +404,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 						 HC.update(t, false, database);
 					 }
 				 }
-				
+
 			 }
 			 }
 			 else if(request.getParameter("task").equals("DELETESELECTIONS"))
@@ -410,72 +413,65 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 if (request.getParameterValues("ids").length == 1)
 	              {
 	            	  try{
-	          			
+
 	          			HC.updateC(cID,request.getParameterValues("type")[0], database);
 	          			database.update("delete from trainingcoordinatehistory where idTrainingCoordinateHistory = "+request.getParameterValues("ids")[0]);
-	          			
+
 	          		}
 	          		  catch (Exception e) { e.printStackTrace();
-	          	          
-	          	      }  finally { 
-	          	           
+
+	          	      }  finally {
+
 	          	      }
-	            	  
+
 	              }
 	              else if (request.getParameterValues("ids").length > 1)
 	              {
 	            	  try{
-	            		
-	            			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+	            			for (int i = 0; i < request.getParameterValues("ids").length; i++)
 	                  	  	{
-	            				
+
 	            				database.update("delete from trainingcoordinatehistory where idTrainingCoordinateHistory = "+request.getParameterValues("ids")[i]);
-	                			
+
 	                  	  	}
 	            	     }
-	            			
+
 	            		  catch (Exception e) { e.printStackTrace();
-	            	          
-	            	      }  finally { 
-	            	           
+
+	            	      }  finally {
+
 	            	      }
-	            	  }  
-			
+	            	  }
+
 			 }
 			 else if(request.getParameter("task").equals("DELETE"))
 			 {
+				 logger.info("  in the task of delete .....");
+				 ArrayList<String>  ids_ar=new ArrayList<String>();
+
 				 if (request.getParameterValues("ids").length == 1)
 	              {
-	            	  try{
-	          			
-	          			database.update("delete from trainingcoordinators where idTrainingCoordinators = "+request.getParameterValues("ids")[0]);
-	          			
-	          		}
-	          		  catch (Exception e) { e.printStackTrace();
-	          	          
-	          	      }  finally { 
-	          	           
-	          	      }
-	            	  
+
+					 ids_ar.add(request.getParameterValues("ids")[0]);
+
+
 	              }
 	              else if (request.getParameterValues("ids").length > 1)
 	              {
-	            	  try{
-	            			
-	            			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
-	                  	  	{
-	            				
-	            				database.update("delete from trainingcoordinators where idTrainingCoordinators = "+request.getParameterValues("ids")[i]);
-	                			
-	                  	  	}
-	            	     }
-	            			
-	            		  catch (Exception e) { e.printStackTrace();
-	            	          
-	            	      }  finally { 
-	            	           
-	            	      }
-	            	  }  
+
+	            	  for (int i = 0; i < request.getParameterValues("ids").length; i++)
+                	  	{
+	         			 ids_ar.add(request.getParameterValues("ids")[i]);
+
+                	  	}
+
+
+	            	  }
+
+				       deleteTrainingCoordinator(database, ids_ar);
+
+
 			 		}
 			    	else if(request.getParameter("task").equals("listTeams"))
 			    	{
@@ -483,7 +479,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 			    		xstream.alias("Teams", Teams.class);
 				        String returnText = xstream.toXML(t);
 				        // //System.out.println("return text = "+returnText);
-				        response.setContentType("application/xml;charset=UTF-8"); 
+				        response.setContentType("application/xml;charset=UTF-8");
 				        PrintWriter out = response.getWriter();
 						out.write(returnText);
 			    	}
@@ -498,36 +494,36 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 							 if (request.getParameterValues("ids").length == 1)
 				              {
 				            	  try{
-				          			
+
 				          			database.update("delete from teams where Teamsid = "+request.getParameterValues("ids")[0]);
-				          			
+
 				          		}
 				          		  catch (Exception e) { e.printStackTrace();
-				          	          
-				          	      }  finally { 
-				          	           
+
+				          	      }  finally {
+
 				          	      }
-				            	  
+
 				              }
 				              else if (request.getParameterValues("ids").length > 1)
 				              {
 				            	  try{
-				            			
-				            			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+				            			for (int i = 0; i < request.getParameterValues("ids").length; i++)
 				                  	  	{
-				            				
+
 				            				database.update("delete from teams where Teamsid = "+request.getParameterValues("ids")[i]);
-				                			
+
 				                  	  	}
 				            	     }
-				            			
+
 				            		  catch (Exception e) { e.printStackTrace();
-				            	          
-				            	      }  finally { 
-				            	           
+
+				            	      }  finally {
+
 				            	      }
-				            	  }  
-			            
+				            	  }
+
 			 }
 				 else if(request.getParameter("task").equals("listTByID"))
 				 {
@@ -571,7 +567,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 					  cNew.setCoordinatorApp(tc.getTrainingCoordinateAbb());
 					  cNew.setCoordinatorEmail(tc.getTrainingCoordinateEmail());
 					  tShow.add(cNew);
-				 
+
 				  }
 				 }
 				 xstream.alias("Teammembers", TeamShow.class);
@@ -604,7 +600,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 cNew.setTrainingCoordinateFirstName(cc.getTrainingCoordinateFirstName()+cc.getTrainingCoordinateLastName());
 				 cNew.setIdTrainingCoordinators(cc.getIdTrainingCoordinators());
 				 cShow.add(cNew);
-				 	          		
+
 				 }
 				 xstream.alias("Trainingcoordinators", Trainingcoordinators.class);
 				 String returnText = xstream.toXML(cShow);
@@ -628,7 +624,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 cNew.setTrainingCoordinateEmail(c.getTrainingCoordinateEmail());
 				 cNew.setTrainingCoordinateAbb(c.getTrainingCoordinateAbb());
 				 cShow.add(cNew);
-				               		
+
 				 }
 				 xstream.alias("Trainingcoordinators", Trainingcoordinators.class);
 				 String returnText = xstream.toXML(cShow);
@@ -661,46 +657,48 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 						 tc.setMemberid(Integer.valueOf(request.getParameterValues("ids")[i]));
 						 tc.setTeamid(id);
 						 tt.add(tc);
-					        		
+
 					 }
 				 }
 				 HC.insertCoor(tt, database);
 			 }
 		 else if(request.getParameter("task").equals("DELETECoo"))
 		 {
+
+			 logger.info("  in the task of deleteCoo .....");
 			 if (request.getParameterValues("ids").length == 1)
              {
            	  try{
-         			
+
          			database.update("delete from teammembers where idTeammembers = "+request.getParameterValues("ids")[0]);
-         			
+
          		}
          		  catch (Exception e) { e.printStackTrace();
-         	          
-         	      }  finally { 
-         	           
+
+         	      }  finally {
+
          	      }
-           	  
+
              }
              else if (request.getParameterValues("ids").length > 1)
              {
            	  try{
-           			
-           			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+           			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                  	  	{
-           				
+
            				database.update("delete from teammembers where idTeammembers = "+request.getParameterValues("ids")[i]);
-               			
+
                  	  	}
            	     }
-           			
+
            		  catch (Exception e) { e.printStackTrace();
-           	          
-           	      }  finally { 
-           	           
+
+           	      }  finally {
+
            	      }
-           	  }  
-		            
+           	  }
+
 		 }
 		 else if(request.getParameter("task").equals("colors"))
 	        {
@@ -716,14 +714,14 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	        	xstream.alias("Trainingcoordinators", Trainingcoordinators.class);
 	            String returnText = xstream.toXML(cs);
 	             // //////System.out.println("return text = "+returnText);
-	             response.setContentType("application/xml;charset=UTF-8"); 
+	             response.setContentType("application/xml;charset=UTF-8");
 	             PrintWriter out = response.getWriter();
 	     			out.write(returnText);
 	        }
-    	
-    	
+
+
     	 try{
- 			
+
        		database.finalize();
      	  } catch (SQLException e) {
 
@@ -732,14 +730,108 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 
    			e.printStackTrace();
    		}
- 	        
-       
-    	
+
+
+
     	return mapping.findForward("success");
 
 
     }
-    public Date parseDate(String s) 
+
+    private void deleteTrainingCoordinator( DataSourceConnection database,ArrayList ids){
+
+    	// delte the coordinator from the database....
+
+    	try{
+
+    		for (int i = 0; i < ids.size()-1; i++) {
+
+    			// first check if the coordinator has any current contract to last id in list...
+    			// get all current contracts or contract coures with this coordinator..
+		         int contracCourseId=0;
+    		   	 int contract=0;
+
+    		String	query = "select idContracts from contracts where Deleted = 0 and ContractStatus < 6  and Contract_idTrainingCoordinators="+ ids.get(i);
+    	    logger.info(query);
+
+    		ResultSet  rs_contract=database.retrieve(query);
+
+         	if (rs_contract.next()){
+                do {
+				contract= rs_contract.getInt(1);
+
+			database
+					.update("UPDATE contracts SET Contract_idTrainingCoordinators = "
+							+ ids.get(ids.size()-1)
+							+ "  where idContracts = "
+							+ contract + ";");
+			logger.info( "UPDATE contracts SET Contract_idTrainingCoordinators = "
+					+ ids.get(ids.size()-1)
+					+ " where idContracts = "
+					+ contract + ";" );
+
+
+                }while (rs_contract.next());
+
+         	}// if contract with the coordinators...
+    	      // for each contract course and each contract change coordiantor to another coordinator.
+    			// //update the contract course in the database///////////////
+    			ResultSet rs = database
+    					.retrieve("select idContractCourse from contractcourse where  ContractCourseStatus < 7 and TrainingCoordinators_idTrainingCoordinators = "
+    							+ ids.get(i));
+    			if (rs.next()){
+                     do {
+    				contracCourseId=rs.getInt(1);
+
+    			database .update("UPDATE contractcourse SET TrainingCoordinators_idTrainingCoordinators = "
+    							+ ids.get(ids.size()-1)
+    							+ " where idContractCourse = "
+    							+ contracCourseId + ";");
+
+    			logger.info( "UPDATE contractcourse SET TrainingCoordinators_idTrainingCoordinators = "
+						+ ids.get(ids.size()-1)
+						+ " where idContractCourse = "
+						+ contracCourseId + ";");
+
+                     }while (rs.next());
+    			}// finish the loop // finish contract coorse ,.
+    			// now change to delete = 1;
+    			//database.update("delete from trainingcoordinators where idTrainingCoordinators = "+ids.get(i));
+    			database.update("update trainingcoordinators set TrainingCoordinatorDeleted=1 where idTrainingCoordinators="+ids.get(i));
+
+    			logger.info("update trainingcoordinators set TrainingCoordinatorDeleted=1 where idTrainingCoordinators="+ids.get(i) );
+    		}// for all coordinator deleted....
+
+  		}// tryyyy ..
+  		  catch (Exception e) {
+  			  e.printStackTrace();
+
+  	      }  finally {
+
+  	      }
+
+//  	  try{
+//
+//			for (int i = 0; i < request.getParameterValues("ids").length; i++)
+//    	  	{
+//
+//				database.update("delete from trainingcoordinators where idTrainingCoordinators = "+request.getParameterValues("ids")[i]);
+//
+//    	  	}
+//	     }
+//
+//		  catch (Exception e) { e.printStackTrace();
+//
+//	      }  finally {
+//
+//	      }
+
+
+    }
+
+
+
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));
