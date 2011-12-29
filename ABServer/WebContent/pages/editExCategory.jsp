@@ -50,7 +50,7 @@ body {
 
 
 
-</style> 
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -60,27 +60,27 @@ body {
 	font-family: Arial;
 }
 -->
-</style>        
+</style>
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
  	<script type="text/javascript" src="colorPicker.js"></script>
  	 <script type="text/javascript" src="../JS/radiogroup.js"></script>
       <script type="text/javascript" src="EditExCategory.js"></script>
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
-
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <% // // //System.out.println(request.getParameter("cat"));
      Integer id=Integer.valueOf(request.getParameter("cat"));
-     session.setAttribute("CatId",id); 
+     session.setAttribute("CatId",id);
      String s=(String)session.getAttribute("LogIn");
  	//  ////System.out.println("s= "+s);
  	if(s == null)
  		response.sendRedirect("../pages/Login.jsp");
-     %> 
-  
-   
+     %>
+
+
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="1000"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -118,18 +118,18 @@ body {
                 <td align="center" width="100"></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-               
+
                <td width=100 align="center"></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center">&nbsp;</td>
-                
+
                <td width=100 align="center"></td>
-              
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-                
+
                 <td align="center" valign="middle"><span class="top-links-visited"><a href="expensesCategory.jsp">Expense Categories</a></span></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
@@ -137,14 +137,14 @@ body {
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                  <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-               
+
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                 <td align="center" valign="middle"></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle">&nbsp;</td>
                  <td align="center" valign="middle"></td>
-                
+
                 <td align="center" valign="middle">&nbsp;</td>
               </tr>
 

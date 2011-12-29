@@ -90,6 +90,7 @@ body {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- Include Ext stylesheets here: -->
     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+    <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
      <%// // //System.out.println(request.getParameter("c"));

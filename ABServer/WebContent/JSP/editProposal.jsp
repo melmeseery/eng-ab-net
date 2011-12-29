@@ -101,21 +101,21 @@
 <!-- Include Ext stylesheets here: -->
 <link rel="stylesheet" type="text/css"
 	href="../ext/resources/css/ext-all.css" />
-
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-<% 
+<%
 if(request.getParameter("contractid") != null){
      Integer id=Integer.valueOf(request.getParameter("contractid"));
      session.setAttribute("contractid",id);
-     
+
      }
 String s=(String)session.getAttribute("LogIn");
 ////  //  ////System.out.println("s= "+s);
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");
-     %> 
+     %>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>&nbsp;</td>

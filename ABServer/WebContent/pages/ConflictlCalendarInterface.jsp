@@ -9,8 +9,9 @@
  	<script type="text/javascript" src="../JS/calendarFilter.js"></script>
   <script type="text/javascript" src="../JS/dojo/dojo.js" djConfig="parseOnLoad: true, isDebug: true"></script>
 	<script type="text/javascript" src="../JS/calendar/ConflictCalendarScript.js"></script>
-	
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
+
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+  <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -42,7 +43,7 @@ body {
 	z-index:1;
 }
 -->
-</style>    
+</style>
 </head>
 <body>
    <%

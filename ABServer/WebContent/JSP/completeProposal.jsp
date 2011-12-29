@@ -9,7 +9,7 @@
     <script type="text/javascript" src="../JS/completeProposal.js"></script>
     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css">
      <link rel="stylesheet" type="text/css" href="../ext/resources/css/form.css"/>
- 
+ <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -31,7 +31,7 @@ body {
 	z-index:1;
 }
 -->
-</style> 
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -41,21 +41,21 @@ body {
 	font-family: Arial;
 }
 -->
-</style>     
- 
+</style>
+
  </head>
 <body>
-<% 
+<%
 if(request.getParameter("contractid") != null){
      Integer id=Integer.valueOf(request.getParameter("contractid"));
      session.setAttribute("contractid",id);
-     
+
      }
 String s=(String)session.getAttribute("LogIn");
 //  //  ////System.out.println("s= "+s);
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");
-     %>   
+     %>
 
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -155,7 +155,7 @@ if(s == null)
     <td>&nbsp;</td>
   </tr>
 </table>
-    
-   
+
+
 </body>
 </html:html>

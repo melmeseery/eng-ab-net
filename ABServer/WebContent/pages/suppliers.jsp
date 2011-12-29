@@ -5,10 +5,11 @@
 	 <title>Suppliers</title>
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
- 	    
+
        <script type="text/javascript" src="Suppliers.js"></script>
- 
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
+
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+  <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -65,10 +66,10 @@ body {
 	z-index:1;
 }
 -->
-</style>     
+</style>
 </head>
 <body>
-     
+
      <%
     String s=(String)session.getAttribute("LogIn");
 	  ////System.out.println("s= "+s);
@@ -112,18 +113,18 @@ body {
                 <td align="center" width="100"></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-               
+
                <td width=100 align="center"></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center">&nbsp;</td>
-                
+
                <td width=100 align="center"></td>
-              
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-                
+
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="expensesCategory.jsp">Expense Categories</a></span></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
@@ -131,14 +132,14 @@ body {
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                  <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-               
+
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                 <td align="center" valign="middle"></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle">&nbsp;</td>
                  <td align="center" valign="middle"></td>
-                
+
                 <td align="center" valign="middle">&nbsp;</td>
               </tr>
 
@@ -193,6 +194,6 @@ body {
     <td>&nbsp;</td>
   </tr>
 </table>
-        
+
 </body>
 </html:html>

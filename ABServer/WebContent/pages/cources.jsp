@@ -51,7 +51,7 @@ body {
 	z-index:1;
 }
 -->
-</style> 
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -61,27 +61,27 @@ body {
 	font-family: Arial;
 }
 -->
-</style> 
+</style>
   <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
-    <script type="text/javascript" src="../ext/ext-all-debug.js"></script>  
-     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>  
+    <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
+     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../JS/SearchField.js"></script>
-    
-    <script type="text/javascript" src="../ext/adapter/jquery/jquery.js"></script> 
+
+    <script type="text/javascript" src="../ext/adapter/jquery/jquery.js"></script>
     <script type="text/javascript" src="../JS/EditableItem.js"></script>
 	<script type="text/javascript" src="../JS/RangeMenu.js"></script>
-	
+
 	<script type="text/javascript" src="../JS/GridFilters.js"></script>
 	<script type="text/javascript" src="../JS/Filter.js"></script>
 
 	<script type="text/javascript" src="../JS/StringFilter.js"></script>
-  
+
   <!-- Include Ext stylesheets here: -->
-    
+
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <script type="text/javascript" src="../ext/ExtStart.js"></script>
-
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%
@@ -128,25 +128,25 @@ if(s == null)
                 <td width=100 align="center" ><a href="../pages/consultingAreas.jsp"><img src="../images/Training area.png" width="60" height="40" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-               
+
                <td width=100 align="center"><a href="../pages/tracks.jsp"><img src="../images/Tracks.png" width="40" height="35" border=0/></a></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center">&nbsp;</td>
-                
+
                <td width=100 align="center"><a href="priceGroupHistory.jsp"><img src="../images/Price-History.png" width="60" height="40" border=0/></a></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
               <td width="100" align="center"><a href="../pages/TargetedParticipants.jsp"><img src="../images/Users.png" width="43" height="40" border=0/></a></td>
            		<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-           		
+
                 <td width="100" align="center"><a href="../pages/competenceAddressed.jsp"><img src="../images/Tracks.png" width="40" height="35" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-                
+
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/trainarea.jsp">Training Areas</a></span></td>
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
@@ -154,7 +154,7 @@ if(s == null)
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                  <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/consultingAreas.jsp">Consulting Areas</a></span></td>
-               
+
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/tracks.jsp">Tracks</a></span></td>
@@ -168,7 +168,7 @@ if(s == null)
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/competenceAddressed.jsp">Competences Addressed</a></span></td>
                 <td align="center" valign="middle">&nbsp;</td>
-               
+
               </tr>
 
             </table></td><td width="354"><table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -220,7 +220,7 @@ if(s == null)
     <td>&nbsp;</td>
   </tr>
 </table>
-    
-   
+
+
 </body>
 </html:html>

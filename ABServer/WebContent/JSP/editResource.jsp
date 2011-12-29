@@ -11,21 +11,21 @@
     <link rel="stylesheet" type="text/css" href="../pages/Multiselect.css"/>
     <script type="text/javascript" src="../JS/editResource.js"></script>
     <script type="text/javascript" src="../JS/radiogroup.js"></script>
-        
+
       <script type="text/javascript" src="../JS/ItemSelector.js"></script>
-      
+
        <script type="text/javascript" src="../JS/MultiSelect.js"></script>
    <script type="text/javascript" src="../JS/DDView.js"></script>
     <script type="text/javascript" src="../JS/FileUploadField.js"></script>
-   
-   
-   
+
+
+
 <script type="text/javascript" src="../JS/SwfUpload.js"></script>
 <script type="text/javascript" src="../JS/SwfUploadPanel.js"></script>
   <link rel="stylesheet" type="text/css" href="../JS/SwfUploadPanel.css" />
     <link rel="stylesheet" type="text/css" href="multiselect.css"/>
-    
-    
+
+    <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
 <!--
 body {
@@ -57,18 +57,18 @@ body {
 	z-index:1;
 }
 -->
-</style>   
-    
+</style>
+
 </head>
 <body>
-  <% 
+  <%
      Integer id=Integer.valueOf(request.getParameter("resourceId"));
      session.setAttribute("resourceId",id);
      String s=(String)session.getAttribute("LogIn");
        //  ////System.out.println("s= "+s);
      if(s == null)
      	response.sendRedirect("../pages/Login.jsp");
-     %>   
+     %>
  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -103,7 +103,7 @@ body {
                 <td width="16" align="center">&nbsp;</td>
                  <td width="100" align="center"><a href="../pages/clients.jsp"><img src="../images/Clients.png" width="60" height="43" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
-               
+
                 <td width=100 align="center"><a href="../pages/coordinators.jsp"><img src="../images/Training Coordinates.png" width="43" height="40" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width=100 align="center"><a href="../pages/datashows.jsp"><img src="../images/Data shows.png" width="60" height="43" border=0/></a></td>
@@ -111,7 +111,7 @@ body {
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -160,7 +160,7 @@ body {
     <div id="binding-example" class="wide"></div><div style="width:600px;" id="search-panel">
 </div>
 
-    
+
     </td>
     <td width="4"><img src="../images/spacer.gif" width="1" height="1" /></td>
               </tr>
@@ -180,7 +180,7 @@ body {
     </table></td>
     <td>&nbsp;</td>
   </tr>
-</table>   
-   
+</table>
+
 </body>
 </html:html>

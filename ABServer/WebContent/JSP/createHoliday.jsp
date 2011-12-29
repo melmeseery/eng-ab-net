@@ -3,7 +3,7 @@
 <html:html>
 <head>
 	<title>Create Holiday</title>
-	
+
 	<style type="text/css">
 .forward {
 	background-image: url(../images/icons/forward.gif) !important;
@@ -31,13 +31,14 @@
 
 
 </style>
-	
-	
+
+
 <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
- 	
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
+
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+  <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -69,7 +70,7 @@ body {
 	z-index:1;
 }
 -->
-</style>    
+</style>
 
 <script type="text/javascript" src="../examples.js"></script>
 
@@ -81,7 +82,7 @@ body {
       String s=(String)session.getAttribute("LogIn");
 ////  //  ////System.out.println("s= "+s);
 if(s == null)
-	response.sendRedirect("../pages/Login.jsp");%> 
+	response.sendRedirect("../pages/Login.jsp");%>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -110,16 +111,16 @@ if(s == null)
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td width="19" height="1">&nbsp;</td>
-                
+
                 <td width="16" align="center" valign="middle">&nbsp;</td>
-                
+
                 <td width="16" align="center" valign="middle">&nbsp;</td>
                 <td width="106" align="center" valign="middle"></td>
                 <td width="16" align="center" valign="middle">&nbsp;</td>
                 <td width="61" align="center" valign="middle"></td>
                 <td width="210" align="center" valign="middle">&nbsp;</td>
                 </tr>
-              
+
             </table></td><td width="354"><table width="100%" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td width="20">&nbsp;</td>

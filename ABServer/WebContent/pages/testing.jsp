@@ -72,6 +72,7 @@ body {
     <!-- Include Ext stylesheets here: -->
      <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
 <!--begin custom header content for this example-->
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 
     /*

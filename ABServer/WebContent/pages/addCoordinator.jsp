@@ -7,27 +7,14 @@
   <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
-<!--  	   <style type=text/css media=all>@import url( ColorPicker.css );</style>
-
-
-      <script src="jquery-1.2.2.js" type="text/javascript"></script>
-         <script src="ColorPicker.js" type="text/javascript"></script> -->
-
-
-        <link rel='stylesheet' type='text/css' href='../ext/resources/css/ext-all.css' />
 		<link rel="stylesheet" type="text/css" href="../colorpicker/colorpicker.css" />
-
-
-
 		<script type="text/javascript" src="../fieldpanel/fieldpanel.js"></script>
 		<script type="text/javascript" src="../colorpicker/colorpicker.js"></script>
 		<script type="text/javascript" src="../colorpicker/colorpickerfield.js"></script>
     <script type="text/javascript" src="../JS/radiogroup.js"></script>
       <script type="text/javascript" src="AddCoordinator.js"></script>
-
-
  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
-
+ <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
  <style type="text/css">
 <!--
 body {

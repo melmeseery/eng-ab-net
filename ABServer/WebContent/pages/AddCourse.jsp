@@ -88,6 +88,7 @@ body {
     <script type="text/javascript" src="addCourse.js"></script>
     <!-- Include Ext stylesheets here: -->
     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
