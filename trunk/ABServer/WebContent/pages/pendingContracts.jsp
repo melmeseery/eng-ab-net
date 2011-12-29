@@ -42,7 +42,7 @@
 	z-index:1;
 }
 -->
-</style> 
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -52,13 +52,13 @@
 	font-family: Arial;
 }
 -->
-</style>     
+</style>
   <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
   <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
   <script type="text/javascript" src="PendingContracts.js"></script>
-
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%
@@ -66,7 +66,7 @@ String s=(String)session.getAttribute("LogIn");
 //  ////System.out.println("s= "+s);
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");
-%> 
+%>
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -165,7 +165,7 @@ if(s == null)
     <td>&nbsp;</td>
   </tr>
 </table>
-    
-   
+
+
 </body>
 </html:html>

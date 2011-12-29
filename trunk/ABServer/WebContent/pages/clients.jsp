@@ -3,7 +3,7 @@
 <html:html>
 <head>
 	 <title>Clients</title>
-    
+
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="../JS/EditableItem.js"></script>
 	<script type="text/javascript" src="../JS/RangeMenu.js"></script>
-	
+
 	<script type="text/javascript" src="../JS/GridFilters.js"></script>
 	<script type="text/javascript" src="../JS/Filter.js"></script>
 
@@ -21,7 +21,7 @@
    <style type=text/css media=all>@import url( ColorPicker.css );</style>
         <script src="jquery-1.2.2.js" type="text/javascript"></script>
         <script src="ColorPicker.js" type="text/javascript"></script>
- 	
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -79,7 +79,7 @@ body {
 	z-index:1;
 }
 -->
-</style>    
+</style>
 </head>
 <body>
     <%
@@ -88,7 +88,7 @@ body {
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");*/
 %>
-    
+
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -132,7 +132,7 @@ if(s == null)
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>

@@ -34,13 +34,13 @@ body {
 	z-index:1;
 }
 -->
-</style>   
+</style>
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
     <script type="text/javascript" src="../JS/AddResourceCourse.js"></script>
     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
-    
+    <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <%
@@ -48,7 +48,7 @@ String s=(String)session.getAttribute("LogIn");
   //  ////System.out.println("s= "+s);
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");
-%>  
+%>
  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -83,7 +83,7 @@ if(s == null)
                 <td width="16" align="center">&nbsp;</td>
                  <td width="100" align="center"><a href="../pages/clients.jsp"><img src="../images/Clients.png" width="60" height="43" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
-               
+
                 <td width=100 align="center"><a href="../pages/coordinators.jsp"><img src="../images/Training Coordinates.png" width="43" height="40" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width=100 align="center"><a href="../pages/datashows.jsp"><img src="../images/Data shows.png" width="60" height="43" border=0/></a></td>
@@ -91,7 +91,7 @@ if(s == null)
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -139,7 +139,7 @@ if(s == null)
                  <td width="956" align="left">
     <div id="binding-example" class="wide"></div><div style="width:600px;" id="search-panel">
 </div>
-    
+
     </td>
     <td width="4"><img src="../images/spacer.gif" width="1" height="1" /></td>
               </tr>
@@ -159,7 +159,7 @@ if(s == null)
     </table></td>
     <td>&nbsp;</td>
   </tr>
-</table>   
-   
+</table>
+
 </body>
 </html:html>

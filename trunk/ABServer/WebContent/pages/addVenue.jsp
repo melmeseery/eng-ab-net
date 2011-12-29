@@ -24,7 +24,7 @@ body {
 	z-index:1;
 }
 -->
-</style>  
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -34,19 +34,19 @@ body {
 	font-family: Arial;
 }
 -->
-</style>         
+</style>
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
  	<script type="text/javascript" src="colorPicker.js"></script>
    <script type="text/javascript" src="../JS/radiogroup.js"></script>
       <script type="text/javascript" src="AddVenue.js"></script>
-    
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
 
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	 
+
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -61,7 +61,7 @@ body {
             <td height="10"><img src="../images/spacer.gif" width="1" height="1" /></td>
           </tr>
           <tr>
-     
+
             <td width="160"><a href="../pages/generalCalendarInterface.jsp"><img src="../images/link_2.gif" width="160" height="30" border="0" /></a></td>
             <td width="160"><a href="../pages/contracts.jsp"><img src="../images/link_3.gif" width="160" height="30" border="0" /></a></td>
             <td width="160"><a href="../pages/index-login.jsp"><img src="../images/link_4_over.gif" width="160" height="30" border="0" /></a></td>
@@ -81,7 +81,7 @@ body {
                 <td width="16" align="center">&nbsp;</td>
                  <td width="100" align="center"><a href="../pages/clients.jsp"><img src="../images/Clients.png" width="60" height="43" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
-               
+
                 <td width=100 align="center"><a href="../pages/coordinators.jsp"><img src="../images/Training Coordinates.png" width="43" height="40" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width=100 align="center"><a href="../pages/datashows.jsp"><img src="../images/Data shows.png" width="60" height="43" border=0/></a></td>
@@ -91,7 +91,7 @@ body {
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td align="center"><a href="../pages/users.jsp"><img src="../images/Users.png" width="43" height="40" border=0/></a></td>
-           
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -168,6 +168,6 @@ body {
     <td>&nbsp;</td>
   </tr>
 </table>
-    
+
 </body>
 </html:html>

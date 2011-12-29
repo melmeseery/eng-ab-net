@@ -49,7 +49,7 @@ body {
 	z-index:1;
 }
 -->
-</style>   
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -64,8 +64,11 @@ body {
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
   <script type="text/javascript" src="ExpensesCategory.js"></script>
-     
+
 <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <%
@@ -74,7 +77,7 @@ body {
 	if(s == null)
 		response.sendRedirect("../pages/Login.jsp");
     %>
-    
+
    <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="1000"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -112,18 +115,18 @@ body {
                 <td align="center" width="100"></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-               
+
                <td width=100 align="center"></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center">&nbsp;</td>
-                
+
                <td width=100 align="center"></td>
-              
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-                
+
                 <td align="center" valign="middle"><span class="top-links-visited"><a href="expensesCategory.jsp">Expense Categories</a></span></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
@@ -131,14 +134,14 @@ body {
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                  <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-               
+
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                 <td align="center" valign="middle"></td>
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle">&nbsp;</td>
                  <td align="center" valign="middle"></td>
-                
+
                 <td align="center" valign="middle">&nbsp;</td>
               </tr>
 

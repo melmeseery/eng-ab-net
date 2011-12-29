@@ -5,13 +5,14 @@
 	 <title>Edit Venue</title>
     <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
- 	    
+
         <script type="text/javascript" src="MultiSelect.js"></script>
  	<link rel="stylesheet" type="text/css" href="Multiselect.css"/>
-    <script type="text/javascript" src="../JS/radiogroup.js"></script>    
+    <script type="text/javascript" src="../JS/radiogroup.js"></script>
       <script type="text/javascript" src="EditVenue.js"></script>
- 
-  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
+
+  <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+  <link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 <!--
 body {
@@ -68,19 +69,19 @@ body {
 	z-index:1;
 }
 -->
-</style>     
-  
+</style>
+
 </head>
 <body>
    <% // // //System.out.println(request.getParameter("v"));
      Integer id=Integer.valueOf(request.getParameter("v"));
-     session.setAttribute("venueID",id); 
+     session.setAttribute("venueID",id);
      String s=(String)session.getAttribute("LogIn");
  	//  ////System.out.println("s= "+s);
  	if(s == null)
  		response.sendRedirect("../pages/Login.jsp");
-     %> 
- 
+     %>
+
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -125,7 +126,7 @@ body {
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>

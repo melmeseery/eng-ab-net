@@ -3,8 +3,8 @@
 <html:html>
 <head>
 	 <title>Resources</title>
-	 
-	 
+
+
 <style type="text/css">
 .forward {
 	background-image: url(../images/icons/forward.gif) !important;
@@ -32,9 +32,9 @@
 
 
 </style>
-	 
-<!--	 
-	 
+
+<!--
+
  body {
 	margin-left: 0px;
 	margin-top: 0px;
@@ -54,8 +54,8 @@
 	z-index:1;
 }
 -->
-</style> 
- 
+</style>
+
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -65,7 +65,7 @@
 	font-family: Arial;
 }
 -->
-</style> 
+</style>
 
   <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
@@ -77,7 +77,7 @@
 
     <script type="text/javascript" src="../JS/EditableItem.js"></script>
 	<script type="text/javascript" src="../JS/RangeMenu.js"></script>
-	
+
 	<script type="text/javascript" src="../JS/GridFilters.js"></script>
 	<script type="text/javascript" src="../JS/Filter.js"></script>
 
@@ -86,13 +86,13 @@
 	<script type="text/javascript" src="../JS/ListFilter.js"></script>
 <script type="text/javascript" src="../JS/combo/MultiSelect.js"></script>
 
-    
-    
+
+
     <!-- Include Ext stylesheets here: -->
      <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css">
      <link rel="stylesheet" type="text/css" href="../ext/resources/css/form.css"/>
 
-
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
      </head>
 <body>
  <%
@@ -100,7 +100,7 @@ String s=(String)session.getAttribute("LogIn");
 //  //  ////System.out.println("s= "+s);
 if(s == null)
 	response.sendRedirect("../pages/Login.jsp");
-%>  
+%>
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -144,7 +144,7 @@ if(s == null)
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -193,7 +193,7 @@ if(s == null)
                 <td width="4"><img src="../images/spacer.gif" width="1" height="1" /></td>
                 <td width="956" align="left">
     <div id="binding-example" class="wide"></div>
-    
+
     </td>
     <td width="4"><img src="../images/spacer.gif" width="1" height="1" /></td>
               </tr>

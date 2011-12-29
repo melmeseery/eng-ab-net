@@ -60,13 +60,13 @@ body {
 	z-index:1;
 }
 -->
-</style>    
+</style>
    <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
   <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
-    <script type="text/javascript" src="Coordinators.js"></script>  
-
+    <script type="text/javascript" src="Coordinators.js"></script>
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <%
@@ -118,7 +118,7 @@ body {
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -187,6 +187,6 @@ body {
     <td>&nbsp;</td>
   </tr>
 </table>
-   
+
 </body>
 </html:html>

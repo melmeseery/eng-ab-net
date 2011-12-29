@@ -63,13 +63,13 @@
 
 <script src="jquery-1.2.2.js" type="text/javascript"></script>
 <script src="ColorPicker.js" type="text/javascript"></script>
- 	
+
 
 <script type="text/javascript" src="../JS/SwfUpload.js"></script>
 <script type="text/javascript" src="../JS/SwfUploadPanel.js"></script>
 <link rel="stylesheet" type="text/css" href="../JS/SwfUploadPanel.css" />
 <link rel="stylesheet" type="text/css" href="multiselect.css" />
-
+<link href="../css/Mytheme.css" rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 <!--
@@ -107,7 +107,7 @@ body {
 
 </head>
 <body>
-<% 
+<%
      Integer id=Integer.valueOf(request.getParameter("resourceId"));
      session.setAttribute("resourceId",id);
      String s=(String)session.getAttribute("LogIn");
