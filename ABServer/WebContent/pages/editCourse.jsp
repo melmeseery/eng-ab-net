@@ -49,7 +49,7 @@ body {
 
 
 
-</style>   
+</style>
 <style type="text/css">
 <!--
 @import url("../css/new.css");
@@ -59,33 +59,47 @@ body {
 	font-family: Arial;
 }
 -->
-</style>   
+</style>
    <!-- Include Ext and app-specific scripts: -->
     <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
- 	
- 	<style type=text/css media=all>@import url( ColorPicker.css );</style>
-        <script src="jquery-1.2.2.js" type="text/javascript"></script>
-        <script src="ColorPicker.js" type="text/javascript"></script>
+
+
+<!--  	   <style type=text/css media=all>@import url( ColorPicker.css );</style>
+
+
+      <script src="jquery-1.2.2.js" type="text/javascript"></script>
+         <script src="ColorPicker.js" type="text/javascript"></script> -->
+
+
+        <link rel='stylesheet' type='text/css' href='../ext/resources/css/ext-all.css' />
+		<link rel="stylesheet" type="text/css" href="../colorpicker/colorpicker.css" />
+
+
+
+		<script type="text/javascript" src="../fieldpanel/fieldpanel.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpicker.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpickerfield.js"></script>
+
  	<script type="text/javascript" src="../JS/ItemSelector.js"></script>
  	<script type="text/javascript" src="MultiSelect.js"></script>
  	<link rel="stylesheet" type="text/css" href="Multiselect.css"/>
 
     <script type="text/javascript" src="DDView.js"></script>
     <script type="text/javascript" src="EditCourse.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <!-- Include Ext stylesheets here: -->
     <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
 </head>
 <body>
      <%// // //System.out.println(request.getParameter("c"));
      Integer id=Integer.valueOf(request.getParameter("c"));
-     session.setAttribute("courseID",id); 
+     session.setAttribute("courseID",id);
      String s=(String)session.getAttribute("LogIn");
   ////System.out.println("s= "+s);
 if(s == null)
-	response.sendRedirect("../pages/Login.jsp");%> 
-  
+	response.sendRedirect("../pages/Login.jsp");%>
+
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>&nbsp;</td>
@@ -124,25 +138,25 @@ if(s == null)
                 <td width=100 align="center" ><a href="../pages/consultingAreas.jsp"><img src="../images/Training area.png" width="60" height="40" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-               
+
                <td width=100 align="center"><a href="../pages/tracks.jsp"><img src="../images/Tracks.png" width="40" height="35" border=0/></a></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center">&nbsp;</td>
-                
+
                <td width=100 align="center"><a href="priceGroupHistory.jsp"><img src="../images/Price-History.png" width="60" height="40" border=0/></a></td>
               	<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
               <td width="100" align="center"><a href="../pages/TargetedParticipants.jsp"><img src="../images/Users.png" width="43" height="40" border=0/></a></td>
            		<td width="16" align="center">&nbsp;</td>
                 <td width="16" align="center"></td>
-           		
+
                 <td width="100" align="center"><a href="../pages/competenceAddressed.jsp"><img src="../images/Tracks.png" width="40" height="35" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
-                
+
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/trainarea.jsp">Training Areas</a></span></td>
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
@@ -150,7 +164,7 @@ if(s == null)
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                  <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/consultingAreas.jsp">Consulting Areas</a></span></td>
-               
+
                <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"></span></td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/tracks.jsp">Tracks</a></span></td>
@@ -164,7 +178,7 @@ if(s == null)
                 <td align="center" valign="middle">&nbsp;</td>
                 <td align="center" valign="middle"><span class="top-links-notvisited"><a href="../pages/competenceAddressed.jsp">Competences Addressed</a></span></td>
                 <td align="center" valign="middle">&nbsp;</td>
-               
+
               </tr>
 
 
@@ -217,7 +231,7 @@ if(s == null)
     <td>&nbsp;</td>
   </tr>
 </table>
-    
-   
+
+
 </body>
 </html:html>

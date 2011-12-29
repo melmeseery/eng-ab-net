@@ -213,22 +213,22 @@ else
 //alert(idCompetencesAdd);
 EngoutLink.setText('<font size=2><a href="'+Engoutline+'" target="_blank">Open/Download English Outline</a></font>',false);
 AroutLink.setText('<font size=2><a href="'+Aroutline+'" target="_blank">Open/Download Arabic Outline</a></font>',false);
-jQuery(function($)
-	        {
-	            $("#picker1").attachColorPicker(c);
-	            $("#picker1").change(function() {$("#picker1").getValue();
-//	            for(var i=0;i<col.getCount();i++)
-//	            {
-//	            	var colorRec = col.getAt(i);
-//	            	if(CourseColorField.getValue()==colorRec.get('courseColor') && courseC !=CourseColorField.getValue())
-//	            	{
-//	            		Ext.MessageBox.alert('Warning', 'The color is selected before, please select another color');
-//	            		CourseColorField.reset();
-//	            	}
-//	            }
-	            });
-
-	        });
+//jQuery(function($)
+//	        {
+//	            $("#picker1").attachColorPicker(c);
+//	            $("#picker1").change(function() {$("#picker1").getValue();
+////	            for(var i=0;i<col.getCount();i++)
+////	            {
+////	            	var colorRec = col.getAt(i);
+////	            	if(CourseColorField.getValue()==colorRec.get('courseColor') && courseC !=CourseColorField.getValue())
+////	            	{
+////	            		Ext.MessageBox.alert('Warning', 'The color is selected before, please select another color');
+////	            		CourseColorField.reset();
+////	            	}
+////	            }
+//	            });
+//
+//	        });
 
 });
 
@@ -531,15 +531,26 @@ myGrid.getView().refresh();
 		  //  anchor : '95%'
 		   maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
-
-	 var CourseColorField =new Ext.form.TextField({
-	fieldLabel: 'Course Color Legend <html><font color=red> *</font></html>',
-	id: 'picker1',
+ var CourseColorField = new Ext.ux.form.ColorPickerField ({
+ 	fieldLabel: 'Course Color Legend <html><font color=red> *</font></html>',
+	id: 'color',
 	allowBlank: false,
-	width:250,
+	name: 'color',
+   value: '123456',
 //	disable:true
 //	allowBlank: false
-});
+ });
+
+
+
+//	 var CourseColorField =new Ext.form.TextField({
+//	fieldLabel: 'Course Color Legend <html><font color=red> *</font></html>',
+//	id: 'picker1',
+//	allowBlank: false,
+//	width:250,
+////	disable:true
+////	allowBlank: false
+//});
 
 
 	var checkds=[['Yes','Yes'],['No','No']];
@@ -845,8 +856,8 @@ myGrid.getView().refresh();
 	 var ValidFromField = new Ext.form.DateField({
 			fieldLabel: 'Valid From <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
-                minValue: '1960-01-01',
-                width:200,
+                minValue: '1930-01-01',
+                width:100,
                 id:'priceValidFrom',
                 allowBlank: false,
                 vtype: 'daterange',

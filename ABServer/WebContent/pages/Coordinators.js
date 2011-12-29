@@ -140,42 +140,43 @@ window.location = 'editCoordinator.jsp?cor='+selections[0].id;
   for(i = 0; i< myGrid.selModel.getCount(); i++){
     selectedCourse.push(selections[i].xml.idTrainingCoordinators);
   }
-  var retreivingDataProxy = new Ext.data.HttpProxy({
-    	url: '../GeneralRetreivingAction.do',
-    	method: 'POST',
-       headers:{'request-type':'ajax' }
- });
-var coordinatorsDS = new Ext.data.Store({
-   // load using HTTP
-  proxy: retreivingDataProxy,
-  baseParams:{task: "coordinators"},
-  // the return will be XML, so lets set up a reader
-  reader: new Ext.data.XmlReader({
-   // The element which contains the total dataset size (optional)
-		record: "Coordinator"
-    },[{name: 'coordinatorName', type: 'string'},{name: 'coordinatorId', type: 'int'}]
-    )
-  });
-var coordinatorId;
-var coordinatorNameCombo = new Ext.form.ComboBox({
-   store: coordinatorsDS,
-   width: 200,
-   fieldLabel: 'Coordinator <html><font color=red> *</font></html>',
-   valueField: 'coordinatorId',
-   displayField:'coordinatorName',
-   selectOnFocus: true,
-   typeAhead: true,
-   editable: false,
-   triggerAction: 'all',
-   emptyText:'Select Coordinator...',
-   selectOnFocus:true,
-    listeners: {
-    select: function (combo, record, index) {
-	    coordinatorId = this.getValue();
-	    console.log(" the main in coordinator id  "+ coordinatorId);
 
-    }}
-});
+//  var retreivingDataProxy = new Ext.data.HttpProxy({
+//    	url: '../GeneralRetreivingAction.do',
+//    	method: 'POST',
+//       headers:{'request-type':'ajax' }
+// });
+//var coordinatorsDS = new Ext.data.Store({
+//   // load using HTTP
+//  proxy: retreivingDataProxy,
+//  baseParams:{task: "coordinators"},
+//  // the return will be XML, so lets set up a reader
+//  reader: new Ext.data.XmlReader({
+//   // The element which contains the total dataset size (optional)
+//		record: "Coordinator"
+//    },[{name: 'coordinatorName', type: 'string'},{name: 'coordinatorId', type: 'int'}]
+//    )
+//  });
+//var coordinatorId;
+//var coordinatorNameCombo = new Ext.form.ComboBox({
+//   store: coordinatorsDS,
+//   width: 200,
+//   fieldLabel: 'Coordinator <html><font color=red> *</font></html>',
+//   valueField: 'coordinatorId',
+//   displayField:'coordinatorName',
+//   selectOnFocus: true,
+//   typeAhead: true,
+//   editable: false,
+//   triggerAction: 'all',
+//   emptyText:'Select Coordinator...',
+//   selectOnFocus:true,
+//    listeners: {
+//    select: function (combo, record, index) {
+//	    coordinatorId = this.getValue();
+//	   // console.log(" the main in coordinator id  "+ coordinatorId);
+//
+//    }}
+//});
 
   function confirmDeleteCourses(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
@@ -189,6 +190,43 @@ var coordinatorNameCombo = new Ext.form.ComboBox({
   }
 
   function deleteCourses(btn){
+
+	  var retreivingDataProxy = new Ext.data.HttpProxy({
+	    	url: '../GeneralRetreivingAction.do',
+	    	method: 'POST',
+	       headers:{'request-type':'ajax' }
+	 });
+	var coordinatorsDS = new Ext.data.Store({
+	   // load using HTTP
+	  proxy: retreivingDataProxy,
+	  baseParams:{task: "coordinators"},
+	  // the return will be XML, so lets set up a reader
+	  reader: new Ext.data.XmlReader({
+	   // The element which contains the total dataset size (optional)
+			record: "Coordinator"
+	    },[{name: 'coordinatorName', type: 'string'},{name: 'coordinatorId', type: 'int'}]
+	    )
+	  });
+	var coordinatorId;
+	var coordinatorNameCombo = new Ext.form.ComboBox({
+	   store: coordinatorsDS,
+	   width: 200,
+	   fieldLabel: 'Coordinator <html><font color=red> *</font></html>',
+	   valueField: 'coordinatorId',
+	   displayField:'coordinatorName',
+	   selectOnFocus: true,
+	   typeAhead: true,
+	   editable: false,
+	   triggerAction: 'all',
+	   emptyText:'Select Coordinator...',
+	    listeners: {
+	    select: function (combo, record, index) {
+		    coordinatorId = this.getValue();
+		   // console.log(" the main in coordinator id  "+ coordinatorId);
+
+	    }}
+	});
+
     if(btn=='yes'){
          var selections = myGrid.selModel.getSelections();
          var selectedCourse = [];
