@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>FieldPanel</title>
+		<link rel='stylesheet' type='text/css' href='../ext/resources/css/ext-all.css' />
+		<link rel="stylesheet" type="text/css" href="../spinner/Spinner.css" />
+
+		<script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ext/ext-all-debug.js"></script>
+
+		<script type="text/javascript" src="../spinner/Spinner.js"></script>
+		<script type="text/javascript" src="../spinner/SpinnerStrategy.js"></script>
+
+		<script type="text/javascript" src="fieldpanel.js"></script>
+		<script type="text/javascript" src="timefield.js"></script>
+		<script type="text/javascript" src="ipfield.js"></script>
+
+		<script type="text/javascript">
+			Ext.QuickTips.init();
+			Ext.form.Field.prototype.msgTarget = 'side';
+			Ext.ux.form.FieldPanel.prototype.msgTarget = 'side';
+
+			Ext.onReady(function(){
+				var valid=true;
+				var enable=true;
+				var win = new Ext.Window({
+					renderTo: document.body,
+					title: "FieldPanel Test",
+					width: 300,
+					height: 250,
+					items: [{
+						xtype: 'form',
+						border: false,
+						bodyStyle: 'background-color:#DFE8F6; padding-top:10px',
+						labelAlign: 'right',
+						labelWidth: 50,
+						items: [{
+							xtype: 'textfield',
+							fieldLabel: 'Name',
+							name: 'name'
+						}, {
+							xtype: 'uxtimefield',
+							fieldLabel: 'Time 1',
+							name: 'time1',
+							value: '01:23:45'
+						}, {
+							xtype: 'uxtimefield',
+							fieldLabel: 'Time 2',
+							name: 'time2',
+							readOnly: true,
+							value: '10:32:54'
+						}, {
+							xtype: 'uxipfield',
+							fieldLabel: 'Ip 1',
+							name: 'ip1',
+							value: '192.168.0.111'
+						}, {
+							xtype: 'uxipfield',
+							fieldLabel: 'Ip 2',
+							name: 'ip2',
+							readOnly: true,
+							value: '192.168.0.1'
+						}]
+					}],
+					buttons:[{
+						text:"Invalid",
+						handler:function(){
+							var form=win.getComponent(0).getForm();
+							var n=form.findField('name');
+							var t1=form.findField('time1');
+							var i1=form.findField('ip1');
+							if (valid) {
+								n.markInvalid();
+								t1.markInvalid();
+								i1.markInvalid();
+								valid = false;
+							} else {
+								n.clearInvalid();
+								t1.clearInvalid();
+								i1.clearInvalid();
+								valid = true;
+							}
+						}
+					}, {
+						text:"Disable",
+						handler: function(){
+							var form=win.getComponent(0).getForm();
+							var n=form.findField('name');
+							var t1=form.findField('time1');
+							var i1=form.findField('ip1');
+							if (enable) {
+								n.disable();
+								t1.disable();
+								i1.disable();
+								enable = false;
+							} else {
+								n.enable();
+								t1.enable();
+								i1.enable();
+								enable = true;
+							}
+						}
+					}, {
+						text:"Values",
+						handler: function(){
+							var form=win.getComponent(0).getForm();
+							var n=form.findField('name');
+							var t1=form.findField('time1');
+							var i1=form.findField('ip1');
+							Ext.Msg.alert("Value", "Name: "+n.getValue()+"<br />Time 1: "+t1.getValue()
+								+"<br />Ip 1: "+i1.getValue());
+						}
+					}]
+				});
+				win.show();
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
