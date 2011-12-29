@@ -3,19 +3,31 @@
 <html:html>
 <head>
 	 <title>Add Coordinator</title>
-    
+
   <!-- Include Ext and app-specific scripts: -->
    <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
- 	<script type="text/javascript" src="colorPicker.js"></script>
+<!--  	   <style type=text/css media=all>@import url( ColorPicker.css );</style>
+
+
+      <script src="jquery-1.2.2.js" type="text/javascript"></script>
+         <script src="ColorPicker.js" type="text/javascript"></script> -->
+
+
+        <link rel='stylesheet' type='text/css' href='../ext/resources/css/ext-all.css' />
+		<link rel="stylesheet" type="text/css" href="../colorpicker/colorpicker.css" />
+
+
+
+		<script type="text/javascript" src="../fieldpanel/fieldpanel.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpicker.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpickerfield.js"></script>
     <script type="text/javascript" src="../JS/radiogroup.js"></script>
       <script type="text/javascript" src="AddCoordinator.js"></script>
-      <style type=text/css media=all>@import url( ColorPicker.css );</style>
-        <script src="jquery-1.2.2.js" type="text/javascript"></script>
-        <script src="ColorPicker.js" type="text/javascript"></script>
- 	
- <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>   
-	
+
+
+ <link rel="stylesheet" type="text/css" href="../ext/resources/css/ext-all.css"/>
+
  <style type="text/css">
 <!--
 body {
@@ -72,7 +84,7 @@ body {
 	z-index:1;
 }
 -->
-</style>       
+</style>
 </head>
 <body>
    <%
@@ -124,7 +136,7 @@ if(s == null)
                 <td width=100 align="center"><a href="../pages/venus.jsp"><img src="../images/Venus.png" width="43" height="39" border=0/></a></td>
                 <td width="16" align="center">&nbsp;</td>
                 <td width="100" align="center"><a href="../pages/suppliers.jsp"><img src="../images/Suppliers.png" width="65" height="45" border=0/></a></td>
-                
+
               </tr>
               <tr>
                 <td>&nbsp;</td>

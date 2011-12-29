@@ -2,7 +2,7 @@
 Ext.apply(Ext.form.VTypes, {
   daterange: function(val, field) {
     var date = field.parseDate(val);
-    
+
     // We need to force the picker to update values to recaluate the disabled dates display
     var dispUpd = function(picker) {
       var ad = picker.activeDate;
@@ -17,7 +17,7 @@ Ext.apply(Ext.form.VTypes, {
             start.maxValue = date;
            // start.validate();
             this.dateRangeMax = date;
-        } 
+        }
         if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = Ext.getCmp(field.endDateField);
             end.minValue = date;
@@ -39,7 +39,7 @@ Ext.onReady(function(){
 
     var bd = Ext.getBody();
     /*=====================Grid========================*/
-    
+
     var TrainingcoordinateHistory  = Ext.data.Record.create([
       {name: 'idTrainingCoordinateHistory', type: 'int'},
       {name: 'trainingCoordinateHistoryType', type: 'string'},
@@ -47,12 +47,12 @@ Ext.onReady(function(){
       {name: 'trainingCoordinateHistoryValidFrom', type: 'string'},
       {name: 'trainingCoordinateHistoryValidTo', type: 'string'},
       {name: 'trainingCoordinateHistoryValue', type: 'string'}
-      
+
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCoordinators.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
@@ -61,17 +61,17 @@ Ext.onReady(function(){
       proxy: dataProxy,
       groupField:'trainingCoordinateHistoryType',
       sortInfo:{field: 'trainingCoordinateHistoryType', direction: "ASC"},
-       baseParams:{task: "Cdata"},  
+       baseParams:{task: "Cdata"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
-   		
+
    		record: "Trainingcoordinatehistory",           // The repeated element which contains row information
    		id: "idTrainingCoordinateHistory"
         },TrainingcoordinateHistory
         )
       });
-  
+
 	var Trainingcoordinators  = Ext.data.Record.create([
       {name: 'idTrainingCoordinators', type: 'int'},
       {name: 'trainingCoordinateAbb', type: 'string'},
@@ -87,29 +87,29 @@ Ext.onReady(function(){
       {name: 'trainingCoordinateTelephone', type: 'string'},
       {name: 'trainingCoordinatorCurrentSalary', type: 'string'},
       {name: 'trainingCoordinatorCurrentTitle', type: 'string'},
-      {name: 'trainingCoordinatorResignationDate', type: 'string'}  
-      
+      {name: 'trainingCoordinatorResignationDate', type: 'string'}
+
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listCoordinators.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 var Tds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "Hdata"},  
+       baseParams:{task: "Hdata"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
-   		
+
    		record: "Trainingcoordinators",           // The repeated element which contains row information
    		id: "idTrainingCoordinators"
         },Trainingcoordinators
         )
       });
-  
+
 
     // example of custom renderer function
     function italic(value){
@@ -143,14 +143,14 @@ var Tds = new Ext.data.Store({
         {header: "Valid From", width: 100, sortable: true, dataIndex: 'trainingCoordinateHistoryValidFrom'},
 		{header: "Valid To", width: 100, sortable: true, dataIndex: 'trainingCoordinateHistoryValidTo'},
     	{header: "Value", width: 100, sortable: true, dataIndex: 'trainingCoordinateHistoryValue'}
-		
+
     ]);
 
  ds.on('add', function(){
 	ds.reload();
 //myGrid.getView().refresh();
    });
- 
+
  Tds.load();
 var c;
 Tds.on('load', function(){//////console.log(Cds.getAt(0));
@@ -171,16 +171,18 @@ c=coordinateRec.get('trainingCoordinateColor');
 SalaryField.setValue(coordinateRec.get('trainingCoordinatorCurrentSalary'));
 TitleField.setValue(coordinateRec.get('trainingCoordinatorCurrentTitle'));
 ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationDate'))
-jQuery(function($)
-	        {
-	            $("#picker1").attachColorPicker(c);
-	            $("#picker1").change(function() {$("#picker1").getValue();
-	         
-	            });
-	        });
+
+
+//jQuery(function($)
+//	        {
+//	            $("#picker1").attachColorPicker(c);
+//	            $("#picker1").change(function() {$("#picker1").getValue();
+//
+//	            });
+//	        });
 });
- 
- 
+
+
     var myGrid = new Ext.grid.GridPanel({
         ds: ds,
         cm: colModel,
@@ -204,7 +206,7 @@ jQuery(function($)
               })
               ],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 
    myGrid.on("rowdblclick", function(myGrid) {
@@ -219,13 +221,13 @@ jQuery(function($)
 		EtypeCombo.setValue(seldata.trainingCoordinateHistoryType);
 });
 
-   
+
     /*
      * ================  Form 5  =======================
      */
     bd.createChild({tag: 'h2', html: ''});
-    
- 
+
+
   var PriceValueField = new Ext.form.TextField({
 		    id: 'trainingCoordinateHistoryValue',
 		    fieldLabel: 'Value <html><font color=red> *</font></html>',
@@ -234,8 +236,8 @@ jQuery(function($)
 		    allowBlank: false,
 		    maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
-		      
-	 	      
+
+
 	 var ValidFromField = new Ext.form.DateField({
 			fieldLabel: 'Valid From <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
@@ -247,7 +249,7 @@ jQuery(function($)
         		vtype: 'daterange',
         		endDateField: 'trainingCoordinateHistoryValidTo'
             });
-    
+
     var ValidToField = new Ext.form.DateField({
 			fieldLabel: 'Valid To',
                 format: 'd-M-Y',
@@ -258,12 +260,12 @@ jQuery(function($)
               //  disabledDays: [5, 6],
                 startDateField:'trainingCoordinateHistoryValidFrom'
             });
- 
+
  var Itemsds=[['1','Salary'],['2','Mobile allowance'],['2','Title']];
     var ItemsDS = new Ext.data.SimpleStore({
         fields: ['id','name'],
         data: Itemsds
-    }); 
+    });
   var typeCombo = new Ext.form.ComboBox({
    // id:'userPrivilage',
     fieldLabel: 'Type <html><font color=red> *</font></html>',
@@ -278,9 +280,9 @@ jQuery(function($)
 	triggerAction: 'all',
 	emptyText:'Select a Type...',
 	selectOnFocus:true
-    }); 
-  
- 
+    });
+
+
     //////////////************adding form****************/////////////////
     var valid='Salary';
     var flag=1;
@@ -303,16 +305,16 @@ jQuery(function($)
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:AddHistoryForm
             },{text:'Cancel',
             	handler:function(){AddTAWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddTAWindow= new Ext.Window({
       id: 'AddTAWindow',
@@ -325,22 +327,22 @@ jQuery(function($)
       items: fs
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
   function resetCourseForm(){
     typeCombo.reset();
     ValidFromField.reset();
     PriceValueField.reset();
  //   ValidToField.reset();
-   
+
   }
-  
+
   // check if the form is valid
   function isCourseFormValid(){
   return(typeCombo.isValid() && ValidFromField.isValid() && PriceValueField.isValid()  );
   }
-  
+
   // display or bring forth the form
   function displayFormWindow(){
   if(!AddTAWindow.isVisible()){
@@ -349,12 +351,12 @@ jQuery(function($)
   } else {
     AddTAWindow.toFront();
   }
-  
-  
+
+
   }
     function AddHistoryForm(){//alert('ana henaaaaaaaaa');
       if(typeCombo.isValid() && ValidFromField.isValid() && PriceValueField.isValid()){//alert(ValidFromField.getValue().format('d-M-Y'));
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listCoordinators.do',
         params: {
@@ -365,29 +367,29 @@ jQuery(function($)
 		   trainingCoordinateHistoryType:        typeCombo.getValue(),
 		   trainingCoordinateHistoryValid:       true
         },
-        method:'POST', 
-        success: function(response){   
-       
+        method:'POST',
+        success: function(response){
+
 			 var record = new Ext.data.Record({
 						    	  trainingCoordinateHistoryValue:		PriceValueField.getValue() ,
 								  trainingCoordinateHistoryValidFrom:   ValidFromField.getValue().format('d-M-Y'),
 								//  trainingCoordinateHistoryValidTo:	    ValidToField.getValue().format('d-M-Y'),
 								  trainingCoordinateHistoryType:        typeCombo.getValue(),
 								  trainingCoordinateHistoryValid:       true
-						    });  
-						    ds.add(record);  
-						    AddTAWindow.hide();  
-              
+						    });
+						    ds.add(record);
+						    AddTAWindow.hide();
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
    } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -395,10 +397,10 @@ jQuery(function($)
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  }   
-  
-  
+
+  }
+
+
  ////////////////////////////////////editing form/////////////////////////////////////////
  var EPriceValueField = new Ext.form.TextField({
 		    id: 'EtrainingCoordinateHistoryValue',
@@ -408,8 +410,8 @@ jQuery(function($)
 		    allowBlank: false,
 		    maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
-		      
-	 	      
+
+
 	 var EValidFromField = new Ext.form.DateField({
 			fieldLabel: 'Valid From <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
@@ -421,7 +423,7 @@ jQuery(function($)
         		vtype: 'daterange',
         		endDateField: 'EtrainingCoordinateHistoryValidTo'
             });
-    
+
     var EValidToField = new Ext.form.DateField({
 			fieldLabel: 'Valid To',
                 format: 'd-M-Y',
@@ -446,9 +448,9 @@ jQuery(function($)
 	triggerAction: 'all',
 	emptyText:'Select a Type...',
 	selectOnFocus:true
-    }); 
- 
-   
+    });
+
+
     var valid1='Salary';
     var flag1=1;
     var valid2=1;
@@ -468,20 +470,20 @@ jQuery(function($)
                  EValidFromField,
 					 //  EValidToField,
 					   EPriceValueField
-					
+
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:EditHistoryForm
             },{text:'Cancel',
             	handler:function(){EditTAWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   EditTAWindow= new Ext.Window({
       id: 'EditTAWindow',
@@ -494,21 +496,21 @@ jQuery(function($)
       items: fs1
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
   function resetECourseForm(){
     EtypeCombo.reset();
     EValidFromField.reset();
   //  EValidToField.reset();
-   
+
   }
-  
+
   // check if the form is valid
   function isECourseFormValid(){
   return(EtypeCombo.isValid()&& EValidFromField.isValid() && EPriceValueField.isValid()  );
   }
-  
+
   // display or bring forth the form
   function displayEFormWindow(){
   if(!EditTAWindow.isVisible()){
@@ -517,8 +519,8 @@ jQuery(function($)
   } else {
     EditTAWindow.toFront();
   }
-  
-  
+
+
   }
     function EditHistoryForm(){//alert('ana henaaaaaaaaa');
       if(EtypeCombo.isValid()&& EValidFromField.isValid() && EPriceValueField.isValid()){
@@ -526,7 +528,7 @@ jQuery(function($)
          var selectedCourse = [];
          for(i = 0; i< myGrid.selModel.getCount(); i++){
           selectedCourse.push(selections[i].id);}
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listCoordinators.do',
         params: {
@@ -538,23 +540,23 @@ jQuery(function($)
 		   trainingCoordinateHistoryType:        EtypeCombo.getValue(),
 		   trainingCoordinateHistoryValid:       true
         },
-        method:'POST', 
-        success: function(response){   
-       
-			
-						    ds.reload();  
-						    EditTAWindow.hide();  
-              
+        method:'POST',
+        success: function(response){
+
+
+						    ds.reload();
+						    EditTAWindow.hide();
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
    } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -562,8 +564,8 @@ jQuery(function($)
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  }    
+
+  }
  	/*
      * ================  Form Fields  =======================
      */
@@ -575,7 +577,7 @@ jQuery(function($)
     	//	anchor:'95%',
     		maskRe: /([a-zA-Z0-9\s]+)$/
      		});
-     		
+
      var LNameField = new Ext.form.TextField({
       		fieldLabel: 'Last Name <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -583,22 +585,22 @@ jQuery(function($)
     		width: 300,
     	//	anchor:'95%',
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
-     		
+     		});
+
      var MobileField = new Ext.form.TextField({
       		fieldLabel: 'Mobile',
       	//	allowBlank: false,
       		width: 300,
     		id:'trainingCoordinateMobile',
     		maskRe: /([0-9\s]+)$/
-     		});	
+     		});
       var TelephoneField = new Ext.form.TextField({
       		fieldLabel: 'Phone ',
       	//	allowBlank: false,
     		id:'trainingCoordinateTelephone',
     		width: 300,
     		maskRe: /([0-9\s]+)$/
-     		});				
+     		});
       var AbbField = new Ext.form.TextField({
 		    id: 'trainingCoordinateAbb',
 		    fieldLabel: 'Abbreviation <html><font color=red> *</font></html>',
@@ -619,8 +621,8 @@ jQuery(function($)
 		  //  allowBlank: false,
 		    maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
-		      	      
-		      	
+
+
       var EmailField = new Ext.form.TextField({
 		    id: 'trainingCoordinateEmail',
 		    fieldLabel: 'Email',
@@ -632,13 +634,22 @@ jQuery(function($)
 		    vtype:'email'
 		//    maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
-	 var ColorField =new Ext.form.TextField({
-	fieldLabel: 'Color',
-	id: 'picker1',
-	width:300,
+	 var ColorField =   new Ext.ux.form.ColorPickerField ({
+ 	fieldLabel: ' Color ',
+	id: 'color',
+	allowBlank: false,
+	name: 'color',
+   value: '123456',
 //	disable:true
 //	allowBlank: false
-});      
+ });
+//	 new Ext.form.TextField({
+//	fieldLabel: 'Color',
+//	id: 'picker1',
+//	width:300,
+////	disable:true
+////	allowBlank: false
+//});
 	 var HireDateField = new Ext.form.DateField({
 			fieldLabel: 'Hire Date <html><font color=red> *</font></html>',
                 format: 'd-M-Y',
@@ -661,7 +672,7 @@ jQuery(function($)
 		//    allowBlank: false,
 		//    maskRe: /([.-0-9\s]+)$/
 		      });
-		      
+
 	var TitleField = new Ext.form.TextField({
 		    id: 'trainingCoordinateCurrentTitle',
 		    fieldLabel: 'Current Title',
@@ -671,7 +682,7 @@ jQuery(function($)
 	//	anchor:'95%',
 		//    allowBlank: false,
 		    maskRe: /([a-zA-Z0-9\s]+)$/
-		      });	      
+		      });
     var BirthDateField = new Ext.form.DateField({
 			fieldLabel: 'Birth Date',
                 format: 'd-M-Y',
@@ -681,7 +692,7 @@ jQuery(function($)
             //	allowBlank: false,
                 minValue: '1950-01-01',
               //  disabledDays: [5, 6]
-               
+
             });
      var ResignationDateField = new Ext.form.DateField({
 			fieldLabel: 'Resignation Date',
@@ -691,14 +702,14 @@ jQuery(function($)
             	width: 300,
                 minValue: '1950-01-01',
               //  disabledDays: [5, 6]
-               
-            });       
+
+            });
      var DescField = new Ext.form.HtmlEditor({
      			id:'trainingCoordinateDescription',
                     fieldLabel:'Description'
      });
 /**==========================================================================*/
- 
+
  var h=new Ext.TabPanel({
                     region:'center',
                    height:280,
@@ -715,9 +726,9 @@ jQuery(function($)
                     DescField
                ]
             }]});
- 
- 
- 
+
+
+
  var tab2 = new Ext.FormPanel({
         labelAlign: 'left',
         title: 'Edit Coordinator',
@@ -757,12 +768,12 @@ jQuery(function($)
                 HireDateField,
                 ColorField,
                 ResignationDateField
-                		
+
                 		]
             }]
         },h
-        
-        
+
+
 //        {
 //            xtype:'tabpanel',
 //            plain:true,
@@ -778,33 +789,33 @@ jQuery(function($)
 //               ]
 //            }]
 //        }
-        
+
         ]
         }),
-        
+
 
 
             });
 
  //   tab2.render(document.body);
-    
+
  //   var viewport = new Ext.Viewport({
    //         layout:'border',
      //       items:[
     var tap= new Ext.TabPanel({
                     region:'center',
-                     height:495, 
+                     height:495,
                      buttonAlign:'center',
                     width:1250,
         			renderTo: 'binding-example',
                     deferredRender:false,
                     activeTab:0,
                     items:[tab2],
-        buttons: [{ 
+        buttons: [{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
-                handler:function(){ 
+                formBind: true,
+                // Function that fires when user clicks the button
+                handler:function(){
                 var d='3000-01-01';
                 var d2='3000-01-01';
                 var d3='3000-01-01';
@@ -820,16 +831,16 @@ jQuery(function($)
                 {
                 	d3=ResignationDateField.getValue().format('Y-m-d');
                 }
-                if(FNameField.isValid() && LNameField.isValid() && AbbField.isValid() && AddressField.isValid() && EmailField.isValid() && BirthDateField.isValid() 
+                if(FNameField.isValid() && LNameField.isValid() && AbbField.isValid() && AddressField.isValid() && EmailField.isValid() && BirthDateField.isValid()
   && HireDateField.isValid() && ColorField.isValid() && TelephoneField.isValid() && MobileField.isValid() && EmailField.isValid() && BirthDateField.isValid())
   {
-                    tab2.getForm().submit( 
-                    	      Ext.Ajax.request({   
+                    tab2.getForm().submit(
+                    	      Ext.Ajax.request({
         						waitMsg: 'Please wait...',
         						url: '../listCoordinators.do',
 								params: {
 								  task: "EditCoordinator",
-								 
+
 								  trainingCoordinateFirstName:       FNameField.getValue() ,
 								  trainingCoordinateLastName:        LNameField.getValue(),
 								  trainingCoordinateMobile:	       	 MobileField.getValue(),
@@ -844,23 +855,23 @@ jQuery(function($)
 								  trainingCoordinateCurrentSalary:	 SalaryField.getValue(),
 								  trainingCoordinateCurrentTitle:	 TitleField.getValue(),
 								  trainingCoordinatorResignationDate: d3
-								
+
 								},
-						        method:'POST', 
+						        method:'POST',
 						        success: function(response){ ////console.log("success");
-						        		 var redirect = 'coordinators.jsp'; 
+						        		 var redirect = 'coordinators.jsp';
 		                        window.location = redirect;
-      
+
 						        },
 						        failure: function(response){////console.log("faaaaaaaaaail");
-						        	tab2.getForm().reset(); 
-						       }                      
-						      })); 
+						        	tab2.getForm().reset();
+						       }
+						      }));
   }
   else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -868,12 +879,12 @@ jQuery(function($)
 							        buttons: Ext.Msg.OK
 								 });
     }
-                } 
+                }
             },{text:'Cancel',
             	handler:function(){window.location='coordinators.jsp';}
             	}
            ]});
-      
+
 
 //]});
 ////////////////////delete selection record(s)//////////////////////////////
@@ -882,8 +893,8 @@ jQuery(function($)
   for(i = 0; i< myGrid.selModel.getCount(); i++){
     selectedCourse.push(selections[i].xml.idTrainingCoordinateHistory);
   }
- 
-  
+
+
   function confirmDeleteCourses(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -894,14 +905,14 @@ jQuery(function($)
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected huh?');
     }
   }
-  
+
   function deleteCourses(btn){
     if(btn=='yes'){
          var selections = myGrid.selModel.getSelections();
          var selectedCourse = [];
          var type = [];
          var sel = myGrid.getSelectionModel().getSelected();
-         
+
          for(i = 0; i< myGrid.selModel.getCount(); i++){
           selectedCourse.push(selections[i].id);
           var sel = selections[i];
@@ -911,12 +922,12 @@ jQuery(function($)
          // alert("ssssssssssssss>>>>>> "+seldata.trainingCoordinateHistoryType);
          // var HistoryRec = ds.getAt(i);
          }
-         
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
-            url: '../listCoordinators.do', 
-            params: { 
-               task: "DELETESELECTIONS", 
+            url: '../listCoordinators.do',
+            params: {
+               task: "DELETESELECTIONS",
                ids:  selectedCourse,
                type:type
               }, method:'POST',
@@ -933,17 +944,17 @@ jQuery(function($)
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-      }  
+      }
   }
-  
-  
+
+
   //////////////////////////FINISH DELETING//////////////////////////////////////////
 
 function stcCallBack1001(record, opts, success) {
-//if (success) 
+//if (success)
 //// do whatever
 //alert("the sucess ");
 //alert (" number of records "+ds.getCount() +"  recourd "+ds.getAt(0)) ;

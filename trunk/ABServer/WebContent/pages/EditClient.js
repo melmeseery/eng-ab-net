@@ -1,7 +1,7 @@
 Ext.apply(Ext.form.VTypes, {
   daterange: function(val, field) {
     var date = field.parseDate(val);
-    
+
     // We need to force the picker to update values to recaluate the disabled dates display
      if(!date){
             return;
@@ -11,14 +11,14 @@ Ext.apply(Ext.form.VTypes, {
             start.maxValue = date;
            // start.validate();
             this.dateRangeMax = date;
-        } 
+        }
         if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = Ext.getCmp(field.endDateField);
             end.minValue = date;
             //end.validate();
             this.dateRangeMin = date;
         }
-		
+
     /* Always return true since we're only using this vtype
      * to set the min/max allowed values (these are tested
      * for after the vtype test)
@@ -42,7 +42,7 @@ Ext.onReady(function(){
 
     var bd = Ext.getBody();
     /*=====================Grid========================*/
-    
+
     var Personals  = Ext.data.Record.create([
       {name: 'idPersonals', type: 'int'},
       {name: 'personAddress', type: 'string'},
@@ -52,29 +52,29 @@ Ext.onReady(function(){
       {name: 'personMobile', type: 'string'},
       {name: 'personTitle', type: 'string'},
       {name: 'personTelePhone', type: 'string'}
-      
+
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listClients.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
     var ds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "listP"},  
+       baseParams:{task: "listP"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
-   		
+
    		record: "Personals",           // The repeated element which contains row information
    		id: "idPersonals"
         },Personals
         )
       });
-  
+
     // example of custom renderer function
     function italic(value){
         return '' + value + '';
@@ -109,16 +109,16 @@ Ext.onReady(function(){
         {header: "Contact Department", width: 130, sortable: true, dataIndex: 'personAddress'},
         {header: "Contact Phone", width: 130, sortable: true, dataIndex: 'personTelePhone'},
         {header: "Contact Mobile", width: 130, sortable: true, dataIndex: 'personMobile'},
-		{header: "Contact Email", width: 130, sortable: true, dataIndex: 'personEmail'}        
-        
-		
+		{header: "Contact Email", width: 130, sortable: true, dataIndex: 'personEmail'}
+
+
     ]);
 
  ds.on('add', function(){
 	ds.reload();
 //myGrid.getView().refresh();
    });
-  
+
     var myGrid = new Ext.grid.GridPanel({
         ds: ds,
         cm: colModel,
@@ -139,7 +139,7 @@ Ext.onReady(function(){
               })
               ],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 
    myGrid.on("rowdblclick", function(myGrid) {
@@ -155,7 +155,7 @@ Ext.onReady(function(){
 		CTitleField.setValue(seldata.personTitle);
 		CTelephoneField.setValue(seldata.personTelePhone);
 		CAddField.setValue(seldata.personAddress);
-		
+
 });
 
 var Clients  = Ext.data.Record.create([
@@ -173,19 +173,19 @@ var Clients  = Ext.data.Record.create([
       {name: 'personMobile', type: 'string'},
       {name: 'personTitle', type: 'string'},
       {name: 'personTelePhone', type: 'string'}
-      
+
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listClients.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
     var Cds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-      baseParams:{task: "listC"},   
+      baseParams:{task: "listC"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
@@ -195,7 +195,7 @@ var Clients  = Ext.data.Record.create([
         )
       });
    bd.createChild({tag: 'h2', html: ''});
- 
+
     ////////////////////////////add contact////////////////////////////////////////////////
   var CFNameField;
   var CLNameField;
@@ -204,7 +204,7 @@ var Clients  = Ext.data.Record.create([
   var CTelephoneField;
   var CMobileField;
   var CAddressField;
-  
+
      CFNameField = new Ext.form.TextField({
 			fieldLabel: 'First Name <html><font color=red> *</font></html> ',
       		allowBlank: false,
@@ -245,14 +245,14 @@ var Clients  = Ext.data.Record.create([
       		width:220,
       		maskRe: /([0-9\s]+)$/,
     		id:'personTelePhone'
-            }); 
+            });
    CAddField = new Ext.form.TextField({
 			fieldLabel: 'Department <html><font color=red> *</font></html> ',
       		//allowBlank: false,
       		width:220,
-      		
+
     		id:'personAddress'
-            });        
+            });
   var FNameField;
   var LNameField;
   var MailField;
@@ -260,7 +260,7 @@ var Clients  = Ext.data.Record.create([
   var TelephoneField;
   var MobileField;
   var AddressField;
-  
+
      FNameField = new Ext.form.TextField({
 			fieldLabel: 'First Name <html><font color=red> *</font></html> ',
       		allowBlank: false,
@@ -301,17 +301,17 @@ var Clients  = Ext.data.Record.create([
       		width:220,
       		maskRe: /([0-9\s]+)$/
     //		id:'personTelePhone',
-            }); 
+            });
    AddField = new Ext.form.TextField({
 			fieldLabel: 'Department <html><font color=red> *</font></html> ',
       		allowBlank: false,
       		width:220
-      		
+
     //		id:'personAddress',
-            });        
-	
+            });
+
  ///////////////////////////////////////edit form//////////////////////////////////////////
-     
+
    var valid=1;
    var valid1=1;
    //var flag=true;
@@ -365,16 +365,16 @@ var Clients  = Ext.data.Record.create([
             }]
         }
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:EditContactForm
             },{text:'Cancel',
             	handler:function(){EditContactWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   EditContactWindow= new Ext.Window({
       id: 'EditContactWindow',
@@ -395,11 +395,11 @@ var Clients  = Ext.data.Record.create([
     CAddField.reset();
    CMobileField.reset();
   }
-  
+
   // check if the form is valid
   function isCourseFormValid(){
   return(CAddField.isValid() && CMailField.isValid() && CTitleField.isValid()&& CLNameField.isValid() && CFNameField.isValid() && CTelephoneField.isValid() && CMobileField.isValid());
-  }  
+  }
  function editFormWindow(){
   if(!EditContactWindow.isVisible()){
     resetCourseForm();
@@ -407,9 +407,9 @@ var Clients  = Ext.data.Record.create([
   } else {
     EditContactWindow.toFront();
   }
-  
-  
-  }      
+
+
+  }
   /////////////////edit contact function/////////////////////
   function EditContactForm(){
   var selections = myGrid.selModel.getSelections();
@@ -417,7 +417,7 @@ var Clients  = Ext.data.Record.create([
          for(i = 0; i< myGrid.selModel.getCount(); i++){
           selectedCourse.push(selections[i].id);}
    if(isCourseFormValid()){
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listClients.do',
         params: {
@@ -432,22 +432,22 @@ var Clients  = Ext.data.Record.create([
 		  mainContact1:			valid1,
 		  personMobile:			CMobileField.getValue()
         },
-        method:'POST', 
-        success: function(response){        
+        method:'POST',
+        success: function(response){
 
 							ds.reload();
-						    EditContactWindow.hide();   
-              
+						    EditContactWindow.hide();
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -455,11 +455,11 @@ var Clients  = Ext.data.Record.create([
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  
-  }      
+
+
+  }
 //////////////************adding form****************/////////////////
- 
+
   //  var flag=true;
   var fs = new Ext.FormPanel({
         frame: true,
@@ -511,16 +511,16 @@ var Clients  = Ext.data.Record.create([
             }]
         }
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:AddVenueForm
             },{text:'Cancel',
             	handler:function(){AddTAWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddTAWindow= new Ext.Window({
       id: 'AddTAWindow',
@@ -533,8 +533,8 @@ var Clients  = Ext.data.Record.create([
       items: fs
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
  function resetAddForm(){
     TelephoneField.reset();
@@ -545,12 +545,12 @@ var Clients  = Ext.data.Record.create([
     AddField.reset();
    MobileField.reset();
   }
-  
+
   // check if the form is valid
   function isAddFormValid(){
   return(AddField.isValid() && MailField.isValid() && TitleField.isValid()&& LNameField.isValid() && FNameField.isValid() && TelephoneField.isValid() && MobileField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayFormWindow(){
   if(!AddTAWindow.isVisible()){
@@ -559,15 +559,15 @@ var Clients  = Ext.data.Record.create([
   } else {
     AddTAWindow.toFront();
   }
-  
-  
-  }         
-  
+
+
+  }
+
   /////////////////adding course function/////////////////////
   function AddVenueForm(){
-  
+
    if(isAddFormValid()){
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listClients.do',
         params: {
@@ -581,8 +581,8 @@ var Clients  = Ext.data.Record.create([
 		  mainContact:			valid,
 		  personMobile:			MobileField.getValue()
         },
-        method:'POST', 
-        success: function(response){        
+        method:'POST',
+        success: function(response){
 
 			  var record = new Ext.data.Record({
 						    	  personTelePhone:		TelephoneField.getValue() ,
@@ -592,21 +592,21 @@ var Clients  = Ext.data.Record.create([
 								  personLastName:       LNameField.getValue(),
 								  personEmail:			MailField.getValue(),
 								  personMobile:			MobileField.getValue()
-						    });  
-						  //  ds.add(record); 
-						   ds.reload(); 
-						    AddTAWindow.hide();   
+						    });
+						  //  ds.add(record);
+						   ds.reload();
+						    AddTAWindow.hide();
               			//	valid=1;
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -614,8 +614,8 @@ var Clients  = Ext.data.Record.create([
 							        buttons: Ext.Msg.OK
 								 });
     }
-  }  
-  
+  }
+
    var ClientNameField;
   var ClientAddField;
   var ClientAppField;
@@ -623,10 +623,10 @@ var Clients  = Ext.data.Record.create([
   var AppPersonField;
   var WorkDateField;
   var ClientColorField;
-  
+
   var AppD='3000-01-01';
   var WorkD='3000-01-01';
-  
+
     ClientNameField = new Ext.form.TextField({
     id: 'clientName',
     fieldLabel: 'Client Company Name <html><font color=red> *</font></html> ',
@@ -636,13 +636,13 @@ var Clients  = Ext.data.Record.create([
    // anchor : '95%',
     maskRe: /([a-zA-Z0-9\s]+)$/
       });
-      
+
   ClientAddField = new Ext.form.TextField({
     id: 'clientAddress',
     fieldLabel: 'Address',
  //   maxLength: 20,
     width:220,
-  //  allowBlank: false,  
+  //  allowBlank: false,
     maskRe: /([a-zA-Z0-9\s]+)$/
       });
    ClientAppField = new Ext.form.TextField({
@@ -650,10 +650,10 @@ var Clients  = Ext.data.Record.create([
     fieldLabel: 'abbreviation <html><font color=red> *</font></html> ',
  //   maxLength: 20,
     width:220,
-    allowBlank: false,  
+    allowBlank: false,
     maskRe: /([a-zA-Z0-9\s]+)$/
       });
-  
+
  ClientAppDateField = new Ext.form.DateField({
 			fieldLabel: 'Approach Date',
                 format: 'd-M-Y',
@@ -663,27 +663,39 @@ var Clients  = Ext.data.Record.create([
                 id: 'clientApproachDate',
              //   allowBlank: false,
         		vtype: 'daterange',
+        		   //        anchor : '35%',
         	//	endDateField:'clientWorkDate'
             });
-    
+
    WorkDateField = new Ext.form.DateField({
 			fieldLabel: 'Start Business Date',
                 format: 'd-M-Y',
                 minValue: '1960-01-01',
                 width:220,
+                 //anchor : '35%',
               //  allowBlank: false,
                 id: 'clientWorkDate',
                 vtype: 'daterange',
             //    startDateField:'clientApproachDate',
              //   disabledDays: [5, 6]
             });
- 
-  ClientColorField =new Ext.form.TextField({
-	fieldLabel: 'Color Legend',
-	id: 'picker1',
-	width: 220
+
+  ClientColorField =  new Ext.ux.form.ColorPickerField ({
+ 	fieldLabel: 'Color Legend',
+	id: 'color',
+	allowBlank: false,
+	name: 'color',
+   value: '123456',
+   //width:320,
+//	disable:true
 //	allowBlank: false
-});
+ });
+//  new Ext.form.TextField({
+//	fieldLabel: 'Color Legend',
+//	id: 'picker1',
+//	width: 220
+////	allowBlank: false
+//});
 
  AppPersonField = new Ext.form.TextField({
     id: 'clientApproachPerson',
@@ -694,7 +706,7 @@ var Clients  = Ext.data.Record.create([
    // anchor : '95%',
     maskRe: /([a-zA-Z0-9\s]+)$/
       });
- var c;     
+ var c;
   Cds.load();
   Cds.on('load', function(){//////console.log(Cds.getAt(0));
 //alert(Cds.getAt(0));
@@ -707,24 +719,24 @@ WorkDateField.setValue(clientRec.get('clientWorkDate'));
 ClientColorField.setValue(clientRec.get('clientColor'));
 c=clientRec.get('clientColor');
 AppPersonField.setValue(clientRec.get('clientApproachPerson'));
- jQuery(function($)
-	        {
-	            $("#picker1").attachColorPicker(c);
-	            $("#picker1").change(function() {$("#picker1").getValue();
-	         /*   for(var i=0;i<col.getCount();i++)
-	            {
-	            	var colorRec = col.getAt(i);
-	            	if(CourseColorField.getValue()==colorRec.get('courseColor'))
-	            	{
-	            		Ext.MessageBox.alert('Warning', 'The color is selected before, please select another color');
-	            		CourseColorField.reset();
-	            	}
-	            }*/
-	            });
-	        }); 
+// jQuery(function($)
+//	        {
+//	            $("#picker1").attachColorPicker(c);
+//	            $("#picker1").change(function() {$("#picker1").getValue();
+//	         /*   for(var i=0;i<col.getCount();i++)
+//	            {
+//	            	var colorRec = col.getAt(i);
+//	            	if(CourseColorField.getValue()==colorRec.get('courseColor'))
+//	            	{
+//	            		Ext.MessageBox.alert('Warning', 'The color is selected before, please select another color');
+//	            		CourseColorField.reset();
+//	            	}
+//	            }*/
+//	            });
+//	        });
 
 });
- /**==========================================================================*/ 
+ /**==========================================================================*/
 ////////////////////////////////////Contracts/////////////////////////////////////////////
  var Contracts  = Ext.data.Record.create([
 	  {name: 'contractId', type: 'int'},
@@ -739,27 +751,27 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
       {name: 'contractDateOfRequest', type: 'string'},
       {name: 'contractDealPerson', type: 'string'}
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listClients.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
     var Conds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "listCon"},  
+       baseParams:{task: "listCon"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
-   		
+
    		record: "Contracts",           // The repeated element which contains row information
    		id: "idContracts"
         },Contracts
         )
       });
-  
+
     // example of custom renderer function
     function italic(value){
         return '' + value + '';
@@ -788,22 +800,22 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
     // custom or reusable ColumnModels
   //  var sm = new Ext.grid.CheckboxSelectionModel();
        var colModel = new Ext.grid.ColumnModel([
-      	{header: "Proposal ID", width: 100, sortable: true, locked:false, dataIndex: 'proposalID'}, 
+      	{header: "Proposal ID", width: 100, sortable: true, locked:false, dataIndex: 'proposalID'},
         {header: "Deal Person", width: 100, sortable: true, dataIndex: 'contractDealPerson'},
         {header: "Fund Type", width: 100, sortable: true, dataIndex: 'contractFundType'},
-        {header: "Proactive Type", width: 100, sortable: true, dataIndex: 'contractProactiveType'}, 
+        {header: "Proactive Type", width: 100, sortable: true, dataIndex: 'contractProactiveType'},
         {header: "Request Date", width: 100, sortable: true, dataIndex: 'contractDateOfRequest'},
         {header: "Tentative Start Date", width: 150, sortable: true, dataIndex: 'contractFirstStartDate'},
         {header: "Tentative End Date", width: 150, sortable: true, dataIndex: 'contractFirstEndDate'},
-       	{header: "Contract Value", width: 100, sortable: true, locked:false, dataIndex: 'contractFee'}, 
-       
+       	{header: "Contract Value", width: 100, sortable: true, locked:false, dataIndex: 'contractFee'},
+
     ]);
 
  //ds.on('add', function(){
 //	ds.reload();
 //myGrid.getView().refresh();
  //  });
-  
+
     var myContractGrid = new Ext.grid.GridPanel({
         ds: Conds,
         cm: colModel,
@@ -823,9 +835,9 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
            //   })
               ],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
-   Conds.load(); 
+   Conds.load();
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -842,8 +854,8 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
  var simple = new Ext.FormPanel({
         labelAlign: 'left',
         title: 'Edit Client',
-        bodyStyle:'padding:5px',
-        width: 980,
+        bodyStyle:'padding:10px',
+       // width: 980,
         labelWidth:140,
         frame:true,
         items: [new Ext.form.FieldSet({
@@ -881,39 +893,39 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
                 		]
             }]
         }]},h
-        
+
 //        {
 //            xtype:'tabpanel',
 //            plain:true,
 //            activeTab: 0,
 //            height:300,
-//            
+//
 //            defaults:{bodyStyle:'padding:10px'},
 //            items:[myGrid,myContractGrid]
 //            }
-            
+
             ]})
 			]
 
     });
 
-//////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////
 // simple.render(document.body);
-    
+
    var pan= new Ext.TabPanel({
                     region:'center',
-                     height:495, 
+                     height:495,
                      buttonAlign:'center',
                      width:1250,
         			renderTo: 'binding-example',
                     deferredRender:false,
                     activeTab:0,
-                    items:[simple],      
-                     buttons:[{ 
+                    items:[simple],
+                     buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
-                handler:function(){ 
+                formBind: true,
+                // Function that fires when user clicks the button
+                handler:function(){
                 	if(WorkDateField.getValue()!='')
                 	{
                 		WorkD=WorkDateField.getValue().format('Y-m-d');
@@ -924,8 +936,8 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
                 	}
                 	if(ClientNameField.isValid() && ClientAddField.isValid() && ClientAppField.isValid()&& ClientColorField.isValid())
                 	{
-                  simple.getForm().submit( 
-                    	      Ext.Ajax.request({   
+                  simple.getForm().submit(
+                    	      Ext.Ajax.request({
         						waitMsg: 'Please wait...',
         						url: '../listClients.do',
 								params: {
@@ -937,24 +949,24 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
 						          clientWorkDate:	  	WorkD,
 						          clientApproachDate: 	AppD,
 						          clientApproachPerson:	AppPersonField.getValue(),
-						          
+
 								},
-						        method:'POST', 
+						        method:'POST',
 						        success: function(response){ //////console.log("success");//alert(valid);
-						        		 var redirect = 'clients.jsp'; 
+						        		 var redirect = 'clients.jsp';
 		                        window.location = redirect;
-      
+
 						        },
 						        failure: function(response){//////console.log("faaaaaaaaaail");//alert(ValidFromField.getValue().format('Y-m-d'));
-						        	simple.getForm().reset(); 
-						       }                      
+						        	simple.getForm().reset();
+						       }
 						      }));
                 	}
                 	else
                 	{
                 		var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -962,22 +974,22 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
 							        buttons: Ext.Msg.OK
 								 });
                 	}
-                
-                } 
+
+                }
             },{text:'Cancel',
             	handler:function(){window.location='clients.jsp';}
             	}
            ] });
  /********************************************************************/
- 
+
   ////////////////////delete contacts//////////////////////////////
   var selections = myGrid.selModel.getSelections();
   var selectedCourse = [];
   for(i = 0; i< myGrid.selModel.getCount(); i++){
     selectedCourse.push(selections[i].xml.idPersonals);
   }
- 
-  
+
+
   function confirmDeleteCourses(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -988,17 +1000,17 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected huh?');
     }
   }
-  
+
   function deleteCourses(btn){
    var selectedCourse = [];
    var flag=true;
          if(btn=='yes'){
          var selections = myGrid.selModel.getSelections();
-          var row= ds.getAt(0);  
-          var rowID=row.get('idPersonals');  
-          
+          var row= ds.getAt(0);
+          var rowID=row.get('idPersonals');
+
          for(i = 0; i< myGrid.selModel.getCount(); i++){
-         	
+
           if(rowID==selections[i].id)
           		Ext.MessageBox.alert('Error','Sorry, you can\'t delete the main contact!');
           else
@@ -1006,15 +1018,15 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
           	selectedCourse.push(selections[i].id);
           //	alert(selections[i].id);
           }
-          
+
          }
           if(selectedCourse.length!=0)
-          {		
-	         Ext.Ajax.request({  
+          {
+	         Ext.Ajax.request({
 	            waitMsg: 'Please Wait',
-	            url: '../listClients.do', 
-	            params: { 
-	               task: "DELETECONTACT", 
+	            url: '../listClients.do',
+	            params: {
+	               task: "DELETECONTACT",
 	               ids:  selectedCourse
 	              }, method:'POST',
 	            success: function(response){
@@ -1030,23 +1042,23 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
 	            },
 	            failure: function(response){
 	              var result=response.responseText;
-	              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+	              Ext.MessageBox.alert('error','could not connect to the database. retry later');
 	              }
 	         });
           }
-      }  
+      }
   }
-  
-  
+
+
   //////////////////////////FINISH DELETING//////////////////////////////////////////
-     
+
  function stcCallBack1001(record, opts, success) {
-//if (success) 
+//if (success)
 //// do whatever
 //alert("the sucess ");
 //alert (" number of records "+ds.getCount() +"  recourd "+ds.getAt(0)) ;
 //////console.log("  LOOOOOOOOOOOOOOD "+"record "+ds.getCount());
 
 };
-loadtest=   ds.load({callback :  stcCallBack1001});        
+loadtest=   ds.load({callback :  stcCallBack1001});
 });
