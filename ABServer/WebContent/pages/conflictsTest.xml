@@ -2,7 +2,7 @@
   <CalendarConflictDay>
     <day>2009-02-10T15:52:07-08:00</day>
     <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>Business Managment</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -12,7 +12,7 @@
     </Conflicts>
 
     <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>Business uuuuu</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -24,7 +24,7 @@
   <CalendarConflictDay>
     <day>2009-02-11T15:52:07-08:00</day>
     <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -32,9 +32,9 @@
     <conflictReason>2</conflictReason>
     <Name> hilton </Name>
     </Conflicts>
-    
+
        <Conflicts>
-    
+
         <FirstCourseName>newcourse</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -42,15 +42,15 @@
     <conflictReason>2</conflictReason>
     <Name> hilton </Name>
     </Conflicts>
-    
-    
+
+
   </CalendarConflictDay>
   <CalendarConflictDay>
     <day>2009-02-22T15:52:07-08:00</day>
-    
-    
+
+
    <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -58,9 +58,9 @@
     <conflictReason>1</conflictReason>
     <Name> Noha </Name>
     </Conflicts>
-    
+
         <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>Business Managment</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -68,12 +68,12 @@
     <conflictReason>2</conflictReason>
     <Name>  intercontental </Name>
     </Conflicts>
-    
+
   </CalendarConflictDay>
   <CalendarConflictDay>
     <day>2009-02-24T15:52:07-08:00</day>
       <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -81,9 +81,9 @@
     <conflictReason>1</conflictReason>
     <Name> Noha </Name>
     </Conflicts>
-    
+
         <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>Business Managment</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -92,12 +92,12 @@
     <Name>  intercontental </Name>
     </Conflicts>
     <conflictReason>4</conflictReason>
-    
+
   </CalendarConflictDay>
   <CalendarConflictDay>
     <day>2009-02-26T15:52:07-08:00</day>
     <Conflicts>
-    
+
         <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -105,7 +105,7 @@
     <conflictReason>1</conflictReason>
     <Name> Noha </Name>
     </Conflicts>
-     
+         <Conflicts>
           <FirstCourseName>Business Managment</FirstCourseName>
     <SecCourseName>training</SecCourseName>
     <FirstCourseRunNo>2</FirstCourseRunNo>
@@ -115,5 +115,5 @@
     </Conflicts>
           <conflictReason>1</conflictReason>
   </CalendarConflictDay>
- 
+
 </list>

@@ -18,7 +18,7 @@
 
             }
 
-       
+
 
             this.passwordText = 'Passwords must be at least 5 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)';
 
@@ -26,13 +26,13 @@
 
             var hasLength = (value.length >= 5);
 
-       
+
 
             return (hasSpecial && hasLength);
 
          },
 
-       
+
 
          passwordText: 'Passwords must be at least 5 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)',
 
@@ -50,19 +50,20 @@ Ext.onReady(function() {
       {name: 'idUsers', type: 'int'},
       {name: 'userPrivilage', type: 'string'},
       {name: 'userUsername', type: 'string'},
-      {name:'userPassword', type: 'string'}
+      {name:'userPassword', type: 'string'},
+       {name:'userEmail', type: 'string'}
      ]);
-     
+
     dataProxy = new Ext.data.HttpProxy({
      	url: '../listUsers.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
     var ds = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-      baseParams:{task: "list"},   
+      baseParams:{task: "list"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
@@ -101,19 +102,20 @@ Ext.onReady(function() {
     // custom or reusable ColumnModels
       var colModel = new Ext.grid.ColumnModel([
         {header: "User Name", width: 150, sortable: true, dataIndex: 'userUsername'},
-		{header: "User Privilage", width: 200, sortable: true, dataIndex: 'userPrivilage'}
+		{header: "User Privilage", width: 200, sortable: true, dataIndex: 'userPrivilage'},
+			{header: "User Email", width: 200, sortable: true, dataIndex: 'userEmail'}
     ]);
 
 ds.on('add', function(){
 	ds.reload();
 //myGrid.getView().refresh();
    });
- 
+
     var myGrid = new Ext.grid.GridPanel({
         ds: ds,
         cm: colModel,
         stripeRows: true,
-         height:495, 
+         height:495,
         renderTo: 'binding-example',
                /* width:980,*/
         title:'Users',
@@ -127,7 +129,7 @@ ds.on('add', function(){
               handler: confirmDeleteCourses
               })],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 
     myGrid.on("rowdblclick", function(myGrid) {
@@ -140,23 +142,26 @@ ds.on('add', function(){
 		EPrivillageField.setValue(seldata.userPrivilage);
 		EPasswordField.setValue(seldata.userPassword);
 		EConfirmPassField.setValue(seldata.userPassword);
+		EUserEmailField.setValue(seldata.userEmail);
+
 });
 
-  
+
 
  ////////////////////adding new record//////////////////////////////
   var AddUserForm;
   var AddUserWindow;
-  
+
   var UserNameField;
   var PasswordField;
   var PrivillageField;
   var ConfirmPassField;
+   var UserEmailField;
  var Itemsds=[['0','Admin'],['1','Accountant'],['2','Employee'],['3','User']];
     var ItemsDS = new Ext.data.SimpleStore({
         fields: ['id','name'],
         data: Itemsds
-    }); 
+    });
   UserNameField = new Ext.form.TextField({
       		fieldLabel: 'User Name <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -164,16 +169,16 @@ ds.on('add', function(){
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
      		});
-     		
+
   PasswordField = new Ext.form.TextField({
       		fieldLabel: 'Password <html><font color=red> *</font></html>',
       		allowBlank: false,
       		inputType:'password',
       		width:200,
-    		id:'userPassword',
+    		id:'userPassword'
     	//	vtype: 'password',
     	//	maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
+     		});
   PrivillageField = new Ext.form.ComboBox({
     id:'userPrivilage',
     fieldLabel: 'User Privillage <html><font color=red> *</font></html>',
@@ -199,8 +204,16 @@ ds.on('add', function(){
       		initialPasswordField: 'userPassword',
     		id:'conuserPassword',
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	 
-     
+     		});
+
+	UserEmailField = new Ext.form.TextField({
+				fieldLabel : 'User E-Mail <html><font color=red> *</font></html>',
+				// allowBlank: false,
+				width : 200,
+			    allowBlank: false,
+				vtype : 'email',
+				id : 'userEmail'
+			});
     //////////////************adding form****************/////////////////
     var fs = new Ext.FormPanel({
         frame: true,
@@ -217,49 +230,50 @@ ds.on('add', function(){
                 items: [UserNameField,
                 	   PasswordField,
                 	   ConfirmPassField,
-					   PrivillageField
-					   
+					   PrivillageField,
+                        UserEmailField
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:AddUserForm
             },{text:'Cancel',
             	handler:function(){AddUserWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddUserWindow= new Ext.Window({
       id: 'AddUserWindow',
       title: 'Add New User',
       closable:false,
       width: 420,
-      height: 220,
+      height: 280,
       plain:true,
       layout: 'fit',
       items: fs
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
   function resetUserForm(){
     UserNameField.reset();
     PasswordField.reset();
     PrivillageField.reset();
     ConfirmPassField.reset();
-   
+    UserEmailField.reset();
+
   }
-  
+
   // check if the form is valid
   function isUserFormValid(){
-  return(UserNameField.isValid() && PasswordField.isValid() && PrivillageField.isValid() && ConfirmPassField.isValid());
+  return(UserNameField.isValid() && PasswordField.isValid() && PrivillageField.isValid() && ConfirmPassField.isValid()&& UserEmailField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayFormWindow(){
   if(!AddUserWindow.isVisible()){
@@ -269,54 +283,56 @@ ds.on('add', function(){
     AddUserWindow.toFront();
   }
   }
-    
-    
+
+
   /////////////////adding course function/////////////////////
   function AddUserForm(){
-  
+
    if(isUserFormValid()){
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listUsers.do',
         params: {
           task: "AddUser",
           userUsername:      	UserNameField.getValue(),
           userPrivilage:        PrivillageField.getValue(),
-          userPassword:    		PasswordField.getValue()
+          userPassword:    		PasswordField.getValue(),
+          userEmail:  UserEmailField.getValue()
         },
-        method:'POST', 
-        success: function(response){        
+        method:'POST',
+        success: function(response){
 
         var result=1;
-        
+
           switch(result){
           case 1:
-         
+
  			var user = new Ext.data.Record({
       		userUsername:      		UserNameField.getValue(),
           	userPrivilage:        	PrivillageField.getValue(),
-          	userPassword:    		PasswordField.getValue()
+          	userPassword:    		PasswordField.getValue(),
+          	userEmail:  UserEmailField.getValue()
     		});
 
     		ds.add(user);
  		//	ds.reload();
 			AddUserWindow.hide();
-            
+
             break;
           default:
             Ext.MessageBox.alert('Warning','Could not create the course.');
             break;
-          }        
+          }
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -324,20 +340,20 @@ ds.on('add', function(){
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  
+
+
   }
- 
- 
+
+
  ////////////////////edit record//////////////////////////////
   var EditUserForm;
   var EditUserWindow;
-  
+
   var EUserNameField;
   var EPasswordField;
   var EPrivillageField;
   var EConfirmPassField;
- 
+var EUserEmailField;
   EUserNameField = new Ext.form.TextField({
       		fieldLabel: 'User Name <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -345,7 +361,7 @@ ds.on('add', function(){
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
      		});
-     		
+
   EPasswordField = new Ext.form.TextField({
       		fieldLabel: 'Password <html><font color=red> *</font></html>',
       		allowBlank: false,
@@ -354,7 +370,7 @@ ds.on('add', function(){
     		id:'userPassword1',
     		//vtype: 'password',
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
+     		});
   EPrivillageField = new Ext.form.ComboBox({
   //  id:'userPrivilage',
     fieldLabel: 'User Privillage <html><font color=red> *</font></html>',
@@ -379,8 +395,15 @@ ds.on('add', function(){
       		initialPasswordField: 'userPassword1',
     		id:'conuserPassword1',
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	 
-     
+     		});
+EUserEmailField=   new Ext.form.TextField({
+				fieldLabel : 'User E-Mail <html><font color=red> *</font></html>',
+				// allowBlank: false,
+				width : 200,
+			    allowBlank: false,
+				vtype : 'email',
+				id : 'userEmail1'
+			});
     //////////////************EDIT form****************/////////////////
     var edit = new Ext.FormPanel({
         frame: true,
@@ -397,49 +420,50 @@ ds.on('add', function(){
                 items: [EUserNameField,
                 	   EPasswordField,
                 	   EConfirmPassField,
-					   EPrivillageField
-					   
+					   EPrivillageField,
+						EUserEmailField
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:EditUserForm
             },{text:'Cancel',
             	handler:function(){EditUserWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   EditUserWindow= new Ext.Window({
       id: 'EditUserWindow',
       title: 'Edit User',
       closable:false,
       width: 400,
-      height: 220,
+      height: 280,
       plain:true,
       layout: 'fit',
       items: edit
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
   function resetEditUserForm(){
     EUserNameField.reset();
     EPasswordField.reset();
     EPrivillageField.reset();
     EConfirmPassField.reset();
-   
+    EUserEmailField.reset();
+
   }
-  
+
   // check if the form is valid
   function isEUserFormValid(){
-  return(EUserNameField.isValid() && EPasswordField.isValid() && EPrivillageField.isValid() && EConfirmPassField.isValid());
+  return(EUserNameField.isValid() && EPasswordField.isValid() && EPrivillageField.isValid() && EConfirmPassField.isValid() && EUserEmailField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayEditUserWindow(){
   if(!EditUserWindow.isVisible()){
@@ -455,8 +479,8 @@ ds.on('add', function(){
          var selectedCourse = [];
          for(i = 0; i< myGrid.selModel.getCount(); i++){
           selectedCourse.push(selections[i].id);}
-   if(EUserNameField.isValid() && EPasswordField.isValid()  && EConfirmPassField.isValid() && EPrivillageField.isValid()){
-      Ext.Ajax.request({   
+   if(EUserNameField.isValid() && EPasswordField.isValid()  && EConfirmPassField.isValid() && EPrivillageField.isValid() && EUserEmailField.isValid()){
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listUsers.do',
         params: {
@@ -464,23 +488,24 @@ ds.on('add', function(){
           id:selections[0].id,
           userUsername:      	EUserNameField.getValue(),
           userPrivilage:        EPrivillageField.getValue(),
-          userPassword:    		EPasswordField.getValue()
+          userPassword:    		EPasswordField.getValue(),
+          userEmail:   EUserEmailField.getValue()
         },
-        method:'POST', 
-        success: function(response){     
+        method:'POST',
+        success: function(response){
 							ds.reload();
-						    EditUserWindow.hide();  
-              
+						    EditUserWindow.hide();
+
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       var errorMsg='Your Form is not valid!';
                 			Ext.Msg.show({
-							         title: 'Error', 
+							         title: 'Error',
 							        msg: errorMsg,
 							        minWidth: 200,
 							        modal: true,
@@ -488,23 +513,23 @@ ds.on('add', function(){
 							        buttons: Ext.Msg.OK
 								 });
     }
-  
-  
-  }      
-  ////////////////////////////////////////////////////////////////////  
+
+
+  }
+  ////////////////////////////////////////////////////////////////////
     /////////////////////FINISH ADDING/////////////////////////////
  ////////////////////////////////////////////////////////////////////
- 
+
  /********************************************************************/
- 
+
   ////////////////////delete selection record(s)//////////////////////////////
   var selections = myGrid.selModel.getSelections();
   var selectedCourse = [];
   for(i = 0; i< myGrid.selModel.getCount(); i++){
     selectedCourse.push(selections[i].xml.idUsers);
   }
- 
-  
+
+
   function confirmDeleteCourses(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -515,7 +540,7 @@ ds.on('add', function(){
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected huh?');
     }
   }
-  
+
   function deleteCourses(btn){
     if(btn=='yes'){
          var selections = myGrid.selModel.getSelections();
@@ -524,12 +549,12 @@ ds.on('add', function(){
           selectedCourse.push(selections[i].id);
         //  alert("ssssssssssssss>>>>>> "+selections[i].id);
          }
-         
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
-            url: '../listUsers.do', 
-            params: { 
-               task: "DELETESELECTIONS", 
+            url: '../listUsers.do',
+            params: {
+               task: "DELETESELECTIONS",
                ids:  selectedCourse
               }, method:'POST',
             success: function(response){
@@ -545,19 +570,19 @@ ds.on('add', function(){
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-      }  
+      }
   }
-  
-  
+
+
   //////////////////////////FINISH DELETING//////////////////////////////////////////
 
 
-	
+
 	function stcCallBack1001(record, opts, success) {
-//if (success) 
+//if (success)
 //// do whatever
 //alert("the sucess ");
 //// alert (" number of records "+ds.getCount() +"  recourd "+ds.getAt(0)) ;

@@ -11,7 +11,7 @@ Ext.apply(Ext.form.VTypes, {
             start.maxValue = date;
             //start.validate();
             this.dateRangeMax = date;
-        } 
+        }
         else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = Ext.getCmp(field.endDateField);
             end.minValue = date;
@@ -30,18 +30,18 @@ Ext.onReady(function() {
     Ext.form.Field.prototype.msgTarget = 'side';
 
     var bd = Ext.getBody();
-            
-    var holidayId = 0;          
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
- 
+
+    var holidayId = 0;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
      dataProxy = new Ext.data.HttpProxy({
      	url: '../HolidaysAction.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
- 
+
   var sm3 = new Ext.grid.CheckboxSelectionModel();
-  
+
   var holidayDS = new Ext.data.Store({
              // load using HTTP
       		proxy: dataProxy,
@@ -55,13 +55,13 @@ Ext.onReady(function() {
         sortInfo:{field: "HolidayName", direction: "ASC"}
         });
 holidayDS.load();
-  
+
     var holidaysGrid = new Ext.grid.GridPanel({
        title:'Holidays',
         store: holidayDS,
         cm: new Ext.grid.ColumnModel([
             sm3,
-            
+
             {id:'holidayId',header: "Holiday Name", width: 300, sortable: true, dataIndex: 'HolidayName'}
             ,{header: "From", width: 250, sortable: true, dataIndex: 'fromDate'},
             {header: "To", width: 250, sortable: true, dataIndex: 'toDate'}
@@ -78,7 +78,7 @@ holidayDS.load();
             tooltip:'Add a new Holiday',
             iconCls:'add',
             handler: function(){
-            	var redirect = '../JSP/createHoliday.jsp'; 
+            	var redirect = '../JSP/createHoliday.jsp';
 			 	window.location = redirect;
             }
         },'-',{
@@ -86,6 +86,11 @@ holidayDS.load();
             tooltip:'Remove the selected Holiday(s)',
             iconCls:'remove',
             handler: confirmDeleteHoliday
+        },{
+            text:'Load Holiday Calendar',
+            tooltip:'Load Holiday Calendar from internet',
+            iconCls:'add',
+            handler: loadHoliday
         }],
 
         width:600,
@@ -94,8 +99,36 @@ holidayDS.load();
     });
 //////////////////////////////////////delete Holiday//////////////////////////////////////////////////////////
 
- 
- //confirm delete function 
+ function loadHoliday(){
+ 	   Ext.MessageBox.confirm('Confirmation','Do you like to load Holiday ?', LoadiCalHoliday);
+
+ }
+ function LoadiCalHoliday(btn){
+    if(btn=='yes'){
+   Ext.Ajax.request({
+            waitMsg: 'Please Wait',
+            url: '../HolidaysAction.do',
+        	params: {
+          		task: "loadiCalHoliday",
+
+              },
+            method:'POST',
+            success: function(response){
+
+
+                holidaysGrid.getStore().load();
+
+
+            },
+            failure: function(response){
+              var result=response.responseText;
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
+              }
+         });
+    }
+
+ }
+ //confirm delete function
   function confirmDeleteHoliday(){
     if(holidaysGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -106,7 +139,7 @@ holidayDS.load();
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected');
     }
   }
-  
+
   function deleteHoliday(btn){
     if(btn=='yes'){
          var selections = holidaysGrid.getSelections();
@@ -114,36 +147,36 @@ holidayDS.load();
          for(i = 0; i< selections.length; i++){
           selectedHoliday.push(selections[i].get('holidayId'));
         //	contractPriceValue = contractTotalPrice.getValue()-selections[i].get('courseTotalPrice');
-   	
+
          }
-        
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
             url: '../HolidaysAction.do',
         	params: {
           		task: "deleteHoliday",
-          		
+
                holidayIds:  selectedHoliday
-              }, 
+              },
             method:'POST',
             success: function(response){
-             
-             
+
+
                 holidaysGrid.getStore().load();
-				
-              
+
+
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-       
-      }  
+
+      }
   }
-  
+
   ////////////////////////////////edit resource///////////////////////////////////////
-  
+
    var holidayName = new Ext.form.TextField({
       		fieldLabel: 'Holiday Name',
       		allowBlank: false,
@@ -152,9 +185,9 @@ holidayDS.load();
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
      		});
-     		
-     		
-	
+
+
+
 	var startHolidayDateField = new Ext.form.DateField({
 	 fieldLabel: 'Start Date',
      format: 'd-M-Y',
@@ -166,7 +199,7 @@ holidayDS.load();
 	 vtype: 'daterange',
 	 endDateField: 'enddt'
     });
-    
+
 	var endHolidayDateField = new Ext.form.DateField({
 	  fieldLabel: 'End Date',
       format: 'd-M-Y',
@@ -177,9 +210,9 @@ holidayDS.load();
 	  id: 'enddt',
 	  vtype: 'daterange',
 	  startDateField: 'startdt' // id of the start date field
-	  
+
     });
-  
+
   var editHolidayForm = new Ext.FormPanel({
         frame: true,
      //   title:'Add Coordinator History',
@@ -190,21 +223,21 @@ holidayDS.load();
         autoHeight: true,
         items: [
 					   holidayName,startHolidayDateField,endHolidayDateField
-		     
+
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:editHoliday
             },{text:'Cancel',
             	handler:function(){editHolidayWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
-    
+
   editHolidayWindow= new Ext.Window({
       id: 'editHolidayWindow',
       title: 'Editing a Holiday',
@@ -215,25 +248,25 @@ holidayDS.load();
       layout: 'fit',
       items: editHolidayForm
     });
-	    
+
 function displayHolidayWindow(){
   if(!editHolidayWindow.isVisible()){
-    
+
     editHolidayWindow.show();
   } else {
     editHolidayWindow.toFront();
   }
-  
-  
-  }	
-  
-  
+
+
+  }
+
+
   function editHoliday(){
-  
-	Ext.Ajax.request({   
+
+	Ext.Ajax.request({
 		waitMsg: 'Please wait...',
 		url: '../HolidaysAction.do',
-		
+
 		params: {
 		  task: "editHoliday",
 		  holidayid:        holidayId,
@@ -241,20 +274,20 @@ function displayHolidayWindow(){
 		  startDate:        startHolidayDateField.getValue().format('Y-m-d'),
 		  endDate:          endHolidayDateField.getValue().format('Y-m-d')
 		  },
-        method:'POST', 
-        success: function(response){ 
+        method:'POST',
+        success: function(response){
         	holidaysGrid.getStore().load();
-      		editHolidayWindow.hide();  
+      		editHolidayWindow.hide();
 		},
 			failure: function(response){  //console.log("faaaaaaaaaail");
-        	//addCertificateForm.getForm().reset(); 
-       }                      
+        	//addCertificateForm.getForm().reset();
+       }
       });
 
-		        
-  	
+
+
   };
-  
+
       function returnFormatDate(value){
     	var dt = new Date(Date.parseDate(value,'d-M-Y'));
 //    	  //console.log('>>>>>'+value);
@@ -263,26 +296,26 @@ function displayHolidayWindow(){
 		dt = new Date(value);
   //console.log('the date = '+dt+' the new date = '+dt.format('Y-m-d'));
 		return dt.format('Y-m-d');
-        
+
     };
-  
+
 holidaysGrid.on("rowdblclick", function(holidaysGrid) {
 	  var selections = holidaysGrid.selModel.getSelections();
-	  
+
 	  holidayId = selections[0].get('holidayId');
-	  
+
 	  holidayName.setValue(selections[0].get('HolidayName'));
 	  startHolidayDateField.setValue(returnFormatDate(selections[0].get('fromDate')));
 	  console.log(selections[0].get('fromDate')+'  '+returnFormatDate(selections[0].get('fromDate')));
 	  endHolidayDateField.setValue(returnFormatDate(selections[0].get('toDate')));
-	  
+
 	  displayHolidayWindow();
 });
-  
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 var tabs=  new Ext.TabPanel({
                    region:'center',
-                    height:495, 
+                    height:495,
                            /* width:980,*/
                            autoHeight : true,
         			renderTo: 'binding-example',
@@ -294,16 +327,16 @@ var tabs=  new Ext.TabPanel({
                     ,tbar: [
             			''
             			]
-                    
-                    
+
+
                     });
-                    
-                    
+
+
 // tabs.on('beforeshow',function(){
-// 	
-// 	
-// 	
-// });                   
+//
+//
+//
+// });
 
 });
-    
+
