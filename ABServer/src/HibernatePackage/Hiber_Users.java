@@ -13,34 +13,36 @@ import database.DataSourceConnection;
 
 import tablespackage.Trainingcoordinators;
 import tablespackage.Users;
-public class Hiber_Users 
+public class Hiber_Users
 {
-	
+
 	public Hiber_Users(){}
-	
+
 	public void insertUser(Users c,DataSourceConnection database)
 	{
 		try{
-			
+
 			String UserUsername=null;
 			String UserPassword=null;
-			
+			String UserEmail=null;
 			if(c.getUserUsername()!=null)
 				UserUsername="'"+c.getUserUsername()+"'";
 			if(c.getUserPassword()!=null)
 				UserPassword="'"+c.getUserPassword()+"'";
-			
-			
-			database.update("insert into users (UserUsername,UserPassword,UserPrivilage) values("+UserUsername+","+UserPassword+","+c.getUserPrivilage()+")");
-			
+			if (c.getUserEmail()!=null){
+				UserEmail="'"+c.getUserEmail()+"'";
+			}
+
+			database.update("insert into users (UserUsername,UserPassword,UserPrivilage,UserEmail) values("+UserUsername+","+UserPassword+","+c.getUserPrivilage()+","+UserEmail+")");
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
 	}
-//	public String checkUser(String id) 
+//	public String checkUser(String id)
 //	{
 //		//boolean flag=false;
 //		String pass="";
@@ -67,13 +69,13 @@ public class Hiber_Users
 //				//	////System.out.println("pass= "+Testuser.getUserPassword());
 //				}
 //		 		else {
-//		 			
+//
 //		 			//////System.out.println(" errorrrrrrrrrrrr");
 //		 		}
-//		 		
+//
 //				}
 //		 	//////System.out.println("pass= "+pass);
-//	
+//
 //	        session.close();
 //		}catch(Exception e){
 //			//e.printStackTrace();
@@ -85,7 +87,7 @@ public class Hiber_Users
 	{
 		ArrayList<Users> Al=new ArrayList<Users>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from users");
 		 	while(l.next())
 		 	{
@@ -94,11 +96,12 @@ public class Hiber_Users
 				u.setUserUsername(l.getString(2));
 				u.setUserPassword(l.getString(3));
 				u.setUserPrivilage(l.getInt(4));
+				u.setUserEmail(l.getString( 5));
 				Al.add(u);
 		 	}
 		 	l.close();
-			
-	        
+
+
 		}catch(Exception e){e.printStackTrace();
 			// //////System.out.println(e.getMessage());
 		}finally{
@@ -108,26 +111,30 @@ public class Hiber_Users
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void updateUser(Users c,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 		//	//System.out.println("update Trainingcoordinatehistory set TrainingCoordinateHistoryValidFrom="+date+" where idTrainingCoordinateHistory="+id);
 			String UserUsername=null;
 			String UserPassword=null;
-			
+			String UserEmail=null;
+
 			if(c.getUserUsername()!=null)
 				UserUsername="'"+c.getUserUsername()+"'";
 			if(c.getUserPassword()!=null)
 				UserPassword="'"+c.getUserPassword()+"'";
-			
-			database.update("update users set UserUsername="+UserUsername+",UserPassword="+UserPassword+",UserPrivilage="+c.getUserPrivilage()+" where idUsers="+c.getIdUsers());
-			
+			if (c.getUserEmail()!=null){
+				UserEmail="'"+c.getUserEmail()+"'";
+			}
+
+			database.update("update users set UserUsername="+UserUsername+",UserPassword="+UserPassword+",UserPrivilage="+c.getUserPrivilage()+" , UserEmail="+UserEmail+" where idUsers="+c.getIdUsers());
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}	
+
+	}
 }

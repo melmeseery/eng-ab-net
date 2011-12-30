@@ -1,11 +1,10 @@
 package mypackage;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +32,7 @@ import HibernatePackage.Hiber_Coordinators;
 //import HibernatePackage.HibernateUtil;
 
 
-import com.mysql.jdbc.Statement;
+
 import com.thoughtworks.xstream.XStream;
 
 import database.DataSourceConnection;
@@ -57,9 +56,11 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 
     	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
+
+
+//		database.initializeConnecton(this.getServlet());
+
 		database.initializeConnecton(this.servlet);
-
-
 
     	if(request.getParameter("task").equals("list"))
     	{

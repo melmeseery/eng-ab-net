@@ -24,6 +24,9 @@ public class UserShow
 	 * @es_generated
 	 */
 	private String userPrivilage;
+
+	private String userEmail;
+
 	public UserShow() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -92,4 +95,10 @@ public class UserShow
 	/** auto generated
 	 * @es_generated
 	 */
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 }
