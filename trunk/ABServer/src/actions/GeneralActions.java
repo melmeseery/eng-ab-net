@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package actions;
 
@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.converters.basic.DateConverter;
 
 /**
  * @author noha
- * 
+ *
  */
 public class GeneralActions {
 
@@ -33,7 +33,7 @@ public class GeneralActions {
 
 	public static Date parseDateToRequiredDate(String parameter)
 			throws ParseException {
-		
+
 		Calendar cal = Calendar.getInstance();
 		DateFormatManager dfm = new DateFormatManager();
 		dfm.setPattern("dd-MMM-yyyy");
@@ -43,10 +43,23 @@ public class GeneralActions {
 		cal.set(cal.MONTH, Integer.parseInt(parameter.substring(5, 7)) - 1);
 		cal.set(cal.DATE, Integer.parseInt(parameter.substring(8, 10)));
 
-		
+
 		////System.out.println(dfm.format(cal.getTime()));
 
 		return dfm.parse(dfm.format(cal.getTime()));
+
+	}
+	public static  Date parseDateFromiCal(String parameter){
+
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.set(cal.YEAR, Integer.parseInt(parameter.substring(0, 4)));
+		cal.set(cal.MONTH, Integer.parseInt(parameter.substring(5, 6))-1);
+		cal.set(cal.DAY_OF_MONTH, Integer.parseInt(parameter.substring(7, 9)));
+
+		return cal.getTime();
+
 
 	}
 

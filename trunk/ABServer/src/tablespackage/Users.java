@@ -27,6 +27,8 @@ public class Users {
 	 */
 	private Integer userPrivilage;
 
+
+	private String userEmail;
 	/** auto generated
 	 * @es_generated
 	 */
@@ -47,20 +49,21 @@ public class Users {
 	 * @es_generated
 	 */
 	public Users(Integer idUsers, Collection tasks, String userUsername,
-			String userPassword, Integer userPrivilage) {
+			String userPassword, Integer userPrivilage, String userEmail) {
 		super();
 		this.idUsers = idUsers;
 		this.tasks = tasks;
 		this.userUsername = userUsername;
 		this.userPassword = userPassword;
 		this.userPrivilage = userPrivilage;
+		this.userEmail=userEmail;
 	}
 
 	/** auto generated
 	 * @es_generated
 	 */
 	public boolean equals(Object value) {
-		//TODO Implement equals() using Business key equality.	
+		//TODO Implement equals() using Business key equality.
 		return super.equals(value);
 	}
 
@@ -68,7 +71,7 @@ public class Users {
 	 * @es_generated
 	 */
 	public int hashCode() {
-		//TODO Implement hashCode() using Business key equality.	
+		//TODO Implement hashCode() using Business key equality.
 		return super.hashCode();
 	}
 
@@ -76,7 +79,7 @@ public class Users {
 	 * @es_generated
 	 */
 	public String toString() {
-		//TODO Implement toString().	
+		//TODO Implement toString().
 		return super.toString();
 	}
 
@@ -149,4 +152,13 @@ public class Users {
 	public void setUserPrivilage(Integer value) {
 		this.userPrivilage = value;
 	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 }

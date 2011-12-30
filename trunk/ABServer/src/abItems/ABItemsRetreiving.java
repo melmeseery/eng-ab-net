@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package abItems;
 
@@ -60,7 +60,7 @@ public class ABItemsRetreiving {
 
 		String xmlText = "";
 		ResultSet rs = database
-				.retrieve("Select idTrainingCoordinators,TrainingCoordinateFirstName,TrainingCoordinateLastName from trainingcoordinators;");
+				.retrieve("Select idTrainingCoordinators,TrainingCoordinateFirstName,TrainingCoordinateLastName from trainingcoordinators  where TrainingCoordinatorDeleted = 0  ;");
 
 		while (rs.next()) {
 
@@ -233,7 +233,7 @@ public class ABItemsRetreiving {
 						+ courseId);
 		if(courses_rs.next())
 		while (rs.next()) {
-			
+
 				ResultSet resourceCourses_rs = database
 						.retrieve("Select idResourceCourse from resourcecourses where ResourceCourse_idCourses = "
 								+ courses_rs.getString(1)
@@ -245,7 +245,7 @@ public class ABItemsRetreiving {
 							+ rs.getString(2)+" "+rs.getString(3) + "</resourceName></Resource>";
 
 				resourceCourses_rs.close();
-			
+
 
 		}
 		courses_rs.close();
@@ -716,7 +716,7 @@ public class ABItemsRetreiving {
 	public String retreiveContractDealPersons(DataSourceConnection database,int dealPersonType)
 			throws SQLException {
 		String xmlText = "";
-		
+
 		if(dealPersonType == 2){
 		ResultSet rs = database
 				.retrieve("Select idTrainingCoordinators,TrainingCoordinateFirstName,TrainingCoordinateLastName from trainingcoordinators;");
@@ -758,7 +758,7 @@ public class ABItemsRetreiving {
 		}
 		rs.close();
 		}
-		
+
 		xmlText = "<list>" + xmlText + "</list>";
 		return xmlText;
 	}
@@ -776,11 +776,11 @@ public class ABItemsRetreiving {
 					+ "</venueName></Venue>";
 
 		}
-		
+
 		xmlText = xmlText + "<Venue><venueId>" + "-1"
 		+ "</venueId><venueName>" + "Other"
 		+ "</venueName></Venue>";
-		
+
 		rs.close();
 		xmlText = "<list>" + xmlText + "</list>";
 		return xmlText;

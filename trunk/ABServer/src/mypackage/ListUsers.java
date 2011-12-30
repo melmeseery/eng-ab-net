@@ -24,25 +24,25 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListUsers extends org.apache.struts.action.Action {
-    
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListUsers() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_Users HU=new Hiber_Users();
         XStream xstream = new XStream();
         ArrayList<UserShow> al=new ArrayList<UserShow>();
-        
+
       	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-        
+
         if(request.getParameter("task").equals("list"))
         {
         	ArrayList<Users> users=HU.getUsers(database);
@@ -52,6 +52,7 @@ public class ListUsers extends org.apache.struts.action.Action {
         		us.setIdUsers(users.get(i).getIdUsers());
         		us.setUserPassword(users.get(i).getUserPassword());
         		us.setUserUsername(users.get(i).getUserUsername());
+        		us.setUserEmail(users.get(i).getUserEmail() );
         		Integer j=users.get(i).getUserPrivilage();
         		if(j.equals(0))
         			us.setUserPrivilage("Admin");
@@ -67,7 +68,7 @@ public class ListUsers extends org.apache.struts.action.Action {
 	        // //////System.out.println("ana ba3d el alias");
 	        String returnText = xstream.toXML(al);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
         }
@@ -85,6 +86,7 @@ public class ListUsers extends org.apache.struts.action.Action {
         	else if(privillage.equals("User"))
         		u.setUserPrivilage(3);
         	u.setUserUsername(request.getParameter("userUsername"));
+        	u.setUserEmail(request.getParameter("userEmail") );
         	HU.insertUser(u, database);
         }
         else if(request.getParameter("task").equals("EditUser"))
@@ -103,48 +105,49 @@ public class ListUsers extends org.apache.struts.action.Action {
 	        	else if(privillage.equals("User"))
 	        		s.setUserPrivilage(3);
 	    	  s.setUserUsername(request.getParameter("userUsername"));
+	    		s.setUserEmail(request.getParameter("userEmail") );
 	    	 HU.updateUser(s, database);
-        	
+
         }
         else if(request.getParameter("task").equals("DELETESELECTIONS"))
         {
         	 if (request.getParameterValues("ids").length == 1)
              {
            	  try{
-         			
+
            		database.update("delete from users where idUsers = "+request.getParameterValues("ids")[0]);
-         			
+
          		}
          		  catch (Exception e) { e.printStackTrace();
-         	          
-         	      }  finally { 
-         	           
+
+         	      }  finally {
+
          	      }
-           	  
+
              }
              else if (request.getParameterValues("ids").length > 1)
              {
            	  try{
-           			
-           			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+           			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                  	  	{
-           				
+
            				database.update("delete from users where idUsers = "+request.getParameterValues("ids")[i]);
-               			
+
                  	  	}
            	     }
-           			
+
            		  catch (Exception e) { e.printStackTrace();
-           	          
-           	      }  finally { 
-           	           
+
+           	      }  finally {
+
            	      }
-           	  }  
+           	  }
 
         }
-        
+
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -153,7 +156,7 @@ public class ListUsers extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-        
+
     	return mapping.findForward("success");
 
     }

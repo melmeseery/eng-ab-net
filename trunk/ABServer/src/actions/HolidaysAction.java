@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package actions;
 
@@ -32,19 +32,19 @@ public class HolidaysAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
+
 		// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-		
+
 		// /////////////////////////////////////////////////////////////////////////////
 		if (request.getParameter("task").equals("addNewHoliday")) {
 			Holidays holidays = new Holidays();
-			
+
 			holidays.addNewHoliday(database, request,response);
-			
-		}	
-		
+
+		}
+
 		// ///////////////////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("retreiveHolidays")) {
 
@@ -59,7 +59,8 @@ public class HolidaysAction extends Action {
 
 			out.write(returnText);
 		}
-		
+
+
 		// ///////////////////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("Holidays")) {
 
@@ -72,23 +73,28 @@ public class HolidaysAction extends Action {
 
 			out.write(returnText);
 		}
-		
+
 		// ///////////////////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("deleteHoliday")) {
 
 			Holidays holidays = new Holidays();
 			holidays
 					.deleteHoliday(database, request);
-			
+
 		}
-		
+		else if (request.getParameter("task").equals("loadiCalHoliday")){//loadiCalHoliday
+
+
+			Holidays holidays = new Holidays();
+			holidays.loadIcalHoliday(database, request);
+		}
 		// ///////////////////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("editHoliday")) {
 
 			Holidays holidays = new Holidays();
 			holidays
 					.editHoliday(database, request);
-			
+
 		}
 		try {
 
@@ -101,6 +107,6 @@ public class HolidaysAction extends Action {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 }
