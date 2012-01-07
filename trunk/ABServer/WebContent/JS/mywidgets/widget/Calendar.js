@@ -17,63 +17,63 @@ dojo.require("dojo.gfx.color.hsv");
 
 /******************change log *************************************************************
  * **** This is the log of changes done to this file . Maha
- * 
- * edit change 26-9 
+ *
+ * edit change 26-9
  * 1. Added period to edit course list in display and in how
- * many day to click calculation (see function drop and click event ) 
+ * many day to click calculation (see function drop and click event )
  * 2. add the interpert the xml from this script not the script.js and general
  * calendar.xml.
- *  3. make save days to courses from calendar. in 
- *  4. remove the change event widget. 
- *  ------------------------- 
+ *  3. make save days to courses from calendar. in
+ *  4. remove the change event widget.
+ *  -------------------------
  *  edit change 08-10 by Maha and
- * noha 
+ * noha
  * 1) corrected errror related to retirving the xml see function
  * "getCheckEntry" and "getIntegerEntry"
  *  2) removed the check for "if value
  * changed" from the pre init it made problems when chaning view. The down side
  * of this it will load all event from db. every time the view is refreshed.
- * ------------------------------------------ 
- * Edit and change made on 9 and 10-oct 
+ * ------------------------------------------
+ * Edit and change made on 9 and 10-oct
  * 1. add the max string length function to shorten the title of course if it
- * is larger than 19 character 
+ * is larger than 19 character
  * 2. the secondery color is now the group color generated using function getColorBasedOnGroup based  on the number of runs
- *and their run no. of the current event 
+ *and their run no. of the current event
  *3. a change on what will be viewed in
  * the event format due to the meeting with eng. hossam on 8-10 see function
  * createColoredDayEvent and createColoredEvent
  * ------------------------------------------------
  * Edit and change on 18 - oct (maha)
- * 1. changed the edit event... 
+ * 1. changed the edit event...
  * ---------------------------------
  * Edit and change on 24 oct (mah )
- * 1. Add the legend using two funciton 
+ * 1. Add the legend using two funciton
  * setCoursesForLegend (to set the values which will be dipslayed. ) a
- * and function  onLegendDisplay to actually display 
- * now according to main app, mainname, main color the legend will be displayed 
- * an if DisplayLegend == true a legend will be displayed other wise only in multi month view will be 
- * displayed. 
+ * and function  onLegendDisplay to actually display
+ * now according to main app, mainname, main color the legend will be displayed
+ * an if DisplayLegend == true a legend will be displayed other wise only in multi month view will be
+ * displayed.
  * 2. Added two variable to be used in speeding up by only retriveing the current dates
- * the parmeters are firstdayincal, lastdayincal see  
+ * the parmeters are firstdayincal, lastdayincal see
  * 	 firstDayInCal: Date(),
 	 LastDayInCal:Date(),
 * they are computed every  change  in function "UdjustStartEnd"
-* 3. correcte the problem with extra event when chanig the veiw 
-* by deleting all the tool tips and generating them again 
+* 3. correcte the problem with extra event when chanig the veiw
+* by deleting all the tool tips and generating them again
 * used funciton    ""getElementsByClass" and function "_initToolTip" to delete all tool tip
-* 
+*
 --------------------------------------------------------------------------
-* 3-1-2009 
-* i added this condition  
-* if (this.calendarType == 'MultiMonth' && EventCount>this.MaxEventPerDay ){	
-* to the  "onSetCalendarCourseEntries "  line 3111  to remove the rectange that appears on every day 
-* make it only appear in the multimonth view when the counts of course is larger than that can be viewed on 
-* a single day (genearly 4).  
-*  	
+* 3-1-2009
+* i added this condition
+* if (this.calendarType == 'MultiMonth' && EventCount>this.MaxEventPerDay ){
+* to the  "onSetCalendarCourseEntries "  line 3111  to remove the rectange that appears on every day
+* make it only appear in the multimonth view when the counts of course is larger than that can be viewed on
+* a single day (genearly 4).
+*
  * 1-2-2009
  ******************************************************************************/
 
- //maximum length of the string displayed in the event... 
+ //maximum length of the string displayed in the event...
   //used in with or in the funciton getSmallerLengthString|
 var Max_Length = 20;
 
@@ -93,21 +93,21 @@ function getElementsByClass( searchClass, domNode, tagName) {
 }
 
 /*****
- * This function takes the group number and produce the crosponding color. 
- * For each group number there is a specific color for example 
- * for group no. 1 color is light blue. 
+ * This function takes the group number and produce the crosponding color.
+ * For each group number there is a specific color for example
+ * for group no. 1 color is light blue.
  *     group no. 2 color is yellow....
  * @param groupno. the number of group
- * @return  string contains the rgb color of the group. 
- *   
- * 
+ * @return  string contains the rgb color of the group.
+ *
+ *
  * **/
 function getColorBasedOnGroup(groupno, noOfRuns, color) {
 
 	var c;
 	// if (groupno==0)
 	// c=new RGBColor("#faebd7"); // this color is
-	// 	  
+	//
 	if (groupno == 1)
 		c = new RGBColor("#DC143C"); // crimson
 	else if (groupno == 2)
@@ -170,11 +170,11 @@ function getColorBasedOnGroup(groupno, noOfRuns, color) {
 
 	/*
 	 * var c=new RGBColor(color);
-	 * 
+	 *
 	 * if (c){
 	 *  // //  //console.log(" c ok is next "); if (c.ok) { // //  //console.log(c);
 	 * //get the c.r , c.g, c.b var arr=[c.r, c.g, c.b];
-	 * 
+	 *
 	 * var arrTo = {};
 	 *  // //  //console.log(" color "+color + " has "+arr) arrTo =
 	 * dojo.gfx.color.rgb2hsv(c.r, c.g, c.b,null); //now change in the hue or
@@ -183,7 +183,7 @@ function getColorBasedOnGroup(groupno, noOfRuns, color) {
 	 *  //   //console.log("getColorBasedOnGroup 255* percent = "+ percent);
 	 * arrTo[1]=percent; //noow i need to get change the value of the
 	 * finalRGb=dojo.gfx.color.hsv2rgb(arrTo[0],arrTo[1],arrTo[2]);
-	 * 
+	 *
 	 * //now format it as in the style //rgb c.r=finalRGb[0]; c.g=finalRGb[1];
 	 * c.b=finalRGb[2]; return c.toRGB();
 	 *  }
@@ -193,15 +193,15 @@ function getColorBasedOnGroup(groupno, noOfRuns, color) {
 
 }
 /*******
- * This function cut down the string in "field" if its length is larger then 
+ * This function cut down the string in "field" if its length is larger then
  * "max_length"
  * @param
  *   field   any string
  * @param
  *   max_length  maximum length which to truncat the string
  * @return
- *    the truncated string. 
- * 
+ *    the truncated string.
+ *
  * ******/
 function getSmallerLengthString(field, max_length) {
 
@@ -217,20 +217,20 @@ function getSmallerLengthString(field, max_length) {
 
 }
 /*******
- * 
- * This function retrieve the  integer value of the "field" 
+ *
+ * This function retrieve the  integer value of the "field"
  * from the xml "entry".
- * The function first check if the entry exits and contains values 
- * and has fields with valid values. 
- * if value exit the function return it other wise it return 0 
-  *  @param 
- *     entry   xml entry to search in it. 
- *  @param 
- *     field   field to find and retrive 
- *   @return 
- *     intger value of entry[field]   
- * 
- * 
+ * The function first check if the entry exits and contains values
+ * and has fields with valid values.
+ * if value exit the function return it other wise it return 0
+  *  @param
+ *     entry   xml entry to search in it.
+ *  @param
+ *     field   field to find and retrive
+ *   @return
+ *     intger value of entry[field]
+ *
+ *
  * **********/
 function getIntegerEntry(entry, field) {
 
@@ -255,19 +255,19 @@ function getIntegerEntry(entry, field) {
 
 }
 /*******
- * 
- * This function retrieve the  string value of the "field" 
+ *
+ * This function retrieve the  string value of the "field"
  * from the xml "entry".
- * The function first check if the entry exits and contains values 
- * and has fields with valid values. 
+ * The function first check if the entry exits and contains values
+ * and has fields with valid values.
  *  if value exit the function return it other wise it return ""
- *  @param 
- *     entry   xml entry to search in it. 
- *  @param 
- *     field   field to find and retrive 
- *   @return 
- *     string value of entry[field]   
- * 
+ *  @param
+ *     entry   xml entry to search in it.
+ *  @param
+ *     field   field to find and retrive
+ *   @return
+ *     string value of entry[field]
+ *
  * **********/
 function getCheckEntry(entry, field) {
 	var test = entry.getElementsByTagName(field);
@@ -297,25 +297,25 @@ function getCheckEntry(entry, field) {
 
 }
 /***
- * thie function checki if the browser is firefox or another browser. 
+ * thie function checki if the browser is firefox or another browser.
  * ***/
 var __isFireFox = navigator.userAgent.match(/gecko/i);
 /*
  * function isArray(obj) {
- * 
+ *
  * ////  //console.log(eval(obj)); ////  //console.log(obj.constructor.toString()); if
  * (obj.constructor.toString().indexOf("Array") == -1) return false; else return
  * true;
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  *  }
  */
 
 /**
  * A class to parse color values
- * 
+ *
  * @author Stoyan Stefanov <sstoo@gmail.com>
  * @link http://www.phpied.com/rgb-color-parser-in-javascript/
  * @license Use it if you like it
@@ -603,7 +603,7 @@ function RGBColor(color_string) {
  * Converts an RGB color value to HSL. Conversion formula adapted from
  * http://en.wikipedia.org/wiki/HSL_color_space. Assumes r, g, and b are
  * contained in the set [0, 255] and returns h, s, and l in the set [0, 1].
- * 
+ *
  * @param {Number}
  *            r The red color value
  * @param {Number}
@@ -643,7 +643,7 @@ var rgbToHsl = function(r, g, b) {
  * Converts an HSL color value to RGB. Conversion formula adapted from
  * http://en.wikipedia.org/wiki/HSL_color_space. Assumes h, s, and l are
  * contained in the set [0, 1] and returns r, g, and b in the set [0, 255].
- * 
+ *
  * @param {Number}
  *            h The hue
  * @param {Number}
@@ -687,7 +687,7 @@ var hslToRgb = function(h, s, l) {
  * Converts an RGB color value to HSV. Conversion formula adapted from
  * http://en.wikipedia.org/wiki/HSV_color_space. Assumes r, g, and b are
  * contained in the set [0, 255] and returns h, s, and v in the set [0, 1].
- * 
+ *
  * @param {Number}
  *            r The red color value
  * @param {Number}
@@ -732,7 +732,7 @@ var rgbToHsv = function(r, g, b) {
  * Converts an HSV color value to RGB. Conversion formula adapted from
  * http://en.wikipedia.org/wiki/HSV_color_space. Assumes h, s, and v are
  * contained in the set [0, 1] and returns r, g, and b in the set [0, 255].
- * 
+ *
  * @param {Number}
  *            h The hue
  * @param {Number}
@@ -788,9 +788,9 @@ var hsvToRgb = function(h, s, v) {
 // '').getPropertyValue("backgroundColor");
 /*******************************************************************************
  * this function check if a color is dark or ligth
- * @param 
- *  color  input color of backgroud to check if dark 
- * 
+ * @param
+ *  color  input color of backgroud to check if dark
+ *
  ******************************************************************************/
 function isDarkColor(color) {
 
@@ -843,13 +843,13 @@ function isCourse(obj) {
 
 }
 function sortDate(A,B){
-	
+
 return	dojo.date.compare(A,B,dojo.date.compareTypes.DATE);
-	
+
 }
 function SortDateArray(/*Array*/ dates){
-	
-	
+
+
 	//  //console.log("[(line 808)SortDateArray  calendar .js ]Sorting the arrays of dates ")
 	dateArray=new Array();
 	k=0;
@@ -858,25 +858,25 @@ function SortDateArray(/*Array*/ dates){
 		   dateArray[k]=dojo.date.fromRfc3339(dates[i]);
 		   k++;
 		}
-		
-		
+
+
 	}
-	
+
 	dateArray.sort(sortDate);
-	
+
 		//  //console.log("[(line 808)SortDateArray  calendar .js ]After sorting dates ")
-	
-	
+
+
 	for( i=0;i<dateArray.length;i++){
-		
+
 		dates[i]=dojo.date.toRfc3339(dateArray[i]);
-		
-		
-		
+
+
+
 	}
-	return dates; 
-	
-	
+	return dates;
+
+
 }
 
 
@@ -1065,7 +1065,7 @@ dojo.widget
 					// list of empty course to add days to it. (edit mode only )
 					CoursesList :null,
 					// true if there is a course that is currently with a click state
-					// used to keep the state of the coures if either click or unclicked.  
+					// used to keep the state of the coures if either click or unclicked.
 					courseClickOn :false,
 					// current course to edit
 					CurrentCourse :null,
@@ -1081,13 +1081,13 @@ dojo.widget
 					clickEvent :0,
 					// you can edit days of the course or no
 					// true when the user is currenlty editing a course
-					// if (true) ==> user can click on days to add to "clicks" 
-					//             the save button is displayed. 
-					//               user can click on the save button 
-					//   
-					// false when user is in ready state. user cannot choose a day for a course. 
-					// 
-					//  
+					// if (true) ==> user can click on days to add to "clicks"
+					//             the save button is displayed.
+					//               user can click on the save button
+					//
+					// false when user is in ready state. user cannot choose a day for a course.
+					//
+					//
 					clickEventEnable :false,
 
 					// --------------Resource and holiday events
@@ -1101,19 +1101,19 @@ dojo.widget
 					CurrentResource : {},
 					// / the list of ical holiday or list of dataes
 					HolidayEntries : {},
-                   //flag to display and hide holidays. 
+                   //flag to display and hide holidays.
 					DisplayHoliday :true,
-                    // the message and infor displayed when the calendar is in ready state. 
+                    // the message and infor displayed when the calendar is in ready state.
 					WelcomeMessage :"",
 					filterMessage :"",
-					// displaylegend boolean 
-					//flag to enable display of legend. 
+					// displaylegend boolean
+					//flag to enable display of legend.
 					DisplayLegend:true,
-					
+
 					//flag on the current color mode
-					//CurrentColorMode:"Courses",// (resource,course,funding, coordinator…..)
-					CurrentColorMode:"Clients",// (resource,course,funding, coordinator…..)
-					
+					//CurrentColorMode:"Courses",// (resource,course,funding, coordinatorï¿½..)
+					CurrentColorMode:"Clients",// (resource,course,funding, coordinatorï¿½..)
+
 					LegendTitle:"Clients",
 					LegendList:{},
 					List:{},
@@ -1121,18 +1121,18 @@ dojo.widget
 					LegendMainList:{},
 					LegendMainTitle:"Courses",  //Coordinators , Resources
 					UseMainLegend:true,
-			 
+
 					 firstDayInCal: Date(),
-					 LastDayInCal:Date(),  
+					 LastDayInCal:Date(),
 					 ConflictEntries:{},
 					 ConflictStatus:false,
 				TotalConflicts:0,
                   ConflictsDaysCount:0,
-                  
-                  
+
+
                   CheckHolidays:false,
-					 
-					
+
+
 					/**
 					 * *** ***************** after mixing properties - like init
 					 * for the widget *************************************
@@ -1227,7 +1227,7 @@ dojo.widget
 						// set the labels
 						this._setLabels();
 					//  //console.log(" [line 1121 (_preInitUI) calendar.js] === before calendar init ...........");
-				
+
 						//UdjustStartEnd
 						// / init the calendar it self.
 						if (this.calendarType == 'month') {
@@ -1244,18 +1244,18 @@ dojo.widget
 							this._initMultiUI();
 
 						}
-                       
+
                    //    	  //console.log(" [line 1141 (_preInitUI) calendar.js] === after calendar init ...........");
-				
+
 						this.setMaxDisplayPerDay();
-					
+
                  //    //console.log(" [line 1144 (_preInitUI) calendar.js] === getting udata  ...........");
-		
+
 						// if (this.isValueChanged){
 						this.onValueChanged(new Date(dateObj));
-						
+
 					//	  //console.log(" [line 1149 (_preInitUI) calendar.js] === after the data...........");
-		
+
 
 						// }else
 						// {
@@ -1265,7 +1265,7 @@ dojo.widget
 						// //  //console.log(" in the pre min ");
 						if (this.addCourses&&this.EditMode) {
 					///	  //console.log(" [line 1098 (_preInitUI) calendar.js] === after calendar init ...........");
-		
+
 							// //  //console.log(" try to get coureses ");
 							// this._iniCourseUIDiv();
 							this._initCourseUIDiv_Rows();
@@ -1278,18 +1278,18 @@ dojo.widget
 					},
 					_initToolTip:function (){
 					//	  //console.log(" [line 1098 (_initToolTip) calendar.js] === REmove all toool tipppppppppppssssssssssss");
-		
-						
+
+
 					tooltips=getElementsByClass("dojoTooltip",document,"div");
-					
+
 					if (	tooltips!=null){
 					for (i=0;i<tooltips.length;i++){
 						//dojo.dom.removeChildren(tooltips[i]);
 						tooltips[i].parentNode.removeChild(tooltips[i]);
 					}
-		
-					
-					}	 
+
+
+					}
 						//  //console.log("finishedd............");
 					},
 					/**
@@ -1299,8 +1299,8 @@ dojo.widget
 					/***********************************************************
 					 * changed on 26-9 by maha to add make the day label
 					 * constant as in do not move firday and sunday arround.
-					 * 
-					 * 
+					 *
+					 *
 					 */
 					_initMultiUI : function() {
 
@@ -1347,7 +1347,7 @@ dojo.widget
 							}
 
 							labelsDays[i] = oLabelsTD.innerHTML;
-						}// for 
+						}// for
 						var oTR, oTD, oDateDiv, oItemDiv;
 
 						// for the month get this month
@@ -1390,10 +1390,10 @@ dojo.widget
 
 									// set the class name of the day.
 									dojo.html.setClass(oTD, currentClassName);
-									d--;   // still in day... 
+									d--;   // still in day...
 
 									continue;
-								} // if label not match 
+								} // if label not match
 
 								// create a td that will carry all elements.
 								oTD = oTR.insertCell(-1);
@@ -1693,7 +1693,7 @@ dojo.widget
 								dateObj,/* this */that) {
 							var oDateDiv = document.createElement("div");
 							dojo.html.setClass(oDateDiv, "clickDate weekDate");
-							
+
 							oDateDiv.setAttribute("date", dojo.date.toRfc3339(
 									dateObj, "dateOnly"));
 							dojo.event.connect(oDateDiv, "onclick", that,
@@ -1720,7 +1720,7 @@ dojo.widget
 							var emptyDiv =document.createElement("div");
 							emptyDiv.innerHTML="    ";
 							tdObject.appendChild( emptyDiv);
-							
+
 							var oItemDiv = document.createElement("div");
 							dojo.html.setClass(oItemDiv, "calendarItemsWeek");
 							var oUL = document.createElement("ul");
@@ -1807,7 +1807,7 @@ dojo.widget
 							var emptyDiv =document.createElement("div");
 							emptyDiv.innerHTML="    ";
 							tdObject.appendChild( emptyDiv);
-						
+
 							var oItemDiv = document.createElement("div");
 							dojo.html.setClass(oItemDiv, "calendarItemsDay");
 
@@ -1914,7 +1914,7 @@ dojo.widget
 					 * this funciton check if "day" was clicked before or not if
 					 * it is clicked before then the second click means to
 					 * remove the first
-					 * 
+					 *
 					 * the funciton remove the click and change click count and
 					 * the clickks array. else it will return false
 					 */
@@ -1923,7 +1923,7 @@ dojo.widget
 							return true;
 						for ( var i = 0; i < this.clicks.length; i++) {
 							// remove this click
-							//	
+							//
 							// ////  //console.log("checking clicks
 							// .........."+this.clicks.length);
 							if (this.clicks[i]) {
@@ -1951,7 +1951,7 @@ dojo.widget
 					 * if the maximum number of days is reached. if no condition
 					 * to stop the selection of the day then the day is add to
 					 * list of click
-					 * 
+					 *
 					 */
 					AddDayToClicks : function(day) {
                     // console.log("check if day........... ..........");
@@ -1967,9 +1967,9 @@ dojo.widget
 							return false;
 
 						} else {
-							
+
 								// console.log("check if holiday ..........");
-								
+
 
                             if (this.CheckHolidays){
 							var holiday = this.checkiFHoliday(day);
@@ -1980,7 +1980,7 @@ dojo.widget
 								// Holiday ");
 								return false;
 							}
-                            
+
                             }
 							// this.check
 //							var resourceFree = this.checkResourcesFreeDay(day);
@@ -2032,7 +2032,7 @@ dojo.widget
 						// indede the check add day ");
 
 						var day = dojo.date.toRfc3339(dayO, "dateOnly")
-    if (this.CheckHolidays){
+    					if (this.CheckHolidays){
 						var holiday = this.checkiFHoliday(day);
 
 						if (holiday) {
@@ -2131,8 +2131,8 @@ dojo.widget
 
 						}// if the date exit in this calendar.......
 						// check if not in the weekly holidays..........
-						// 
-						//  
+						//
+						//
 						dayobject = dojo.date.fromRfc3339(day);
 
 						var flagholiday = false;
@@ -2176,14 +2176,14 @@ dojo.widget
 					SaveCourseClicks : function(course, coursedays) {
 						// ----------------this funciton supposed to save the
 						// course days to the database.
-						
-						
+
+
 						this.updateUserMessage("Please wait till course schedule is saved");
-						
-						//this line was added to sort the course days before saving them 
+
+						//this line was added to sort the course days before saving them
 						coursedays=SortDateArray(coursedays);
-						
-						
+
+
 						// var varstring= course.Name + " "+course.ID+"
 						// "+course.Days+" "+course.Runs;
 						// var cdays=" ";
@@ -2194,7 +2194,7 @@ dojo.widget
 						// if (coursedays[index]){
 						// cdays+=" "+coursedays[index];
 						// }
-						//	 		
+						//
 						// }
 						// oCalendar.calendarCourseEvents
 						// add course to oCalendar.calendarCourseEvents
@@ -2215,7 +2215,7 @@ dojo.widget
 						var calEntry;
 						// if (course.Period.match("S"))
 						// {
-						//          			
+						//
 						// numberOfDays=
 						// }
 
@@ -2314,7 +2314,7 @@ dojo.widget
 					/*
 					 * Simply this funciton calls the funciton that will display
 					 * click on the current view.
-					 * 
+					 *
 					 */
 
 					setTheDatesClicked : function() {
@@ -2348,8 +2348,8 @@ dojo.widget
 					 * If a day is clicked and approved as a day of course then
 					 * we change the view and add a class to this day to display
 					 * the selected day diffrenet from the others.
-					 * 
-					 * 
+					 *
+					 *
 					 */
 
 					onCalenderChoose : function() {
@@ -2407,7 +2407,7 @@ dojo.widget
 					 * If a day was clicked and view changed then when remvoing
 					 * the click the view must return as befor e so call this
 					 * function to remove click from view
-					 * 
+					 *
 					 */
 					RemoveDateClick : function(day) {
 						// ////  //console.log(" On the remove funciton s")
@@ -2436,13 +2436,13 @@ dojo.widget
 					 * If a day is clicked and approved as a day of course then
 					 * we change the view and add a class to this day to display
 					 * the selected day diffrenet from the others.
-					 * 
-					 * 
+					 *
+					 *
 					 */
 
-				
+
 					/** *** ***************** setCalenderChoose******* */
-					
+
 					/**
 					 * *** ***************** function for courses events
 					 * display.......... *************************************
@@ -2477,12 +2477,12 @@ dojo.widget
 								.setClass(oItemDiv, " ExtraItems"); //calendarItems
 
 						var oUL = document.createElement("div");
-						
-						
+
+
 						oUL.id = "ExtraEvent_" + dayid;///iiiiiiiiiiiiiiiiiiiiiiiiiiii
-						
-						
-						dojo.html.setClass(oUL, "ExtraItems");//listItems 
+
+
+						dojo.html.setClass(oUL, "ExtraItems");//listItems
 
 						oItemDiv.appendChild(oUL);
 
@@ -2511,10 +2511,10 @@ dojo.widget
 					},
 				onLegendDisplay:function (){
 					//  //console.log("inside the legned. ..... ");
-					//now i have to display the 
+					//now i have to display the
 					//this.LegendNode
-					
-					//remove pervious 
+
+					//remove pervious
 				  dojo.dom.removeChildren(this.LegendNode)
 				  //this.LegendNode
 				  legDiv=document.createElement("table");
@@ -2524,34 +2524,34 @@ dojo.widget
 				    td=document.createElement("td");
 				    td.innerHTML="Legend";
 				    td.colSpan=5;
-				    
+
 				    dojo.html.setClass(td,"LegendTitle")
-				    
+
 				    rd.appendChild(td);
 				    legDiv.appendChild(rd);
 				    //////////second row contains the both legend with there title....
-				    
+
 				     rd2=document.createElement("tr");
 				    td1=document.createElement("td");
 				    td1.innerHTML=this.LegendTitle;
-				    dojo.html.setClass(td1,"LegendSmallTitle")	  
+				    dojo.html.setClass(td1,"LegendSmallTitle")
 				    rd2.appendChild(td1);
-				    
+
 				    td2=document.createElement("td");
 				    if (this.UseMainLegend){
 				    td2.innerHTML=this.LegendMainTitle;
 				    }
-				    dojo.html.setClass(td2,"LegendSmallTitle")	  
+				    dojo.html.setClass(td2,"LegendSmallTitle")
 				    rd2.appendChild(td2);
 				   // legDiv.appendChild(rd2);
 				    if(List.length>0){
 				    td3=document.createElement("td");
-				    
+
 				    td3.innerHTML=this.Title;
-				    
-				    dojo.html.setClass(td3,"LegendSmallTitle")	  
+
+				    dojo.html.setClass(td3,"LegendSmallTitle")
 				    rd2.appendChild(td3);
-				    
+
 				    }
 				    legDiv.appendChild(rd2);
 				    //////////////now for the legend it self ....
@@ -2566,44 +2566,44 @@ dojo.widget
 				   }
 				   if(List.length>max)
 				   max=List.length;
-				   /////////////   now loop on the maximum number 
+				   /////////////   now loop on the maximum number
 				      for(i=0;i<max;i++){
-				      	//row for each legend item ... 
+				      	//row for each legend item ...
 				      	   rd3=document.createElement("tr");
-				      	   
-				      	   
-				      	   
+
+
+
 				      	    td1=document.createElement("td");
-				    		//create a new span // then a div.  
+				    		//create a new span // then a div.
 				      	  dojo.html.setClass(td1,"LegendRows");
-				      	  
-				      	  
+
+
 				      	 td2=document.createElement("td");
-				    	 //create a new span // then a div.  
+				    	 //create a new span // then a div.
 				      	 dojo.html.setClass(td2,"LegendRows");
-				      	  
-				      	  				      	  
+
+
 				      	 td3=document.createElement("td");
-				    	 //create a new span // then a div.  
+				    	 //create a new span // then a div.
 				      	 dojo.html.setClass(td3,"LegendRows");
-				      	  
+
 				      	  if (i<LegendList.length){
 				      	  	if(LegendList[i]){
 				      	  		  tdspan1=document.createElement("span");
 				    		  tdspan1.innerHTML=i+1+".";
-				    		  
+
 				    		    tdsdiv1=document.createElement("span");
 				    		    tdsdiv1.innerHTML="  "+LegendList[i]+". ";
 				    		 	td1.appendChild( tdspan1);
 				    			td1.appendChild(tdsdiv1);
 				      	  	}
 				      	  }
-				      	  
+
 				      	 if(i<LegendMainList.length && this.UseMainLegend){
 				      	 	if(LegendMainList[i]){
-				    		
-				    		//create a new span // then a div.  
-				    		
+
+				    		//create a new span // then a div.
+
 				    		  tdspan2=document.createElement("span");
 				    		  		  //change this based on eng. hossam request  from
 				    		  //tdspan2.innerHTML=(i+1)+".  "+LegendMainList[i].app;
@@ -2611,24 +2611,24 @@ dojo.widget
 				    		   tdspan2.innerHTML=" "+LegendMainList[i].app;
 				    		  tdspan2.style.backgroundColor= LegendMainList[i].color+" ";
 				    	     // tdspan2.style.border="2px";
-				    		  
+
 				    		    tdsdiv2=document.createElement("span");
 				    		    tdsdiv2.innerHTML="  "+LegendMainList[i].name;
 				    		 	td2.appendChild( tdspan2);
 				    			td2.appendChild(tdsdiv2);
 				    	}
-				      	 	
-				      	 	
-				      	 	
-				      	 }//if length.... 
-				      	
+
+
+
+				      	 }//if length....
+
 				      	//written by noha
-				      	
+
 				      	 if(i<List.length){
 				      	 	if(List[i]){
-				    		
-				    		//create a new span // then a div.  
-				    		
+
+				    		//create a new span // then a div.
+
 				    		  tdspan3=document.createElement("span");
 				    		  		  //change this based on eng. hossam request  from
 				    		  //tdspan2.innerHTML=(i+1)+".  "+LegendMainList[i].app;
@@ -2636,108 +2636,108 @@ dojo.widget
 				    		   tdspan3.innerHTML=" "+List[i].app;
 				    		  tdspan3.style.backgroundColor= List[i].color+" ";
 				    	     // tdspan2.style.border="2px";
-				    		  
+
 				    		    tdsdiv3=document.createElement("span");
 				    		    tdsdiv3.innerHTML="  "+List[i].name;
 				    		 	td3.appendChild( tdspan3);
 				    			td3.appendChild(tdsdiv3);
 				    	}
-				      	 	
-				      	 	
-				      	 	
-				      	 }//if length.... 
-//				      	
-				      	  
-				      	  
+
+
+
+				      	 }//if length....
+//
+
+
 				      rd3.appendChild(td1);
 				 rd3.appendChild(td2);
 				 rd3.appendChild(td3);
 				   legDiv.appendChild(rd3);
 				      }
-				   
-				   
-				   
+
+
+
 //				    dojo.html.setClass(td1,"LegendRows");
 //				    for(i=0;i<LegendList.length;i++){
-//	                				    
+//
 //				    	if(LegendList[i]){
-//				    		 
-//				          
-//				    		
+//
+//
+//
 //				    		  tdspan1=document.createElement("span");
 //				    		  tdspan1.innerHTML=i;
-//				    		  
+//
 //				    		    tdsdiv1=document.createElement("div");
 //				    		    tdsdiv1.innerHTML=LegendList[i];
 //				    		 	td1.appendChild( tdspan1);
 //				    			td1.appendChild(tdsdiv1);
 //				    	}
 //				    }
-//				    
+//
 //				     td2=document.createElement("td");
 //				    dojo.html.setClass(td2,"LegendRows");
-//				  if (this.UseMainLegend){  
+//				  if (this.UseMainLegend){
 //				  for(i=0;i<LegendMainList.length;i++){
 //				    	if(LegendMainList[i]){
-//				    		
-//				    		//create a new span // then a div.  
-//				    		
+//
+//				    		//create a new span // then a div.
+//
 //				    		  tdspan2=document.createElement("span");
 //				    		  tdspan2.innerHTML=i+".  "+LegendMainList[i].MainApp;
 //				    		  tdspan2.style.backgroundColor= LegendMainList[i].MainColor;
-//				    		  
+//
 //				    		    tdsdiv2=document.createElement("div");
 //				    		    tdsdiv2.innerHTML=LegendMainList[i].MainName;
 //				    		 	td2.appendChild( tdspan2);
 //				    			td2.appendChild(tdsdiv2);
 //				    	}
 //				    }
-//				    
+//
 //				  }
-				
-				    
+
+
 				 //   LegendMainList
 				    //dojo.dom
-				   
-				      	  
-		
-				  
-				  
+
+
+
+
+
 				  this.LegendNode.appendChild(legDiv)
-				  
+
 					},
 					setCoursesForLegend:function ( ){
-						
+
 						//  //console.log("setCoursesForLegend line 2507 ")
-						
-						//add the legend id , to the course to be displayed 
+
+						//add the legend id , to the course to be displayed
 						MaxClients=this.calendarCourseEvents.length;
 						LegendList=new Array();
 						LegendMainList=new Array();
 						List=new Array();
-							
+
 						for ( i=0; i<this.calendarCourseEvents.length;i++) {
 							Course=this.calendarCourseEvents[i];
-							
-						/// check if man legend name is empty or not 
+
+						/// check if man legend name is empty or not
 							if (Course.MainName==""){
-								
+
 								if (this.LegendMainTitle=='Courses')
-								
-								
+
+
 								{
-									
+
 									Course.MainName=Course.Name;
-									
+
 								}
-								
-								
-								
+
+
+
 							}
-							
-							mainname=Course.MainName;//currently make ti course 
+
+							mainname=Course.MainName;//currently make ti course
 							foundm=false;
-							
+
 							for(k=0; k <LegendMainList.length;k++){
 								if (LegendMainList[k]){
 									if (mainname.match(	LegendMainList[k].name))
@@ -2747,31 +2747,31 @@ dojo.widget
 									}
 								}
 							}
-							
-							if (foundm==false){ // not of the legend list 
-								//add to the list of legends 
+
+							if (foundm==false){ // not of the legend list
+								//add to the list of legends
 							obj  =new Object();
 							obj.name=Course.MainName;
 							obj.color=Course.MainColor;
 							obj.app=Course.MainApp;
 							LegendMainList[k]=obj;
-								 							 
-								 
+
+
 							}
-							
-							
-							
-							
+
+
+
+
 							//for each event get the client name
-							// 
-							//  
+							//
+							//
 							clname=	Course.Client;
-							foundC=false; // currentl yit is not found 
-							
-							
-							
+							foundC=false; // currentl yit is not found
+
+
+
 						//	this.calendarCourseEvents[i].ClientLegendID=1;
-							
+
 							for(k=0; k <LegendList.length;k++){
 								if (LegendList[k]){
 									if (clname.match(	LegendList[k]))
@@ -2782,20 +2782,20 @@ dojo.widget
 									}
 								}
 							}
-							if (foundC==false){ // not of the legend list 
-								//add to the list of legends 
+							if (foundC==false){ // not of the legend list
+								//add to the list of legends
 								 Course.ClientLegendID=k+1;
 								 LegendList[k]=clname;
-								 
+
 							}
-							  
-							  
+
+
 							  /////written by noha
 							 if(this.CurrentColorMode != "Courses"){
 							if(this.CurrentColorMode == "Clients"){
-							mainname=Course.Client;//currently make ti course 
+							mainname=Course.Client;//currently make ti course
 							found=false;
-							
+
 							for(k=0; k <List.length;k++){
 								if (List[k]){
 									if (mainname.match(	List[k].name))
@@ -2805,22 +2805,22 @@ dojo.widget
 									}
 								}
 							}
-							
-							if (found==false){ // not of the legend list 
-								//add to the list of legends 
+
+							if (found==false){ // not of the legend list
+								//add to the list of legends
 							obj  =new Object();
 							obj.name=Course.Client;
 							obj.color=Course.clientColor;
 							obj.app=Course.clientApp;
 							List[k]=obj;
-								 							 
-								 
+
+
 							}
 							}
 							else if(this.CurrentColorMode == "Resources"){
-							mainname=Course.ResourceName;//currently make ti course 
+							mainname=Course.ResourceName;//currently make ti course
 							found=false;
-							
+
 							for(k=0; k <List.length;k++){
 								if (List[k]){
 									if (mainname.match(	List[k].name))
@@ -2830,9 +2830,9 @@ dojo.widget
 									}
 								}
 							}
-							
-							if (found==false){ // not of the legend list 
-								//add to the list of legends 
+
+							if (found==false){ // not of the legend list
+								//add to the list of legends
 							obj  =new Object();
 							obj.name=Course.ResourceName;
 //							if(Course.resourceColor == "#EECBAD")
@@ -2841,23 +2841,23 @@ dojo.widget
 							obj.color=Course.resourceColor;
 							obj.app=Course.resourceApp;
 							List[k]=obj;
-								 							 
-								 
+
+
 							}
 							}
-							 
+
 							 else if(this.CurrentColorMode == "Funding"){
 							 	if(Course.funded == 1){
 							mainname="Funded";
-							
+
 							}
 							else{
 								mainname="Not Funded";
-							
+
 							}
-							
+
 							found=false;
-							
+
 							for(k=0; k <List.length;k++){
 								if (List[k]){
 									if (mainname.match(	List[k].name))
@@ -2867,9 +2867,9 @@ dojo.widget
 									}
 								}
 							}
-							
-							if (found==false){ // not of the legend list 
-								//add to the list of legends 
+
+							if (found==false){ // not of the legend list
+								//add to the list of legends
 							obj  =new Object();
 							if(Course.funded == 1){
 							obj.name="Funded";
@@ -2882,18 +2882,18 @@ dojo.widget
 							obj.app="NF";
 							}
 							List[k]=obj;
-								 							 
-								 
+
+
 							}
 							}
-							 
-							 
-							  
-							  
+
+
+
+
 							else if(this.CurrentColorMode == "Coordinators"){
-							mainname=Course.CoordinatorName;//currently make ti course 
+							mainname=Course.CoordinatorName;//currently make ti course
 							found=false;
-							
+
 							for(k=0; k <List.length;k++){
 								if (List[k]){
 									if (mainname.match(	List[k].name))
@@ -2903,44 +2903,44 @@ dojo.widget
 									}
 								}
 							}
-							
-							if (found==false){ // not of the legend list 
-								//add to the list of legends 
+
+							if (found==false){ // not of the legend list
+								//add to the list of legends
 							obj  =new Object();
 							obj.name=Course.CoordinatorName;
 							obj.color=Course.coordinatorColor;
 							obj.app=Course.coordinatorApp;
 							List[k]=obj;
-								 							 
-								 
+
+
 							}
 							}
-							  
-							  
-							 }  
-							   
+
+
+							 }
+
 							}
-						
-						
+
+
 					},
 					/**
 					 * *** ***************** add the coureses to dispalyed html
-					 * 
+					 *
 					 * *************************************
 					 */
 					onSetCalendarCourseEntries : function() {
-						
+
                     	//	console.log("---------------------------------inslide the calendar entries.----------------")
 					//	console.log(dojo.json.serialize(course));
-				
+
 
 						this.updateUserMessage("Please wait till courses are displayed");
-						
+
 						if (this.DisplayLegend||(this.calendarType == 'MultiMonth')){
-							
+
 							this.setCoursesForLegend();
 						//		onLegendDisplay();
-							
+
 						}
 
 						// //  //console.log("[line 897
@@ -2963,40 +2963,40 @@ dojo.widget
 
 						// /
 						var EventDayindex = 0;
-						
+
 	 						if ((!this.calendarCourseEvents)||(this.calendarCourseEvents.length==0))
 						{
 								this.updateUserMessage(this.WelcomeMessage);
 							return;
-							
-							
-							
+
+
+
 						}
-          
+
 						/**
 						 * *** ***************** for all the calendar event s
 						 * *************************************
 						 */
-						 
-						 
-						 
-						 
-						 //var i in 
+
+
+
+
+						 //var i in
 						for (var i=0; i<this.calendarCourseEvents.length;i++ ) {
 									//  //console.log("([Line 2380] onSetCalendarCourseEntries calendar.js) int the last loops"+i)
-								
+
 									//  //console.log("([Line 2380] onSetCalendarCourseEntries calendar.js) this course is ");
 								////	  //console.log(dojo.json.serialize(this.calendarCourseEvents[i]) )
 								//
 //							if (i>=CL-2)
 //							{
 //									  //console.log("([Line 2380] onSetCalendarCourseEntries calendar.js) int the last loops before last "+i)
-//									
+//
 //									  //console.log("([Line 2380] onSetCalendarCourseEntries calendar.js) this course is ");
 //									  //console.log(dojo.json.serialize(this.calendarCourseEvents[i]) )
-//									
-//									
-//			
+//
+//
+//
 //							}
 							var course = this.calendarCourseEvents[i];
 
@@ -3013,9 +3013,9 @@ dojo.widget
 //							{
 							//  //console.log("([Line 2400] onSetCalendarCourseEntries calendar.js) this course is  "+i+" and day is "+j);
 							//  //console.log( dojo.json.serialize(course.CourseDays[j]))
-//									
-//			
-//			
+//
+//
+//
 //							}
 
 
@@ -3024,16 +3024,16 @@ dojo.widget
 								 * *** ***************** get start date
 								 * ************************************
 								 */
-								 
+
 		//						 //console.log(" eventDate.starttime ="+eventDate.starttime);
 								startDate = dojo.date
 										.fromRfc3339(eventDate.starttime);
-								 //console.log(" I am looking for date befoer set time  "+startDate);		
+								 //console.log(" I am looking for date befoer set time  "+startDate);
 //										tempDateString= dojo.date
 //										.toRfc3339(startDate);
 										//console.log("After conversion again = "+tempDateString);
-										
-										
+
+
 								if (!allDay && hasTimeZone) {
 									startDate = this.setTZDate(startDate);
 								}
@@ -3046,8 +3046,8 @@ dojo.widget
 								 * calendar view
 								 * *************************************
 								 */
-								 
-								
+
+
 								// check if the date of the event is in the
 								// current view of the calendar
 								// / if it exist in this month it will return
@@ -3056,15 +3056,15 @@ dojo.widget
 										startDate, 'dateOnly'));
 
 								var dayid;
-								 
+
 
 								var ToolTipExtraDiv;
 								if (oDateObject) {
 									// get the current id of the date
 									dayid = oDateObject.id;
 								//	 console.log(console.log(dojo.json.serialize(course)));
-								
-				 
+
+
 								 //console.log(" I found date  "+dayid);
 									endDate = dojo.date
 											.fromRfc3339(eventDate.endtime);
@@ -3100,7 +3100,7 @@ dojo.widget
 													Number(endDate));
 									oLI.setAttribute("coursei", i);
 									oLI.setAttribute("dayj", j);
-								
+
 									var EventCount=  oDateObject
 											.getAttribute("eventcount");
 									// EventCount=
@@ -3112,7 +3112,7 @@ dojo.widget
 										EventCount = 0;
 									}
 
-							
+
 
 									/**
 									 * *** ***************** adde event in the
@@ -3122,11 +3122,11 @@ dojo.widget
 									// check if there are different other events
 									// in this day.........
 									if (oDateObject.childNodes.length > 0) { // of
-										// 
-									
+										//
+
 
 										if ((EventCount) >= this.MaxEventPerDay) {
-										 
+
 										//	  //console.log(eventDate);
 											ExtraEvents = true;
 											// now i will check if nodes reached
@@ -3139,13 +3139,13 @@ dojo.widget
 											if (oDateExtraObject) {
 												// there is an old object for
 												// extra data
-                                                    //gethgon the ottem div 
-                                                    
-                                                   
+                                                    //gethgon the ottem div
+
+
 												oItemDiv = dojo.byId("ExtraEvent_"+ dayid);//iiiiiiiiiii
 													//   //console.log("In type of calendar....  "+this.calendarType)
 												//   //console.log("[line 2878(onSetCalendarCourseEntries)]oItemDiv  ")
-												 
+
 												//    //console.log(oItemDiv)
 											///	  if (this.calendarType == 'month'  ){
 											ToolTipExtraDiv =dojo.byId("ExtraItemsToolTipDiv"+ dayid);
@@ -3155,14 +3155,14 @@ dojo.widget
 //												ToolTipExtraDiv =document.getElementById("ExtraItemsToolTipDiv"+ dayid);//iiiiiiiiiiiii
 //											}
 												//   //console.log("[line 2878(onSetCalendarCourseEntries)] ToolTipExtraDiv  ")
-												//			    //console.log(	ToolTipExtraDiv)		
+												//			    //console.log(	ToolTipExtraDiv)
 												moreDiv=oDateExtraObject.firstChild;
-												
+
 													current = EventCount
 														- this.MaxEventPerDay
-														+ 1;		
+														+ 1;
 												moreDiv.innerHTML = current;
-																
+
 												if (oItemDiv==null	) {
 													if (ToolTipExtraDiv==null) {
 														extra = this.CreateExtraToolTipDiv(dayid);
@@ -3171,47 +3171,47 @@ dojo.widget
                                                 //          //console.log(" [2882]	onSetCalendarCourseEntries  ERRRRRRRRRRRRRRRRRRRORRRRRRRRRRRRRRRRRRRR");
 													}
 													else{
-														
-														
-																
+
+
+
 														var oUL = document.createElement("div");
-														
-														
+
+
 														oUL.id = "ExtraEvent_" + dayid;///iiiiiiiiiiiiiiiiiiiiiiiiiiii
-														
-														
-														dojo.html.setClass(oUL, "ExtraItems");//listItems 
-								
+
+
+														dojo.html.setClass(oUL, "ExtraItems");//listItems
+
 														oItemDiv=oUL;
-														
-				
-						 
-														
+
+
+
+
 														//oItemDiv=""
 															ToolTipExtraDiv.appendChild(oItemDiv)
 													}
-													//create and oitem div and atttaceit 
-													
-													
+													//create and oitem div and atttaceit
+
+
 												}
 //												else{
 //													ToolTipExtraDiv = document.createElement('div');
 //														dojo.html.setClass(ToolTipExtraDiv, " ExtraItems");
 //														ToolTipExtraDiv.id = "ExtraItemsToolTipDiv" + dayid;//iiiiiiiiiiiiiiiiiiiiiiiiiii
-//													
-//													
+//
+//
 //															//oItemDiv=""
 //															ToolTipExtraDiv.appendChild(oItemDiv);
 //												}
-												
-												
-												//finally after 
-//												   //console.log("[line 2978(onSetCalendarCourseEntries)]oItemDiv  ")									
+
+
+												//finally after
+//												   //console.log("[line 2978(onSetCalendarCourseEntries)]oItemDiv  ")
 //												    //console.log(oItemDiv)
 //													   //console.log("[line 2978(onSetCalendarCourseEntries)] ToolTipExtraDiv  ")
-//															    //console.log(	ToolTipExtraDiv)	
-//												  //console.log("------------------------------------------------")	
-//									
+//															    //console.log(	ToolTipExtraDiv)
+//												  //console.log("------------------------------------------------")
+//
 
 											}//
 											else {// create a div and add it
@@ -3225,7 +3225,7 @@ dojo.widget
 												if (oDateObject.tagName == 'UL'||oDateObject.tagName == 'ul') {
 													oDateObjectMain = oDateObject.parentNode;
 												}
-												//							
+												//
 												else if (oDateObject.tagName == 'DIV'||oDateObject.tagName == 'div') {
 													oDateObjectMain = oDateObject.parentNode;
 												}
@@ -3237,15 +3237,15 @@ dojo.widget
 												// the number of extra events
 												// / var
 												// countspan=document.createElement('span');
-											
+
 												// countspan.innerHTML=
 												// EventCount;
 												// oDateExtraObject.appendChild(countspan);
 												var moreDiv = document.createElement('div');
-														
+
 													current = EventCount
 														- this.MaxEventPerDay
-														+ 1;		
+														+ 1;
 												moreDiv.innerHTML = current;
 												dojo.html.setClass(moreDiv,"ExtraEvents");
 												moreDiv.id = "ExtraToolArrowTip"
@@ -3265,18 +3265,18 @@ dojo.widget
 																oDateExtraObject,
 																oDateObject.nextSibling);
 
-											 
+
 
 												// ToolTipExtraDiv=this.CreateExtraToolTipDiv(dayid)
 												// ;
 												extra = this.CreateExtraToolTipDiv(dayid);
 												ToolTipExtraDiv = extra[0];
 												oItemDiv = extra[1];
- 
+
 
 											}
- 
-   
+
+
 											oItemDiv.appendChild(oLI);
 
 										} else {
@@ -3329,45 +3329,45 @@ dojo.widget
 									EventCount++;
 									oDateObject.setAttribute("eventcount",
 											EventCount);
-													
-													
-													
-						if (this.calendarType == 'MultiMonth' && EventCount>this.MaxEventPerDay ){													
-																			
-                
+
+
+
+						if (this.calendarType == 'MultiMonth' && EventCount>this.MaxEventPerDay ){
+
+
                   	  eventcountSpan = dojo.byId("EC"+ oDateObject.id);
-										
+
 					  if (!eventcountSpan){
-					  	
+
 					  	  //  Daydiv=	oDateObject.parentNode
                  dayDiv=oDateObject.parentNode.previousSibling;
-                 
+
                  fillcell=document.createElement("div");
                      	dojo.html.setClass( fillcell,"fillcell");
-                     	
-                      // now i need to add the span that will contains the event cournt 
+
+                      // now i need to add the span that will contains the event cournt
                   eventcountSpan=document.createElement("span");
-                  
-                  
+
+
                  if (dayDiv.tagName=='div'||dayDiv.tagName=='DIV'){
                  	dayDiv.appendChild(fillcell);
                          fillcell.appendChild(eventcountSpan);
                  }
-                  
-                  eventcountSpan.id="EC"+	oDateObject.id; 
+
+                  eventcountSpan.id="EC"+	oDateObject.id;
                   	dojo.html.setClass(eventcountSpan,"countSpan");
-					  	
-					  }					
-										
-						 eventcountSpan.innerHTML=" "+EventCount+" ";				
+
+					  }
+
+						 eventcountSpan.innerHTML=" "+EventCount+" ";
 						}
 								    if (ExtraEvents){
 								    	CourseDiv = this.createColoredEvent(
 												course, eventDate,
 												EventDayindex);
-								    }			
+								    }
 											else {
-											
+
 									if (this.calendarType == 'MultiMonth') {
 										CourseDiv = this.createSmallColorEvent(
 												course, eventDate,
@@ -3375,7 +3375,7 @@ dojo.widget
 										// oLI.appendChild(CourseDiv);
 										// //oLI=CourseDiv;
 										// oToolTip=this.createSmallEventToolTip(course,eventDate);
-										//				
+										//
 									} else if (this.calendarType == 'day'
 											|| this.calendarType == 'week') {
 
@@ -3440,7 +3440,7 @@ dojo.widget
 															"dojo:Tooltip",
 															toolEtipArgs,
 															ToolTipExtraDiv);
-										
+
 										}
 									}
 
@@ -3483,12 +3483,12 @@ dojo.widget
 							// (onSetCalendarCourseEntries) calendar.js] next
 							// course "+course);
 						}// for coures
-			
+
 						if (this.DisplayLegend||(this.calendarType == 'MultiMonth')){
-							
+
 							//this.setCoursesForLegend();
 								this.onLegendDisplay();
-							
+
 						}
 						this.updateUserMessage(this.WelcomeMessage);
 
@@ -3516,7 +3516,7 @@ dojo.widget
 						var oDiv, toolTip, oToolTip, tooltipArgs, oImgDiv;
 						for ( var i in this.calendarEvents) {
 							allDay = this.calendarEvents[i].allday;
-							// 
+							//
 							// ////  //console.log(" all day "+allDay);
 							startDate = dojo.date
 									.fromRfc3339(this.calendarEvents[i].starttime);
@@ -3549,7 +3549,7 @@ dojo.widget
 								 * Course</span> </td>
 								 * </tr>
 								 * </table>
-								 * 
+								 *
 								 **********************************************/
 
 								// / i will need to add the event is
@@ -3638,7 +3638,7 @@ dojo.widget
 								 * {formatLength:"short", selector:"timeOnly",
 								 * locale:this.lang}); sEnd = (hasTimeZone?" (" +
 								 * unescape(this.selectedtimezone.sn) + ")":"");
-								 * 
+								 *
 								 * oSpan.innerHTML =
 								 * this.calendarType!='month'&&Number(startDate)!=Number(endDate)?sStart+sHTML:sStart;
 								 * oLI.appendChild(oSpan); }
@@ -3664,7 +3664,7 @@ dojo.widget
 								/*
 								 * oSpan = document.createElement('span');
 								 * dojo.html.setClass(oSpan, "titletext");
-								 * 
+								 *
 								 * sHTML = this.calendarEvents[i].title;
 								 * if(this.calendarEvents[i].url != ''){ sHTML = '<a
 								 * href="' + this.calendarEvents[i].url + '"
@@ -3693,7 +3693,7 @@ dojo.widget
 								/*
 								 * oLI.appendChild(oSpan); oSpan.id = "toolTip" +
 								 * i;
-								 * 
+								 *
 								 */
 								if (!this.calendarEvents[i].repeated
 										&& this.EditMode) {
@@ -3850,131 +3850,131 @@ dojo.widget
 						}
 
 					},
-					
+
 					onSetCalendarConflictEntries:function (){
-						
+
 					//		console.log("now i am in conflict");
 						     if (this.ConflictStatus){
-						     	
+
 						     	ConflictSize=this.ConflictEntries.length;
 						     		for ( i=0;i< ConflictSize;i++){
 						     	//		console.log("now i am in conflict entry "+i+"  from  "+ ConflictSize);
 						     			ConflictDay=this.ConflictEntries[i];
-						     		 
+
 						     			ConflictDate=dojo.date
 											.fromRfc3339(ConflictDay.Day);
-						     			
-						     			
+
+
 						     			dateString=dojo.date.toRfc3339(ConflictDate,'dateOnly');
-						     			
-						     			
+
+
 						     			oDateObject = dojo.byId( "Day_"+dateString);
-						     			
+
 						     	//		console.log("  The date is conflict date is  "+ConflictDate);
 						     	//		console.log("  The date is string  date is  "+dateString);
-						     			
+
 						     			if (oDateObject) {
-						     			
+
 						     	//		console.log("the day is found ");
 						     			         this.ConflictDayColor(oDateObject,ConflictDay.Reason);
 						     			          this.ConflictDayToolTipTest(oDateObject,ConflictDay);
-						     				
-						     				
-						     			}//if data object 
-						     			
-						     			
-						     		}//for conflicts size 
-						     	
-						     	
-						     	
-						     	
-						     	
-						     }// if conflict status ==true 
-						     
+
+
+						     			}//if data object
+
+
+						     		}//for conflicts size
+
+
+
+
+
+						     }// if conflict status ==true
+
 //			  this.TotalConflicts
 //	this.ConflictsDaysCount++;
 						     	this.updateUserMessage(" There are "+this.TotalConflicts+ " Conflicts "+"  in "+this.ConflictsDaysCount+ " Days ");
-						
+
 					},
 					ConflictDayToolTipTest:function (oDateObject,ConflictDay){
-						
+
 								//	console.log("add toooooooooooooool tip ");
-						
-						//first getting formating the tool tip 
-						
+
+						//first getting formating the tool tip
+
 						//oToolTipMain = document.createElement('span');
 							oToolTip = document.createElement('span');
-						//addin the first reasons 
-				 
+						//addin the first reasons
+
 								oDiv = document.createElement('div');
 						dojo.html.setClass(oDiv, "toolkittitle" );
 						oDiv.innerHTML=" Conflicts ";
 						 oToolTip.appendChild(oDiv);
-						 	
-						  
-						 
-						
+
+
+
+
 						    		mainString="";
 							oDivmain = document.createElement('div');
 							dojo.html.setClass(oDivmain, "toolkitbody");
 							if (ConflictDay.ConflictNo==1)
 										mainString=" There is "+ConflictDay.ConflictNo +"  conflict with details : <br>";
-				else 
+				else
 							mainString=" There are "+ConflictDay.ConflictNo +"  conflicts : <br>";
 							oDivmain.innerHTML= mainString;
 							oToolTip.appendChild(oDivmain);
-							
-						
-							
-							
+
+
+
+
 							for( var ce = 0; ce < ConflictDay.ConflictNo; ce++){
-								
+
 								var Conflict =ConflictDay.Conflicts[ce];
-								
+
 								oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody");
 							 if (Conflict.Reason==1){
-							 	
+
 							 		TheConflictString= "A Resource conflict  ";
-							 	
+
 							 }
 							 else {
 							 	if (Conflict.Reason==2)
 							 		TheConflictString= " A Venue conflict ";
-							 		else 
+							 		else
 							 		 		TheConflictString= " A Session conflict (AB premises) ";
-							 	
+
 							 }
-							
+
 							if (Conflict.Course1RunNo!=0&&Conflict.Course2RunNo!=0){
-							
+
 							TheConflictString= TheConflictString+" between Course   = " + Conflict.Course1Name +" G# " +Conflict.Course1RunNo +" "+
 							 " and Course   = " + Conflict.Course2Name +" G# " +Conflict.Course2RunNo +" <br> ";
 							}
-							 
-							 
-							 
-							 
+
+
+
+
 							 if (Conflict.Reason==1){
 							 TheConflictString=TheConflictString+"  and the name of the resource is  ";
-							 
-							 
+
+
 							 }else if (Conflict.Reason==2){
-							 	 
+
 						  TheConflictString=TheConflictString+"  and the name of the venue is ";
-							  
-							 
+
+
 							 }
 							   TheConflictString=TheConflictString+Conflict.Name;
-							oDiv.innerHTML = TheConflictString;		 
+							oDiv.innerHTML = TheConflictString;
 							oToolTip.appendChild(oDiv);
-								
-							}//loops on the conflict of this day 
-							
-					
-						 
-						
-			//addin the tool tip 
+
+							}//loops on the conflict of this day
+
+
+
+
+			//addin the tool tip
 						dojo.body().appendChild(oToolTip);
 								tooltipArgs = {
 									connectId :oDateObject.id,
@@ -3983,127 +3983,127 @@ dojo.widget
 								};
 								toolTip = dojo.widget.createWidget(
 										"dojo:Tooltip", tooltipArgs, oToolTip);
-						
-						
-						
-						
-						
+
+
+
+
+
 					},
 					ConflictDayToolTip:function (oDateObject,ConflictDay){
-						
+
 					//	console.log("add toooooooooooooool tip ");
-						
-						//first getting formating the tool tip 
-						
+
+						//first getting formating the tool tip
+
 						//oToolTipMain = document.createElement('span');
 							oToolTip = document.createElement('span');
-						//addin the first reasons 
+						//addin the first reasons
 						numberOfConflicts=1;
 						if (ConflictDay.Reason>3)
 						 {
 						 	numberOfConflicts=2;
 						 }
-						
-				
-						
+
+
+
 							oDivmain = document.createElement('div');
 							dojo.html.setClass(oDivmain, "toolkitbody");
 							mainString=" There are "+numberOfConflicts +" Conflicts ";
 						//	oDivmain.innerHTML = " There are "+numberOfConflicts +" details are:";
-						
+
 						if (ConflictDay.Reason==1||ConflictDay.Reason==4||ConflictDay.Reason==5)
 						{  //resource conflict
-						
+
 							mainString= mainString+" a Resource Conflict ";
 							if (ConflictDay.Reason==4||ConflictDay.Reason==5)
 							{
 								mainString= mainString+" and ";
-								
-								
+
+
 							}
 									if (ConflictDay.ResourceCourse1Name != "" && ConflictDay.ResourceCourse1RunNo!=0) {
 
 							oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody");
 							oDiv.innerHTML = "a Resource Conflict between  Course   = " + ConflictDay.ResourceCourse1Name +" G# " +ConflictDay.ResourceCourse1RunNo +" ";
-									 
+
 							oToolTip.appendChild(oDiv);
 
 						}
-						
+
 								if (ConflictDay.ResourceCourse2Name != "" && ConflictDay.ResourceCourse2RunNo!=0) {
-									
-									
-							
+
+
+
 
 							oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody2");
 							oDiv.innerHTML = " and Course  = " + ConflictDay.ResourceCourse2Name +" G# " +ConflictDay.ResourceCourse2RunNo +" ";
-									 
+
 							oToolTip.appendChild(oDiv);
 
 						}
-						
+
 								if (ConflictDay.ResourceName!= ""  ) {
 
 							oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody2");
 							oDiv.innerHTML = " For the resource = " + ConflictDay.ResourceName ;
-									 
+
 							oToolTip.appendChild(oDiv);
 
 						}
-						
-						
+
+
 						}
 						 if  (ConflictDay.Reason==2||ConflictDay.Reason==3||ConflictDay.Reason==4||ConflictDay.Reason==5){
 									mainString= mainString+"  Venue Conflict";
-							
+
 									if (ConflictDay.VenueCourse1Name != "" && ConflictDay.VenueCourse1RunNo!=0) {
 
 							oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody");
 							oDiv.innerHTML = " Venue Conflict between Course   = " + ConflictDay.VenueCourse1Name +" G# " +ConflictDay.VenueCourse1RunNo +" ";
-									 
+
 							oToolTip.appendChild(oDiv);
 
 						}
-						
+
 								if (ConflictDay.VenueCourse2Name != "" && ConflictDay.VenueCourse2RunNo!=0) {
 
 							oDiv = document.createElement('div');
 							dojo.html.setClass(oDiv, "toolkitbody2");
 							oDiv.innerHTML = " and Course  = " + ConflictDay.VenueCourse2Name +" G# " +ConflictDay.VenueCourse2RunNo +" ";
-									 
+
 							oToolTip.appendChild(oDiv);
 
 						}
-						
-			
-					
-						
-						
+
+
+
+
+
 
 						}
 						oDivmain.innerHTML = mainString;
-						
-						
-						
-						
+
+
+
+
 							oToolTip.insertBefore(oDivmain,
 												oToolTip.childNodes[0]);
-						
-						
+
+
 								oDiv = document.createElement('div');
 						dojo.html.setClass(oDiv, "toolkittitle" );
 						oDiv.innerHTML=" Conflicts ";
 						 	//oToolTip.appendChild(oDiv);
-						 	
+
 						 	oToolTip.insertBefore(oDiv,
 												oToolTip.childNodes[0]);
-						 
-						
-			//addin the tool tip 
+
+
+			//addin the tool tip
 						dojo.body().appendChild(oToolTip);
 								tooltipArgs = {
 									connectId :oDateObject.id,
@@ -4112,48 +4112,48 @@ dojo.widget
 								};
 								toolTip = dojo.widget.createWidget(
 										"dojo:Tooltip", tooltipArgs, oToolTip);
-						
-						
+
+
 					},
 					ConflictDayColor:function(oDateObject,Reason){
 							currentClassName = oDateObject.className;
-					
+
 										+ "TrainerBusyDay";
 						/****  eiter do this way or ********/
 						ReasonClass="";
 						if (Reason==1){
 					//	oDateObject.style.backgroundColor="RED";  ///resource
-						
+
 						ReasonClass="ResourceConflict";
 					}
 						if (Reason==2){
 						 //	oDateObject.style.backgroundColor="Yellow"; //venue
-						 	
+
 						 			ReasonClass="VenueConflict";
 					}
 						 	if (Reason==3){
 						 //	oDateObject.style.backgroundColor="Yellow";//session
 						 			ReasonClass="VenueConflict";//VenueConflict  SessionConflict
-						 	
-						 	// 
-						 	} 
+
+						 	//
+						 	}
 						 		else if (Reason>=4){
 						 //	oDateObject.style.backgroundColor="Orange"; //session and resource
-						 	// 
-						 	// 
+						 	//
+						 	//
 						 			ReasonClass="ResourceVenueConflict";//
-						 	
-						  } 
-						 		
+
+						  }
+
 						 currentClassName = currentClassName +" "+ReasonClass;
-						 		
+
 						  dojo.html.setClass(oDateObject, currentClassName);
-						
+
 					},
-					
+
 setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
-	
-		 
+
+
 						if (entriesObj != "" && typeof entriesObj == "string") {
 							entriesObj = dojo.json.evalJson(entriesObj);
 						}
@@ -4161,9 +4161,9 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							this.ConflictEntries = entriesObj;
 							this.onSetCalendarConflictEntries();
 						}
-	
-	
-	
+
+
+
 },
 					/**
 					 * *** ***************** createResourceTime
@@ -4229,8 +4229,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * the date in the current view/ 3. if the view contain the
 					 * date add the holiday class to the date div so it can be
 					 * rendered diffrentaly
-					 * 
-					 * 
+					 *
+					 *
 					 **********************************************************/
 					onSetHolidayEntries : function() {
 						if (this.DisplayHoliday) {
@@ -4246,7 +4246,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 								Holiday = this.HolidayEntries[i];
 
-									
+
 								if (Holiday.OneDay) {
 
 								startDate = dojo.date
@@ -4262,8 +4262,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 									// ////  //console.log("one
 									// day....."+onDateObject.innerHTML) ;
 								} else {
-									
-									
+
+
                                 //  console.log(" int holiday no. "+i);
                              if (Holiday.starttime!="")
 									startDate = dojo.date
@@ -4271,9 +4271,9 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							 if (Holiday.endtime!="")
 									endDate = dojo.date
 											.fromRfc3339(Holiday.endtime);
-											
-											
-											
+
+
+
 									nextDate = startDate;
 
 									oDateObject = dojo.byId("Day_"
@@ -4343,7 +4343,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 					/***********************************************************
 					 * createHoliday The actual render of the holiday day.
-					 * 
+					 *
 					 **********************************************************/
 					createHoliday : function(Holiday, oDateObject) {
 
@@ -4405,8 +4405,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						oToolTip = document.createElement('span');
 						oImgDiv = document.createElement('div');
 						oToolTip.appendChild(oImgDiv);
-						
-						//removed by maha on 18-oct. 
+
+						//removed by maha on 18-oct.
 						//oToolTip.style.backgroundColor = course.MainColor;
 						addingClass = "";
 //						if (isDarkColor(course.MainColor)) {
@@ -4575,7 +4575,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 */
 					/***********************************************************
 					 * this function is called to render the event tool tip.
-					 * 
+					 *
 					 **********************************************************/
 					createEventToolTip : function(course, eventData) {
 
@@ -4767,7 +4767,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							   	otable.style.backgroundColor = "#009900";
 							}
 						}
-						
+
 						// oTd.innerHTML=course.MainApp;
 						dojo.html.setClass(oTd, classname);
 
@@ -4802,7 +4802,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						dojo.html.setClass(oSpan, "titletext");
 						// sHTML = course.Name;//.title
 						sHTML = course.MainApp + ",";
-						
+
 						if (  course.ClientLegendID )
 							sHTML+= course.ClientLegendID ;
 
@@ -4811,19 +4811,19 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							sHTML = '<a href="' + course.link
 									+ '" target="_blank">' + sHTML + '</a>';
 						}*/
-						
-						
+
+
 						oSpan.innerHTML = sHTML;
 						/**
 						 * *** Now add spans to table
 						 * ..................................*******
 						 */
 						oTd2.appendChild(oSpan);
-						
-						
+
+
 						if(this.CurrentColorMode == "Courses"){
 						oTd2.style.backgroundColor = course.MainColor;
-					   	
+
 						}
 						else if(this.CurrentColorMode == "Resources"){
 						oTd2.style.backgroundColor = course.resourceColor;
@@ -4842,8 +4842,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								oTd2.style.backgroundColor = "#009900";
 							}
 						}
-						
-						
+
+
 						//oTd2.style.backgroundColor = course.MainColor;
 						// ////  //console.log(" the td "+oTd2.innerHTML);
 						oRow2.appendChild(oTd2);
@@ -4871,10 +4871,10 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 						// dojo.event.connect( otable, "onclick", this,
 						// "OnEventClick");
-						
+
 						if(this.CurrentColorMode == "Courses"){
 							listDiv.style.backgroundColor = course.MainColor;
-					   	
+
 						}
 						else if(this.CurrentColorMode == "Resources"){
 							listDiv.style.backgroundColor = course.resourceColor;
@@ -4893,7 +4893,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 									listDiv.style.backgroundColor = "#009900";
 							}
 						}
-						
+
 					//listDiv.style.backgroundColor = course.MainColor;
 						listDiv.appendChild(otable);
 
@@ -4953,12 +4953,12 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						// // ////  //console.log(" the row11 1 "+oTds.innerHTML);
 						// //oTds.style.backgroundColor="Red";
 						// // oTds.innerHTML="RA";
-						//             
-						//              
+						//
+						//
 						// dojo.html.setClass(oTds, classname);
-						//              
+						//
 						// classname="UpperEventLabel";
-						// 
+						//
 						// oTd=document.createElement("td");
 						// oTd.style.backgroundColor=course.MainColor;
 						// oTd.innerHTML=course.MainApp;
@@ -5001,7 +5001,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 						// if ( course.Period.match("S")||
 						// eventData.Period.match("S")){
-						//					 	
+						//
 						// if ( course.Period.match("S"))
 						// sHTML+=","+course.Period;
 						// else
@@ -5015,10 +5015,10 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						 * ..................................*******
 						 */
 						oTd2.appendChild(oSpan);
-						
+
 						if(this.CurrentColorMode == "Courses"){
 						oTd2.style.backgroundColor = course.MainColor;
-					   	
+
 						}
 						else if(this.CurrentColorMode == "Resources"){
 						oTd2.style.backgroundColor = course.resourceColor;
@@ -5037,8 +5037,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								oTd2.style.backgroundColor = "#009900";
 							}
 						}
-						
-						
+
+
 						//oTd2.style.backgroundColor = course.MainColor;
 						if (isDarkColor(course.MainColor)) {
 							classname = "eventText lightfont";
@@ -5059,10 +5059,10 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						oTd3 = document.createElement("td");
 						// oTd3.colSpan=2;
 						//oTd3.style.backgroundColor = course.MainColor;
-						
+
 						if(this.CurrentColorMode == "Courses"){
 						oTd3.style.backgroundColor = course.MainColor;
-					   	
+
 						}
 						else if(this.CurrentColorMode == "Resources"){
 						oTd3.style.backgroundColor = course.resourceColor;
@@ -5081,7 +5081,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								oTd3.style.backgroundColor = "#009900";
 							}
 						}
-						
+
 						dojo.html.setClass(oTd3, classname);
 						TempString = "";
 
@@ -5348,7 +5348,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						// unescape(this.selectedtimezone.sn) + ")":"");
 						// //////  //console.log("end....... "+sEnd);
 						// var spanString;
-						//						
+						//
 						// spanString =
 						// this.calendarType!='month'&&Number(startDate)!=Number(endDate)?sStart+sHTML:sStart;
 						// oSpan.innerHTML = spanString;
@@ -5367,10 +5367,10 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 						dojo.html.setClass(oSpan, "titletext");
 
-						// 				
+						//
 						// sHTML+= " D("+eventData.DayNo+")" ;
 						// if(course.link != ''){
-						//						
+						//
 						// sHTML = '<a href="' + course.link + '"
 						// target="_blank">' + course.title + '</a>';
 						// }
@@ -5431,10 +5431,10 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						 */
 						oTd2.appendChild(oSpan);
 						//oTd2.style.backgroundColor = course.MainColor;
-						
+
 						if(this.CurrentColorMode == "Courses"){
 						oTd2.style.backgroundColor = course.MainColor;
-					   	
+
 						}
 						else if(this.CurrentColorMode == "Resources"){
 						oTd2.style.backgroundColor = course.resourceColor;
@@ -5453,7 +5453,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								oTd2.style.backgroundColor = "#009900";
 							}
 						}
-						
+
 						if (isDarkColor(course.MainColor)) {
 							classname = "eventText lightfont";
 
@@ -5540,29 +5540,29 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// this.selectedtimezone != null){
 					// hasTimeZone = true;
 					// }// end of time zone
-					//			
+					//
 					// startDate = dojo.date.fromRfc3339(eventData.starttime);
 					// endDate = dojo.date.fromRfc3339(eventData.endtime);
 					// sDate = dojo.date.format(startDate,
 					// {formatLength:"medium", selector:"dateOnly",
 					// locale:this.lang}) + "<br />";
 					// sStart = sHTML = sEnd = '';
-					//	  
+					//
 					// otable = document.createElement("table");
-					//			  
+					//
 					// /**************
 					// * Row colors...............................
 					// * *************/
-					//			  
+					//
 					// oRow=document.createElement("tr");
-					//			 
-					//	
-					//         
-					//		
-					//              
+					//
+					//
+					//
+					//
+					//
 					// classname="RightEventLabel";
-					//              
-					//              	  
+					//
+					//
 					// oTds=document.createElement("td");
 					// oTds.style.backgroundColor=eventData.SecColor;
 					// oTds.innerHTML=eventData.SecApp;
@@ -5570,12 +5570,12 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// //oTds.style.backgroundColor="Red";
 					// // oTds.innerHTML="RA";
 					// oTds.rowSpan=2;
-					//              
+					//
 					// dojo.html.setClass(oTds, classname);
-					//              
+					//
 					// classname="UpperEventLabel";
-					//              
-					//              
+					//
+					//
 					// oTd=document.createElement("td");
 					// oTd.style.backgroundColor=eventData.MainColor;
 					// oTd.innerHTML=eventData.MainApp;
@@ -5584,29 +5584,29 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// //oTd.innerHTML="CABB";
 					// // oTd.style.height="20%";
 					// // oTd.colSpan=2;
-					//              
+					//
 					// dojo.html.setClass(oTd, classname);
-					//              
-					//			 
+					//
+					//
 					// oRow.appendChild(oTds);
 					// oRow.appendChild(oTd);
 					// otable.appendChild(oRow);
 					// ////  //console.log(" the row11 1 "+oRow.innerHTML);
 					// // ////  //console.log(eval(oRow));
 					// var oRow2=document.createElement("tr");
-					//		
-					//             
+					//
+					//
 					// // oRow2.appendChild(oTds);
-					//		
+					//
 					// oTd2=document.createElement("td");
 					// // ////  //console.log(eval(otable));
 					// ////  //console.log(otable.innerHTML);
-					//				
+					//
 					// /***** span for the
 					// time..................................********/
 					// oSpan = document.createElement('span');
 					// //////  //console.log(dojo.json.serialize(eventData))
-					//				
+					//
 					// if(!eventData.repeated && this.changeEventTimes){
 					// dojo.html.setClass(oSpan, "timetext");
 					// }
@@ -5624,36 +5624,36 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// ////  //console.log("end......."+sEnd);
 					// oSpan.innerHTML =
 					// this.calendarType!='month'&&Number(startDate)!=Number(endDate)?sStart+sHTML:sStart;
-					//						
-					//						
+					//
+					//
 					// ////  //console.log(oSpan.innerHTML);
-					//						
+					//
 					// oTd2.appendChild(oSpan);
-					//						
-					//						
-					//						
-					//						
+					//
+					//
+					//
+					//
 					// /***** span for the course name
 					// ..................................********/
-					//						
-					//						
+					//
+					//
 					// oSpan = document.createElement('span');
 					// dojo.html.setClass(oSpan, "titletext");
-					//					
+					//
 					// sHTML = eventData.title;
 					// if(eventData.url != ''){
-					//						
+					//
 					// sHTML = '<a href="' + eventData.url + '"
 					// target="_blank">' + eventData.title + '</a>';
 					// }
 					// oSpan.innerHTML = sHTML
 					// //oSpan.id = "toolTip" + eventindex;
-					//			
+					//
 					// oTd2.appendChild(oSpan);
-					//			
-					//						
-					//						
-					//						
+					//
+					//
+					//
+					//
 					// //////  //console.log(" the otd "+oTd2.innerHTML);
 					// //////  //console.log(" the row "+oRow2.innerHTML);
 					// //////  //console.log(eval(oRow2));
@@ -5661,7 +5661,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// // ////  //console.log(" the row "+oRow2.innerHTML);
 					// otable.appendChild(oRow2);
 					// otable.id = "toolTip" + eventindex;
-					//						
+					//
 					// // oDiv= document.createElement("div");
 					// // oDiv.innerHTML="jskfjskldjf sdkljfkl sd jfksdjf klsd
 					// jfklsd";
@@ -5670,28 +5670,28 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// // dojo.html.setClass(oDiv, classname);
 					// // listDiv.appendChild(oDiv);
 					// listDiv.appendChild(otable);
-					//						
-					//					
+					//
+					//
 					// //////  //console.log("table..............")
 					// // ////  //console.log(otable.innerHTML);
 					// //////  //console.log(listDiv.innerHTML);
 					// return listDiv
-					//			
-					//			
-					//			
+					//
+					//
+					//
 					// },
 					// /////////////////////add my function for courses
 					// _iniCourseUI: function (){ //tables i
 					// // ////  //console.log(" int he init course ui ");
 					// var oLabelsTR = this.CoursesHeadNode.insertRow(-1);
 					// var labels=new Array("Courses","Days","Runs");
-					//		
+					//
 					// for(var i=0; i<labels.length; i++) {
 					// oLabelsTD = oLabelsTR.insertCell(-1);
 					// oLabelsTD.innerHTML =labels[i] ;
 					// }
-					//			
-					//			
+					//
+					//
 					// var oTR, oTD, oDateDiv, oItemDiv;
 					// //////  //console.log("willl try t");
 					// /// this is only for testing
@@ -5713,8 +5713,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// Course.Days=7;
 					// Course.Runs=2;
 					// this.CoursesList[2]=Course;
-					//           		    
-					//					
+					//
+					//
 					// }
 					// // ////  //console.log("courses are now defined. ");
 					// //for the list of coures CoursesList
@@ -5722,23 +5722,23 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// //
 					// ////  //console.log(this.CoursesList.length);
 					// for (var i = 0; i < this.CoursesList.length; ++i){
-					//					
+					//
 					// oTR = this.CoursesBodyNode.insertRow(-1);
 					// oTR.valign = 'top';
-					//		
+					//
 					// classname = "courseDisplay";
 					// dojo.html.setClass(oTR, classname);
-					//					
+					//
 					// ///----------------------addding event
-					//					
+					//
 					// dojo.event.connect(oTR, "onclick", this,
 					// "onCourseClicked");
 					// new dojo.dnd.HtmlDragSource(oTR, "dragListCoures");
-					//		
-					//		
+					//
+					//
 					// oTR.setAttribute("CourseID", Number(i));
 					// oTR.setAttribute("CourseName",this.CoursesList[i].Name)
-					//		
+					//
 					// for (var cells=0;cells<labels.length;++cells) {
 					// ////  //console.log("Adding the cell.......");
 					// oTD = oTR.insertCell(-1);
@@ -5749,24 +5749,24 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// }
 					// else if (labels[cells].match('Days')){
 					// ////  //console.log("Days............");
-					//						
+					//
 					// classname = "courseDisplayList";
 					// dojo.html.setClass(oTD, classname);
 					// oTD.innerHTML=this.CoursesList[i].Days;
 					// }
 					// else if (labels[cells].match('Runs')){
 					// ////  //console.log("Days............");
-					//						
+					//
 					// classname = "courseDisplayList";
 					// dojo.html.setClass(oTD, classname);
 					// oTD.innerHTML=this.CoursesList[i].Runs;
 					// }
-					//					
+					//
 					// dojo.event.connect(oTD, "onclick", this,
 					// "onCourseClicked");
 					// oTD.setAttribute("CourseID", Number(i));
 					// oTD.setAttribute("CourseName",this.CoursesList[i].Name);
-					//		
+					//
 					// // dojo.html.setClass(oTD, currentClassName);
 					// }
 					// }
@@ -5781,7 +5781,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * each div(course) 3. the on click button on each div
 					 * (course ). function changed on 26-9 by maha to make
 					 * changes in display in course list as requested by client.
-					 * 
+					 *
 					 */
 					_initCourseUIDiv_Rows : function() {
 						// ////  //console.log(" before
@@ -5789,8 +5789,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						dojo.dom.removeChildren(this.CoursesHeadNode);
 						dojo.dom.removeChildren(this.CoursesBodyNode);
 						dojo.dom.removeChildren(this.SaveButtonNode);
-					
-				      
+
+
 				      //)
 						if (!this.addCourses)
 							return;
@@ -5808,7 +5808,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						// 88888888888888888888888888888888888888888888888 ");
 						// var oLabelsTR = this.CoursesHeadNode.insertRow(-1);
 						// var labels=new Array("Courses","Days","Runs");
-						//		
+						//
 						// for(var i=0; i<labels.length; i++) {
 						// oLabelsTD = oLabelsTR.insertCell(-1);
 						// oLabelsTD.innerHTML =labels[i] ;
@@ -5877,7 +5877,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * html then add 1. the save button 2. the drag event on
 					 * each div(course) 3. the on click button on each div
 					 * (course ).
-					 * 
+					 *
 					 */
 					_iniCourseUIDiv : function() { // tables i
 						// ////  //console.log(" int he init course ui ");
@@ -5946,28 +5946,28 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							 * classname = "courseDisplayList";
 							 * //---------------------------create divs for the
 							 * types ..........
-							 * 
+							 *
 							 * var oItemDiv = document.createElement("div");
 							 * dojo.html.setClass(oItemDiv, classname);
 							 * oItemDiv.innerHTML= this.CoursesList[i].Name+" ";
 							 * oItemDiv.setAttribute("CourseID", Number(i));
 							 * oTD.appendChild(oItemDiv);
-							 * 
-							 * 
+							 *
+							 *
 							 * oItemDiv = document.createElement("div");
 							 * dojo.html.setClass(oItemDiv, classname);
 							 * oItemDiv.innerHTML= this.CoursesList[i].Days+" ";
 							 * oItemDiv.setAttribute("CourseID", Number(i));
 							 * oTD.appendChild(oItemDiv);
-							 * 
-							 * 
+							 *
+							 *
 							 * oItemDiv = document.createElement("div");
 							 * dojo.html.setClass(oItemDiv, classname);
 							 * oItemDiv.innerHTML= this.CoursesList[i].Runs+" ";
 							 * oItemDiv.setAttribute("CourseID", Number(i));
 							 * oTD.appendChild(oItemDiv);
-							 * 
-							 * 
+							 *
+							 *
 							 */
 
 							/*
@@ -5977,7 +5977,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							 * oCourseDiv.innerHTML=innerString; new
 							 * dojo.dnd.HtmlDragSource(oCourseDiv,
 							 * "dragListCourses");
-							 * 
+							 *
 							 * oTR.appendChild(oCourseDiv);
 							 */
 
@@ -5991,13 +5991,13 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							 * oTD.innerHTML=this.CoursesList[i].Name; } else if
 							 * (labels[cells].match('Days')){
 							 * ////  //console.log("Days............");
-							 * 
+							 *
 							 * classname = "courseDisplay";
 							 * dojo.html.setClass(oTD, classname);
 							 * oTD.innerHTML=this.CoursesList[i].Days; } else if
 							 * (labels[cells].match('Runs')){
 							 * ////  //console.log("Days............");
-							 * 
+							 *
 							 * classname = "courseDisplay";
 							 * dojo.html.setClass(oTD, classname);
 							 * oTD.innerHTML=this.CoursesList[i].Runs; }
@@ -6026,9 +6026,9 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							 * Course.Name="Course 3"; Course.Days=7;
 							 * Course.Runs=2; Course.ID=4445;
 							 * this.CoursesList[2]=Course;
-							 * 
+							 *
 							 * //}
-							 * 
+							 *
 							 */
 
 							this.CoursesList = this.GetCoursesList();
@@ -6062,7 +6062,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							}
 
 						}
-						
+
 						//	  //console.log("[line 4933  onCoursesChanged] in the calendar.js  ")
 						//  //console.log( dojo.json.serialize(this.CoursesList));
 
@@ -6077,7 +6077,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					/**
 					 * ***********888 this funciton is called when a user click
 					 * on a course div
-					 * 
+					 *
 					 * the funciton do the following 1. check that there is not
 					 * previous click on other course to remove before adding
 					 * this one. 1. if same course is clicked more than once
@@ -6088,7 +6088,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * save button to be used as savve. functin update by maha
 					 * on 26-9 to check on the period of course to edit the
 					 * number of days to save.
-					 * 
+					 *
 					 */
 					onCourseClicked : function(evt) {
 						var eventTarget = evt.target;
@@ -6381,24 +6381,24 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						//  //console.log( "[ (L5292)  _eventChanged in calendar.js ]sortinggggggggggggggggggggggggggggggg")
 							// / now resort the day in day no.
 							noOfdays = course.CourseDays.length;
-							
-							//now after the new date we need to sort date 
-							//now take the current value and 
-							
-							//create an array with the dates 
-							
+
+							//now after the new date we need to sort date
+							//now take the current value and
+
+							//create an array with the dates
+
 							dates=new Array( course.CourseDays.length);
 							for(k=0;k<course.CourseDays.length;k++){
-								dates[k]=course.CourseDays[k].EventDate;						
+								dates[k]=course.CourseDays[k].EventDate;
 							}
 							dates=SortDateArray(dates);
-							
+
 								for(k=0;k<course.CourseDays.length;k++){
-							course.CourseDays[k].EventDate=dates[k];	
+							course.CourseDays[k].EventDate=dates[k];
 							course.CourseDays[k].starttime=dates[k]	;
-							course.CourseDays[k].endtime=dates[k]	;				
+							course.CourseDays[k].endtime=dates[k]	;
 							}
-							
+
 							// first remove the index of the old value
 
 //							for ( var d = 0; d < noOfdays; d++) {
@@ -6488,52 +6488,61 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						}
 					},// end event changed.
                         checkConflict:function (evt){
-                        	
+
                         	evt.stopPropagation();
 				               this.GetConflictFromServer();
-                        	
+
                         },
-                        
+
                         //this code written by noha
                         changeColorToResourceState:function (evt){
-                        	
-                        	
+
+
 				               this.CurrentColorMode = "Resources";
 				               this.Title = "Resources";
 				               this.refreshScreen();
-                       	
+
                         },
                         changeColorToCoordinatorState:function (evt){
-                        	
+
                         	this.CurrentColorMode = "Coordinators";
                         	this.Title = "Coordinators";
                         	this.refreshScreen();
-                        	
+
                         },
                         changeColorToClientState:function (evt){
-                        	
+
                         	this.CurrentColorMode = "Clients";
                         	this.Title = "Clients";
                         	this.refreshScreen();
-                        	
+
                         },
                         changeColorToFundingState:function (evt){
-                        	
+
                         	this.CurrentColorMode = "Funding";
                         	this.Title = "Funding";
                         	this.refreshScreen();
-                        	
+
                         },
                         changeColorToCourseState:function (evt){
-                        	
+
                             this.CurrentColorMode = "Courses";
                             this.Title = "";
                             this.refreshScreen();
-                        	
-                        },
-                        
-                        
-                    //maha code    
+
+                        },printCalendarFromServer: function() {
+
+						return;
+
+					},  printIconClick:function (evt){
+
+					console.log(" in the print icon click ... ");
+                          this.printCalendarFromServer();
+
+                        } ,
+
+
+                    //maha code
 					onMoveToDate : function(evt) {
 						evt.stopPropagation();
 						var d = new Date();
@@ -6550,38 +6559,42 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						this._preInitUI(this.value);
 					},
                    UdjustStartEnd:function(){
-                   	
+                       console.log(" inside the uDjustStartEnd  with type "+this.calendarType);
                    	// firstDayInCal: Date(),
-					 //LastDayInCal:Date(),  
+					 //LastDayInCal:Date(),
 						// / init the calendar it self.
 						if (this.calendarType == 'month') {
-
+                           console.log(" currest value is  month"+this.value);
 							 this.firstDayInCal=this._initFirstDay(this.value)
 						     this.LastDayInCal=dojo.date.add(this.firstDayInCal,dojo.date.dateParts.DAY,7*5);
-		
-						 
-							 
+
+
+
 						} else if (this.calendarType == 'week') {
-								 this.firstDayInCal=this._initFirstDay(this.value)
+							console.log(" weekkkk ")
+								 this.firstDayInCal=this._initFirstDay(this.value);
 						     this.LastDayInCal=dojo.date.add(this.firstDayInCal,dojo.date.dateParts.DAY,7);
 
-						 
+
 						} else if (this.calendarType == 'day') {
+							      console.log(" currest value is  day  "+this.value);
 	                         this.firstDayInCal=this.value;
 						     this.LastDayInCal=this.value;
-							 
-						} else if (this.calendarType == 'MultiMonth') {
 
-						  this.firstDayInCal=this.value;
-						  this.firstDayInCal.setDate(1);
+						} else if (this.calendarType == 'MultiMonth') {
+                           console.log(" currest value is multi month "+this.value);
+//						  this.firstDayInCal=this.value;
+//						   //this.firstDayInCal.setDate(1);
+//						  this.firstDayInCal.setDate(1);
+                          this.firstDayInCal=this._initFirstDay(this.value);
 						  this.LastDayInCal=dojo.date.add(this.firstDayInCal,dojo.date.dateParts.DAY,31*this.MultiMonthCount );
-		
-						 
+
+
 
 						}
-						
-					//	console.log("end of undjust calendar dates");
-						
+
+						console.log("end of undjust calendar dates");
+
                    },
 					setMaxDisplayPerDay : function() {
 
@@ -6685,12 +6698,12 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					/***********************************************************
 					 * this function is called when the calendar has changed the
 					 * tyep it call pre init to init all the calendar veiw.
-					 * 
+					 *
 					 **********************************************************/
 					setCalendarType : function(/* String */sType) {
 						this.calendarType = sType;
 						var d = new Date(this.value);
-						
+
 						this._preInitUI(d);
 					},
 					// ///////////////to prooper case
@@ -6717,7 +6730,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * This function set the labels on the previous and next
 					 * arrows at the header of the calendar they vary according
 					 * to type of the calendar.
-					 * 
+					 *
 					 **********************************************************/
 					_setLabels : function() {
 						var d = new Date(this.value);
@@ -6836,16 +6849,16 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 									selector :"dateOnly",
 									locale :this.lang
 								}));
-								
+
 								this.multiLabelNode.title='MultiMonth View';
 								this.ConflictIconNode.title='Conflict View';
-								
+
 								this.ResourceColloringLabelNode.title='View Courses based on Resource Color';
 								this.CoordinatorColloringLabelNode.title='View Courses based on Coordinator Color';
 								this.FundingColloringLabelNode.title='View Courses based on Course Funding';
 								this.CoursesColloringLabelNode.title='View Courses based on Course Color';
 								this.ClientColloringLabelNode.title='View Courses based on Client Color';
-								
+                                this.PrintPdfLabelNode.title="print calendar to pdf";
 
 						if (this.createNewEntries) {
 							dojo.html.setClass(this.newEntryLabelNode,
@@ -6866,7 +6879,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								var oTR = document.createElement('tr');
 								var oTD = document.createElement('td');
 								oTD.colSpan = "6";
-								oTD.style.paddingLeft = "3px";
+								oTD.style.paddingLeft = "4px";
 								oTD.innerHTML = this
 										.toProperCase(lookup["field-zone"])
 										+ ": " + this.selectedtimezone.name;
@@ -7187,12 +7200,12 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					 * maximum (computed by period and day count) 5. starting
 					 * for the day the course is droped to add days to the
 					 * clicks
-					 * 
+					 *
 					 * 6. enable or disable save button to be used as savve.
 					 * functin update by maha on 26-9 to check on the period of
 					 * course to edit the number of days to save.
-					 * 
-					 * 
+					 *
+					 *
 					 **********************************************************/
 					_dropCourseFunction : function(evt)
 
@@ -7207,14 +7220,14 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						// refresh ...............");
 						// // undo the previous add
 						// this.refreshScreen();
-						//				 
+						//
 						// return ;
 						// }
 
 						/*
 						 * if (this.DropActive) {
 						 * //dojo.dnd.HtmlDragManager.cancelEvent(evt);
-						 * 
+						 *
 						 * return ; }
 						 */
 
@@ -7314,7 +7327,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					/***********************************************************
 					 * This function is called when an event is dropped into a
 					 * day.
-					 * 
+					 *
 					 **********************************************************/
 					_dropFunction : function(evt) {
 					//  //console.log( " [line 93647 (_dropFunction)] === in drop ");
@@ -7488,14 +7501,20 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 									- this._getAdjustedDay(d,
 											this.w_WeekStartsOn));
 						}
+       						else if (this.calendarType == 'MultiMonth'){
+
+       								d.setDate(1);
+       							   d.setMonth(d.getMonth());
+       						}
+
 //						else if (this.calendarType=='Multi'){
-//							d.setDate(1);
+//
 ////							d.setDate(d.getDate()
 ////									- this._getAdjustedDay(d,
 ////											this.m_WeekStartsOn));
-//							d.setMonth(d.getMonth());
-//							
-//							
+//
+//
+//
 //						}
 						d.setHours(0, 0, 0, 0);
 						return d; // Date
@@ -7540,7 +7559,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						cEntry = xmlentries.item(c);
 						// if (c==11){
 						// ////  //console.log(cEntry);
-						//		         
+						//
 						// }
 						// map from xml to the course object ..........
 						var Course = new Object();
@@ -7548,7 +7567,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						var dateString = getCheckEntry(cEntry, "summary");
 						// console.debug(dojo.json.serialize(Course));
 						// dojo.string.trim(cEntry.getElementsByTagName("summary")[0].firstChild.nodeValue);
-						// 
+						//
 						// ////  //console.log( dateString);
 						datePart = dateString.substring(6, 25);
 						var eDate = dojo.date.fromIso8601(datePart);
@@ -7722,13 +7741,14 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 
 				},
 				GetConflictFromServer:function (){
-					
+
 				},
+
 				readConflictFromXml:function (type, xml, e){
 						var ConflictEntries;
 				// console.log(" in the Conflict  xmL");
 					var xmlentries = xml.getElementsByTagName("CalendarConflictDay");
-					
+
                     this.ConflictStatus=true;
                     this.ConflictsDaysCount=0;
                     this.TotalConflicts=0;
@@ -7745,38 +7765,38 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						var Conflict = new Object();
 					//	console.log("stargint to add conflicts");
      		 Conflict.Day= dojo.date.toRfc3339(dojo.date.fromRfc3339(getCheckEntry(Centry, "day")));
-     	
-     	
-     	 
+
+
+
      		Conflict.VenueCourse1Name=getCheckEntry(Centry, "vFirstCourseName");
      		Conflict.VenueCourse2Name=getCheckEntry(Centry, "vSecCourseName");
-     
-     		
+
+
      		Conflict.VenueCourse1RunNo=getIntegerEntry(Centry, "vFirstCourseRunNo");
      		Conflict.VenueCourse2RunNo=getIntegerEntry(Centry, "vSecCourseRunNo");
-     	
+
            Conflict.ResourceCourse1Name=getCheckEntry(Centry, "rFirstCourseName");
      		Conflict.ResourceCourse2Name=getCheckEntry(Centry, "rSecCourseName");
-     		
-     		 
-       
+
+
+
      		Conflict.ResourceCourse1RunNo=getIntegerEntry(Centry, "rFirstCourseRunNo");
      		Conflict.ResourceCourse2RunNo=getIntegerEntry(Centry, "rSecCourseRunNo");
      		Conflict.Reason=getIntegerEntry(Centry,"conflictReason");
-     		
 
-     	
-     		
+
+
+
 			Conflict.ResourceName=getCheckEntry(Centry,"ResourceName");
-			
-			  
+
+
 	this.ConflictsDaysCount++;
 	     		if (Conflict.Reason<3)
      		   this.TotalConflicts++;
-     		   else 
+     		   else
      		     this.TotalConflicts=  this.TotalConflicts+2;
-	
-	
+
+
 						ConflictEntries[c] = Conflict;
                         //	  console.log(dojo.json.serialize( Conflict));
 						// console.debug(dojo.json.serialize(Course));
@@ -7785,13 +7805,13 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					// console.debug(dojo.json.serialize( HolidayEntries));
 					return ConflictEntries;
 				},
-				
-				
+
+
 					readConflictFromXmlTest:function (type, xml, e){
 						var ConflictEntries;
 					// ////  //console.log(" in the Resourse xmL");
 					var xmlentries = xml.getElementsByTagName("CalendarConflictDay");
-					
+
                     this.ConflictStatus=true;
                     this.TotalConflicts=0;
                     this.ConflictsDaysCount=0;
@@ -7807,11 +7827,11 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 						var Centry = xmlentries.item(c);
 						// map from xml to the course object ..........
 						var ConflictDay = new Object();
-						
+
      		 			ConflictDay.Day= dojo.date.toRfc3339(dojo.date.fromRfc3339(getCheckEntry(Centry, "day")));
      					Reason=getIntegerEntry(Centry,"conflictReason");
-     					
-     					
+
+
      					DayEntries=Centry.getElementsByTagName("Conflicts");
      					DayConflicts=new Array(DayEntries.length);
      						for ( var ce = 0; ce < DayEntries.length; ce++) {
@@ -7823,9 +7843,9 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
      							Conflict.Course2RunNo=getIntegerEntry(entry, "SecCourseRunNo");
      							Conflict.Reason=getIntegerEntry(entry,"conflictReason");
 								Conflict.Name=getCheckEntry(entry,"Name");
-								
+
 								//addin reasonssssssss
-								
+
 								if ( Reason==0||Reason==Conflict.Reason)
 								{
 									 Reason=Conflict.Reason;
@@ -7840,12 +7860,12 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 										Reason=5;
 									}
 								}else if (Conflict.Reason>1){
-									
+
 								 	if (Reason==1)
 									{
 										Reason=Conflict.Reason+Reason+1;
 									}
-									
+
 									if (Conflict.Reason>3){
 										Reason=Conflict.Reason;
 									}
@@ -7853,23 +7873,23 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 //									{
 //										Reason=Conflict.Reason;
 //									}
-								
-									
+
+
 								}
-								 
-								
+
+
 								DayConflicts[ce]=Conflict;
      						}
-     					 
-     	
-     	
+
+
+
 							ConflictDay.Conflicts=DayConflicts;
 							ConflictDay.ConflictNo= DayEntries.length;
-						
+
 							ConflictDay.Reason=Reason;
 							ConflictEntries[c] = ConflictDay;
-							
-							
+
+
 							this.ConflictsDaysCount++;
 							this.TotalConflicts=this.TotalConflicts+DayEntries.length;
 
@@ -7878,8 +7898,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					  //console.log(dojo.json.serialize( ConflictEntries));
 					return ConflictEntries;
 				},
-				
-				
+
+
 				readHolidayFromXml : function(type, xml, e) {
 
 					var HolidayEntries;
@@ -7927,19 +7947,19 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					var filterStatment = xml.getElementsByTagName("filterStatment");
 					var cEntry;
 					var fEntry;
-					
+
 					for ( var c = 0; c < filterStatment.length; c++) {
 						// get entry
 					//	  //console.log("[ line 6674 in readCourseFromXml ]  "+c);
-					
+
 
 						fEntry = filterStatment.item(c);
-						
+
 						var filterStatment = new Object();
-						
+
 						filterStatment.text = getCheckEntry(fEntry, "text")
 						// console.log('>>> '+filterStatment.text);
-						
+
 						this.filterMessage =  filterStatment.text;
 						//this.updateUserMessage(this.WelcomeMessage);
 					}
@@ -7951,7 +7971,7 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 					for ( var c = 0; c < xmlentries.length; c++) {
 						// get entry
 					//	  //console.log("[ line 6674 in readCourseFromXml ]  "+c);
-					
+
 
 						cEntry = xmlentries.item(c);
 						//	  //console.log(cEntry);
@@ -8004,18 +8024,18 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 								"ResourceName");
 						Course.CoordinatorName = getCheckEntry(cEntry,
 								"CoordinatorName");
-								
-								
+
+
 						Course.resourceColor= getCheckEntry(cEntry, "resourceColor");
 						Course.coordinatorColor= getCheckEntry(cEntry, "coordinatorColor");
 						Course.clientColor= getCheckEntry(cEntry, "clientColor");
-						Course.funded= getCheckEntry(cEntry, "funded");	
-						
+						Course.funded= getCheckEntry(cEntry, "funded");
+
 						Course.resourceApp= getCheckEntry(cEntry, "resourceApp");
 						Course.coordinatorApp= getCheckEntry(cEntry, "coordinatorApp");
-						Course.clientApp= getCheckEntry(cEntry, "clientApp");	
-							
-								
+						Course.clientApp= getCheckEntry(cEntry, "clientApp");
+
+
 						var temptype = getCheckEntry(cEntry, "type");
 						Course.type = [ temptype ];
 						// ["reminder"];
@@ -8072,8 +8092,8 @@ setCalendarConflictEntries: function (/*Object|String*/ entriesObj){
 							CourseDays[d] = Day;
 
 						}
-						
-						
+
+
 						Course.CourseDays = CourseDays;
 
 						CourseEntries[c] = Course;
