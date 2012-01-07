@@ -28,7 +28,7 @@ Ext.apply(Ext.form.VTypes, {
   }
 });
 
-
+var TCid;
 
 Ext.onReady(function(){
 
@@ -87,8 +87,8 @@ Ext.onReady(function(){
       {name: 'trainingCoordinateTelephone', type: 'string'},
       {name: 'trainingCoordinatorCurrentSalary', type: 'string'},
       {name: 'trainingCoordinatorCurrentTitle', type: 'string'},
-      {name: 'trainingCoordinatorResignationDate', type: 'string'}
-
+      {name: 'trainingCoordinatorResignationDate', type: 'string'},
+      {name: 'trainingCoordinatorCV', type: 'string'}
      ]);
 
     dataProxy = new Ext.data.HttpProxy({
@@ -153,9 +153,11 @@ var Tds = new Ext.data.Store({
 
  Tds.load();
 var c;
+var TrainCV="../files/trainingCoordinatorCV/";
 Tds.on('load', function(){//////console.log(Cds.getAt(0));
 //alert(Cds.getAt(0));
 var coordinateRec = Tds.getAt(0);
+TCid=coordinateRec.get('idTrainingCoordinators');
 FNameField.setValue(coordinateRec.get('trainingCoordinateFirstName'));
 LNameField.setValue(coordinateRec.get('trainingCoordinateLastName'));
 MobileField.setValue(coordinateRec.get('trainingCoordinateMobile'));
@@ -170,7 +172,17 @@ DescField.setValue(coordinateRec.get('trainingCoordinateDescription'));
 c=coordinateRec.get('trainingCoordinateColor');
 SalaryField.setValue(coordinateRec.get('trainingCoordinatorCurrentSalary'));
 TitleField.setValue(coordinateRec.get('trainingCoordinatorCurrentTitle'));
-ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationDate'))
+ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationDate'));
+
+
+testout=coordinateRec.get('trainingCoordinatorCV');
+TrainCV+=coordinateRec.get('trainingCoordinatorCV');
+if(testout == '')
+	TrainCVLink.setVisible(false);
+else
+	TrainCVLink.setVisible(true);
+
+	TrainCVLink.setText('<font size=2><a href="'+TrainCV+'" target="_blank">Open/Download CV</a></font>',false);
 
 
 //jQuery(function($)
@@ -639,7 +651,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
 	id: 'color',
 	allowBlank: false,
 	name: 'color',
-   value: '123456',
+   value: '123456'
 //	disable:true
 //	allowBlank: false
  });
@@ -658,7 +670,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
                 width: 300,
                 id: 'trainingCoordinateHireDate',
                 allowBlank: false,
-        		vtype: 'daterange',
+        		vtype: 'daterange'
         	//	anchor:'60%'
         	//	requestDateField: 'requestdt'
             });
@@ -666,7 +678,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
 		    id: 'trainingCoordinateCurrentSalary',
 		    fieldLabel: 'Current Salary',
 		//    maxLength: 20,
-		    width: 300,
+		    width: 300
 		//    allowNegative: false,
 	//	anchor:'95%',
 		//    allowBlank: false,
@@ -690,7 +702,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
             //    anchor:'95%',
             	width: 300,
             //	allowBlank: false,
-                minValue: '1950-01-01',
+                minValue: '1950-01-01'
               //  disabledDays: [5, 6]
 
             });
@@ -700,14 +712,27 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
                 id:'ResignationDate',
             //    anchor:'95%',
             	width: 300,
-                minValue: '1950-01-01',
+                minValue: '1950-01-01'
               //  disabledDays: [5, 6]
 
             });
+
+            var uploadCVField = new Ext.form.TextField({
+      		fieldLabel: 'Coordinator CV',
+      		width:50,
+    		inputType: 'file'
+     		});
+
+	var TrainCVLink = new Ext.form.Label({html:'<font size=2><a href="'+TrainCV+'" target="_blank">Open/Download CV</a></font>'});
+TrainCVLink.setVisible(false);
+
      var DescField = new Ext.form.HtmlEditor({
      			id:'trainingCoordinateDescription',
                     fieldLabel:'Description'
      });
+
+
+
 /**==========================================================================*/
 
  var h=new Ext.TabPanel({
@@ -735,11 +760,13 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
         bodyStyle:'padding:5px',
      //   width: 600,
         frame:true,
+                labelWidth: 150,
+        defaultType: 'fieldset',
        // autoScroll:true,
         items:new Ext.form.FieldSet({
                // title: 'Contact Information',
                 autoHeight: true,
-                width:1200,
+                width:1300,
                 border:false,
                 defaultType: 'textfield',
                 items: [{
@@ -757,7 +784,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
                 		AbbField,
                 		AddressField,
                 		TelephoneField,
-                		MobileField,
+                		MobileField
                 		]
             },{
                 columnWidth:.5,
@@ -767,7 +794,24 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
                 BirthDateField,
                 HireDateField,
                 ColorField,
-                ResignationDateField
+                ResignationDateField,
+              new Ext.form.FieldSet({
+              //  title: 'Photo',
+                labelWidth: 140,
+                autoHeight: true,
+             //   autoWidth: true,
+                border: false,
+           //   defaults: {width: 150},
+                layout:'column',
+           //    width: 350,
+              //  defaultType: 'textfield',
+                items: [
+                {width:350,layout: 'form',
+                items: [ uploadCVField]},
+                {width:100,layout: 'form',
+                items: [ TrainCVLink]}
+		                   ]
+            })
 
                 		]
             }]
@@ -791,7 +835,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
 //        }
 
         ]
-        }),
+        })
 
 
 
@@ -834,7 +878,7 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
                 if(FNameField.isValid() && LNameField.isValid() && AbbField.isValid() && AddressField.isValid() && EmailField.isValid() && BirthDateField.isValid()
   && HireDateField.isValid() && ColorField.isValid() && TelephoneField.isValid() && MobileField.isValid() && EmailField.isValid() && BirthDateField.isValid())
   {
-                    tab2.getForm().submit(
+
                     	      Ext.Ajax.request({
         						waitMsg: 'Please wait...',
         						url: '../listCoordinators.do',
@@ -854,19 +898,35 @@ ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationD
 								  trainingCoordinateDescription:	 DescField.getValue(),
 								  trainingCoordinateCurrentSalary:	 SalaryField.getValue(),
 								  trainingCoordinateCurrentTitle:	 TitleField.getValue(),
-								  trainingCoordinatorResignationDate: d3
+								  trainingCoordinatorResignationDate: d3,
+								  trainingCoordinatorCv: uploadCVField.getValue()
 
 								},
 						        method:'POST',
-						        success: function(response){ ////console.log("success");
-						        		 var redirect = 'coordinators.jsp';
-		                        window.location = redirect;
+						        success:function(response){
+		                           tab2.getForm().submit({
 
-						        },
+	              		url: '../upload.do?task=coordinatorCV&CoordinatorID='+TCid,
+	                    waitMsg: 'Uploading your File...',
+
+	                    success: function(fp, o){
+	                        msg('Success', 'Processed your files on the server');
+	                      	//addTab();
+	                    var redirect = 'coordinators.jsp';
+			 			window.location = redirect;
+
+
+	                    }
+                   }
+
+                 );
+						        }
+
+						        ,
 						        failure: function(response){////console.log("faaaaaaaaaail");
 						        	tab2.getForm().reset();
 						       }
-						      }));
+						      });
   }
   else {
       var errorMsg='Your Form is not valid!';

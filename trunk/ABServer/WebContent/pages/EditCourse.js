@@ -175,13 +175,16 @@ if(courseRec.get('courseType')=='Group')
 	price.disable();
 CourseTAField.setValue(courseRec.get('trainArea'));
 idTrainingArea=courseRec.get('idTrainingArea');
+testout=courseRec.get('courseOutlineAr');
 Aroutline+=courseRec.get('courseOutlineAr');
-if(Aroutline == '')
+if(testout == '')
 	AroutLink.setVisible(false);
 else
 	AroutLink.setVisible(true);
+
+testout=courseRec.get('courseOutlineEng');
 Engoutline+=courseRec.get('courseOutlineEng');
-if(Engoutline == '')
+if(testout == '')
 	EngoutLink.setVisible(false);
 else
 	EngoutLink.setVisible(true);
@@ -536,7 +539,7 @@ myGrid.getView().refresh();
 	id: 'color',
 	allowBlank: false,
 	name: 'color',
-   value: '123456',
+   value: '123456'
 //	disable:true
 //	allowBlank: false
  });
@@ -818,21 +821,21 @@ myGrid.getView().refresh();
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceImc_comp',
+    		id:'priceImc_comp'
     	//	maskRe: /([0-9\s]+)$/
      		});
    var ImcField_Client = new Ext.form.NumberField({
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceImc_client',
+    		id:'priceImc_client'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var InternationalField = new Ext.form.NumberField({
       		fieldLabel: 'International Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceInternational',
+    		id:'priceInternational'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var PuplicField_Comp = new Ext.form.NumberField({
@@ -841,7 +844,7 @@ myGrid.getView().refresh();
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var PuplicField_Client = new Ext.form.NumberField({
@@ -850,7 +853,7 @@ myGrid.getView().refresh();
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var ValidFromField = new Ext.form.DateField({
@@ -860,7 +863,7 @@ myGrid.getView().refresh();
                 width:100,
                 id:'priceValidFrom',
                 allowBlank: false,
-                vtype: 'daterange',
+                vtype: 'daterange'
               //  disabledDays: [5, 6],
              //   endDateField:'priceValidTo'
             });
@@ -1011,7 +1014,7 @@ myGrid.getView().refresh();
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+          Ext.MessageBox.alert('error',result+' could not connect to the database. retry later');
         }
       });
     } else {
@@ -1049,21 +1052,21 @@ myGrid.getView().refresh();
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'EpriceImc_comp',
+    		id:'EpriceImc_comp'
     	//	maskRe: /([0-9\s]+)$/
      		});
    var EImcField_Client = new Ext.form.NumberField({
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'EpriceImc_client',
+    		id:'EpriceImc_client'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var EInternationalField = new Ext.form.NumberField({
       		fieldLabel: 'International Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'EpriceInternational',
+    		id:'EpriceInternational'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var EPuplicField_Comp = new Ext.form.NumberField({
@@ -1072,7 +1075,7 @@ myGrid.getView().refresh();
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var EPuplicField_Client = new Ext.form.NumberField({
@@ -1081,7 +1084,7 @@ myGrid.getView().refresh();
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var EValidFromField = new Ext.form.DateField({
@@ -1091,7 +1094,7 @@ myGrid.getView().refresh();
                 width:200,
                 allowBlank: false,
                 id:'EpriceValidFrom',
-                vtype: 'daterange',
+                vtype: 'daterange'
             //    disabledDays: [5, 6],
              //   endDateField:'priceValidTo'
             });
