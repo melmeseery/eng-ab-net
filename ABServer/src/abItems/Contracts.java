@@ -2279,9 +2279,9 @@ public class Contracts {
 		if (contract_rs.next()) {
 
 			Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-			PdfWriter.getInstance(document, new FileOutputStream(Upload
-					.getmainPath()
-					+ "\\webapps\\ABServer\\files\\contractPDFs\\"
+			PdfWriter.getInstance(document, new FileOutputStream(
+					Upload.getmainPathFromSession(request)
+					+"files"+File.separator+"contractPDFs"+File.separator
 					+ contract_rs.getString(1) + ".pdf"));
 
 			ResultSet client_rs = database
@@ -2397,9 +2397,9 @@ public class Contracts {
 
 			document.close();
 			Runtime.getRuntime().exec(
-					"rundll32 url.dll,FileProtocolHandler "
-							+ Upload.getmainPath()
-							+ "\\webapps\\ABServer\\files\\contractPDFs\\"
+					"rundll32 url.dll,FileProtocolHandler"
+							+ Upload.getmainPathFromSession(request)
+							+"files"+File.separator+"contractPDFs"+File.separator
 							+ contract_rs.getString(1) + ".pdf");
 
 		}

@@ -86,6 +86,15 @@ public class Trainingcoordinators {
 	/** auto generated
 	 * @es_generated
 	 */
+	private String  TrainingCoordinatorCV;
+	public String getTrainingCoordinatorCV() {
+		return TrainingCoordinatorCV;
+	}
+
+	public void setTrainingCoordinatorCV(String trainingCoordinatorCV) {
+		TrainingCoordinatorCV = trainingCoordinatorCV;
+	}
+
 	private Collection contractcourse_1;
 
 	/** auto generated
@@ -152,7 +161,7 @@ public class Trainingcoordinators {
 	 * @es_generated
 	 */
 	public boolean equals(Object value) {
-		//TODO Implement equals() using Business key equality.	
+		//TODO Implement equals() using Business key equality.
 		return super.equals(value);
 	}
 
@@ -160,7 +169,7 @@ public class Trainingcoordinators {
 	 * @es_generated
 	 */
 	public int hashCode() {
-		//TODO Implement hashCode() using Business key equality.	
+		//TODO Implement hashCode() using Business key equality.
 		return super.hashCode();
 	}
 
@@ -168,7 +177,7 @@ public class Trainingcoordinators {
 	 * @es_generated
 	 */
 	public String toString() {
-		//TODO Implement toString().	
+		//TODO Implement toString().
 		return super.toString();
 	}
 

@@ -25,11 +25,7 @@ import abItems.Resources;
 
 import database.DataSourceConnection;
 
-import abItemsShow.CoursesShow;
-import abItemsShow.ResourceHolidayShow;
-import abItemsShow.ResourceRatesShow;
-import abItemsShow.ResourcesShow;
-import tablespackage.Consultingareas;
+
 import tablespackage.Courses;
 import tablespackage.Resourcefiles;
 
@@ -44,11 +40,6 @@ public class Upload extends Action {
 	 */
 	  static Logger logger = Logger.getLogger(Upload.class);
 	private static final long serialVersionUID = 7440302204266787092L;
-
-	// private static String uploadPath = "d:\\ABServerFiles\\resource_files\\";
-	//
-	// private static String tempPath =
-	// "d:\\ABServerFiles\\resource_files_tmp\\";
 
 	public static String uploadPath = getPathForUpload()+"resource_files"+File.separator;
 //		+ "\\Webapps\\ABServer\\files\\resource_files\\";
@@ -111,7 +102,16 @@ public class Upload extends Action {
 			tempPath =getPathForUpload()+"outlines_files_tmp"+File.separator;
 					//getmainPath()
 					//+ "\\Webapps\\ABServer\\files\\outlines_files_tmp\\";
-		} else if (arg2.getParameter("task").equals("CONTRACTS")) {// ////////System.out.println("ana
+		}  else if (arg2.getParameter("task").equals("coordinatorCV")) {// ////////System.out.println("ana
+			// goa el
+			// if");
+			uploadPath =getPathForUpload()+"trainingCoordinatorCV"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\outlines_files\\";
+			tempPath =getPathForUpload()+"trainingCoordinatorCV_tmp"+File.separator;
+					//getmainPath()
+					//+ "\\Webapps\\ABServer\\files\\outlines_files_tmp\\";
+		}else if (arg2.getParameter("task").equals("CONTRACTS")) {// ////////System.out.println("ana
 			// goa el
 			// if");
 			uploadPath = getPathForUpload()+"contracts"+File.separator;
@@ -167,14 +167,13 @@ public class Upload extends Action {
 				String fileName = fi.getName();
 				//System.out.println("file name= " + fileName);
 				if (fileName != null) {
-					if (!fileName.equals("")) {// ////////System.out.println("ana goa
+					if (!fileName.equals("")) {
 											// el
 						// ifff");
 
 						if (arg2.getParameter("task") == null) {
 						//	tx = session.beginTransaction();
-							String extfile = fileName.substring(fileName
-									.indexOf("."));
+							String extfile = fileName.substring(fileName.indexOf("."));
 							 ////System.out.println("file name is: " + fileName+" counter = "+counter);
 							if (counter == 7 || counter == 8) {
 
@@ -227,6 +226,10 @@ public class Upload extends Action {
 
 							}
 
+						}else if (arg2.getParameter("task").equals("coordinatorCV")){
+							String Coordinatorid=arg2.getParameter("CoordinatorID");
+							String extfile = fileName.substring(fileName 	.indexOf("."));
+							fileName = "cv_Coor_"+Coordinatorid + extfile;
 						}
 						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
             //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
@@ -297,7 +300,9 @@ public class Upload extends Action {
 
           return temp;
 	}
-
+      public static String getmainPathFromSession(HttpServletRequest arg2  ){
+    		return RootPathForApplication=arg2.getSession().getServletContext().getRealPath( "/");
+      }
 	public static String getmainPath() {
 		return RootPathForApplication;
 
