@@ -56,6 +56,7 @@ public class Hiber_Coordinators
 				TC.setTrainingCoordinatorResignationDate(l.getDate(13));
 				TC.setTrainingCoordinatorCurrentSalary(l.getString(14));
 				TC.setTrainingCoordinatorCurrentTitle(l.getString(15));
+				TC.setTrainingCoordinatorCV(l.getString(18));
 				//TC.setManDay(l.getInt(16));
 				Al.add(TC);
 		 	}
@@ -106,6 +107,7 @@ public class Hiber_Coordinators
 			String TrainingCoordinateEmail=null;
 			String TrainingCoordinateTelephone=null;
 			String TrainingCoordinateMobile=null;
+			String TrainingCoordinateCV=null;
 
 			if(c.getTrainingCoordinateFirstName()!=null)
 				TrainingCoordinateFirstName="'"+c.getTrainingCoordinateFirstName()+"'";
@@ -129,9 +131,10 @@ public class Hiber_Coordinators
 				TrainingCoordinateBirthDate="'"+TrainingCoordinateBirthDate+"'";
 			if(TrainingCoordinateHireDate!=null)
 				TrainingCoordinateHireDate="'"+TrainingCoordinateHireDate+"'";
+			if(c.getTrainingCoordinatorCV()!=null)
+				TrainingCoordinateCV="'"+c.getTrainingCoordinatorCV()+"'";
 
-
-			database.update("insert into trainingcoordinators (TrainingCoordinateFirstName,TrainingCoordinateAbb,TrainingCoordinateLastName,TrainingCoordinateDescription,TrainingCoordinateColor,TrainingCoordinateAddress,TrainingCoordinateEmail,TrainingCoordinateTelephone,TrainingCoordinateMobile,TrainingCoordinateHireDate,TrainingCoordinateBirthDate) values("+TrainingCoordinateFirstName+","+TrainingCoordinateAbb+","+TrainingCoordinateLastName+","+TrainingCoordinateDescription+","+TrainingCoordinateColor+","+TrainingCoordinateAddress+","+TrainingCoordinateEmail+","+TrainingCoordinateTelephone+","+TrainingCoordinateMobile+","+TrainingCoordinateHireDate+","+TrainingCoordinateBirthDate+")");
+			database.update("insert into trainingcoordinators (TrainingCoordinateFirstName,TrainingCoordinateAbb,TrainingCoordinateLastName,TrainingCoordinateDescription,TrainingCoordinateColor,TrainingCoordinateAddress,TrainingCoordinateEmail,TrainingCoordinateTelephone,TrainingCoordinateMobile,TrainingCoordinateHireDate,TrainingCoordinateBirthDate,TrainingCoordinatorCV) values("+TrainingCoordinateFirstName+","+TrainingCoordinateAbb+","+TrainingCoordinateLastName+","+TrainingCoordinateDescription+","+TrainingCoordinateColor+","+TrainingCoordinateAddress+","+TrainingCoordinateEmail+","+TrainingCoordinateTelephone+","+TrainingCoordinateMobile+","+TrainingCoordinateHireDate+","+TrainingCoordinateBirthDate+","+TrainingCoordinateCV+")");
 
 		}
 		  catch (Exception e) { e.printStackTrace();
@@ -243,6 +246,7 @@ public class Hiber_Coordinators
 				TC.setTrainingCoordinatorResignationDate(l.getDate(13));
 				TC.setTrainingCoordinatorCurrentSalary(l.getString(14));
 				TC.setTrainingCoordinatorCurrentTitle(l.getString(15));
+				TC.setTrainingCoordinatorCV(l.getString(18));
 			 }
 			 l.close();
 
@@ -349,6 +353,7 @@ public class Hiber_Coordinators
 				TC.setTrainingCoordinateMobile(l.getString(12));
 				TC.setTrainingCoordinatorCurrentSalary(l.getString(14));
 				TC.setTrainingCoordinatorCurrentTitle(l.getString(15));
+				TC.setTrainingCoordinatorCV(l.getString(18));
 				al.add(TC);
 		 	}
 
@@ -494,6 +499,7 @@ public class Hiber_Coordinators
 			String TrainingCoordinateEmail=null;
 			String TrainingCoordinateTelephone=null;
 			String TrainingCoordinateMobile=null;
+			String TrainingCoordinateCV=null;
 			if(c.getTrainingCoordinateFirstName()!=null)
 				TrainingCoordinateFirstName="'"+c.getTrainingCoordinateFirstName()+"'";
 			if(c.getTrainingCoordinateAbb()!=null)
@@ -518,8 +524,9 @@ public class Hiber_Coordinators
 				TrainingCoordinateHireDate="'"+TrainingCoordinateHireDate+"'";
 			if(Resign!=null)
 				Resign="'"+Resign+"'";
-
-			database.update("update trainingcoordinators set TrainingCoordinateFirstName="+TrainingCoordinateFirstName+",TrainingCoordinateAbb="+TrainingCoordinateAbb+",TrainingCoordinateLastName="+TrainingCoordinateLastName+",TrainingCoordinateHireDate="+TrainingCoordinateHireDate+",TrainingCoordinateBirthDate="+TrainingCoordinateBirthDate+",TrainingCoordinateDescription="+TrainingCoordinateDescription+",TrainingCoordinateColor="+TrainingCoordinateColor+",TrainingCoordinateAddress="+TrainingCoordinateAddress+",TrainingCoordinateEmail="+TrainingCoordinateEmail+",TrainingCoordinateTelephone="+TrainingCoordinateTelephone+",TrainingCoordinateMobile="+TrainingCoordinateMobile+",TrainingCoordinatorResignationDate="+Resign+" where idTrainingCoordinators="+c.getIdTrainingCoordinators());
+			if(c.getTrainingCoordinatorCV()!=null)
+				TrainingCoordinateCV="'"+c.getTrainingCoordinatorCV()+"'";
+			database.update("update trainingcoordinators set TrainingCoordinateFirstName="+TrainingCoordinateFirstName+",TrainingCoordinateAbb="+TrainingCoordinateAbb+",TrainingCoordinateLastName="+TrainingCoordinateLastName+",TrainingCoordinateHireDate="+TrainingCoordinateHireDate+",TrainingCoordinateBirthDate="+TrainingCoordinateBirthDate+",TrainingCoordinateDescription="+TrainingCoordinateDescription+",TrainingCoordinateColor="+TrainingCoordinateColor+",TrainingCoordinateAddress="+TrainingCoordinateAddress+",TrainingCoordinateEmail="+TrainingCoordinateEmail+",TrainingCoordinateTelephone="+TrainingCoordinateTelephone+",TrainingCoordinateMobile="+TrainingCoordinateMobile+",TrainingCoordinatorResignationDate="+Resign+", TrainingCoordinatorCV="+	TrainingCoordinateCV+" where idTrainingCoordinators="+c.getIdTrainingCoordinators());
 
 		}
 		  catch (Exception e) { e.printStackTrace();

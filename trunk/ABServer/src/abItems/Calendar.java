@@ -36,7 +36,7 @@ import database.DataSourceConnection;
 
 /**
  * @author noha
- * 
+ *
  */
 public class Calendar {
 
@@ -63,7 +63,7 @@ public class Calendar {
 	static String resourceName = "";
 
 	static String coordinatorName = "";
-	
+
 	static int colorNumber = 1;
 
 	public ArrayList retreiveContractEmptyCourses(
@@ -279,7 +279,7 @@ public class Calendar {
 
 					c.setCoordinatorColor(coordinators_rs.getString(3));
 					c.setCoordinatorApp(coordinators_rs.getString(4));
-					
+
 					coordinators_rs.close();
 
 				}
@@ -295,7 +295,7 @@ public class Calendar {
 
 					c.setResourceColor(resources_rs.getString(3));
 					c.setResourceApp(resources_rs.getString(4));
-					
+
 					resources_rs.close();
 
 				}
@@ -303,7 +303,7 @@ public class Calendar {
 				//1--> funded
 				//2---> not funded
 				c.setFunded(contract_rs.getInt(7));
-			
+
 				c.setID(rs.getInt(1));
 				String location = "Not Assigned";
 				if (rs.getString(30) != null && !rs.getString(30).equals("")) {
@@ -409,15 +409,18 @@ public class Calendar {
 		String result = returnText.substring(start, end);
 
 		String[] courseResultArray = result.split("<Course>");
-		
 
+		boolean existCourse;
 		for (int i = 1; i < courseResultArray.length; i++) {
 
+
+			  existCourse = false;
 			courseResultArray[i] = "<Course>" + courseResultArray[i];
-			// ////System.out.println("course---"+courseResultArray[i] );
+
 			String[] singleCourseResultArray = courseResultArray[i]
 					.split("<CourseDays>");
 			String singleCourseResult = singleCourseResultArray[0];
+			existCourse=singleCourseResult.contains("<CourseDays__array>");
 
 			for (int k = 2; k < singleCourseResultArray.length; k++) {
 
@@ -438,7 +441,11 @@ public class Calendar {
 				singleCourseResult = singleCourseResult + result;
 			}
 
-			singleCourseResult = singleCourseResult + "</Course>";
+			if (existCourse)
+
+			singleCourseResult = singleCourseResult + "</CourseDays__array></Course>";
+			else
+				singleCourseResult = singleCourseResult + "</Course>";
 
 			finalCoursesResult = finalCoursesResult + singleCourseResult;
 		}
@@ -804,7 +811,7 @@ public class Calendar {
 
 					c.setCoordinatorColor(coordinators_rs.getString(3));
 					c.setCoordinatorApp(coordinators_rs.getString(4));
-					
+
 					coordinators_rs.close();
 
 				}
@@ -820,7 +827,7 @@ public class Calendar {
 
 					c.setResourceColor(resources_rs.getString(3));
 					c.setResourceApp(resources_rs.getString(4));
-					
+
 					resources_rs.close();
 
 				}
@@ -909,17 +916,17 @@ public class Calendar {
 
 					Date startDate2 = startDate;
 					Date endDate2 = endDate;
-					
+
 					java.util.Calendar cal = java.util.Calendar.getInstance();
 					cal.setTime(startDate);
 					SimpleDateFormat sdf2 = new SimpleDateFormat(
 							"yyyy-MM-dd", Locale.US);
 					while ((startDate2.before(endDate2) || startDate2
 							.equals(endDate2))) {
-						
+
 						String startDate2_string = sdf2.format(startDate2);
 						String EventDate_string = sdf2.format(EventDate);
-						
+
 						if(startDate2_string.equals(EventDate_string)){
 						ShowCourseDays.add(courseDay);
 						break;
@@ -946,7 +953,7 @@ public class Calendar {
 		}
 
 		rs.close();
-
+boolean existCourse =false;
 		XStream xstream = new XStream();
 		xstream.alias("CourseDays", CourseDays.class);
 		xstream.alias("Course", Course.class);
@@ -968,12 +975,13 @@ public class Calendar {
 
 			for (int i = 1; i < courseResultArray.length; i++) {
 
+				existCourse=false;
 				courseResultArray[i] = "<Course>" + courseResultArray[i];
 
 				String[] singleCourseResultArray = courseResultArray[i]
 						.split("<CourseDays>");
 				String singleCourseResult = singleCourseResultArray[0];
-
+				existCourse=singleCourseResult.contains("<CourseDays__array>");
 				for (int k = 2; k < singleCourseResultArray.length; k++) {
 
 					singleCourseResultArray[k] = "<CourseDays>"
@@ -991,8 +999,11 @@ public class Calendar {
 					singleCourseResult = singleCourseResult + result;
 				}
 
-				singleCourseResult = singleCourseResult + "</Course>";
+				if (existCourse)
 
+				singleCourseResult = singleCourseResult + "</CourseDays__array></Course>";
+				else
+					singleCourseResult = singleCourseResult + "</Course>";
 				finalCoursesResult = finalCoursesResult + singleCourseResult;
 			}
 
@@ -1029,7 +1040,7 @@ public class Calendar {
 		idResource = "";
 		idClient = "";
 		filterStatment = "";
-		
+
 		Calendar.colorNumber = 1;
 	}
 
@@ -1209,7 +1220,7 @@ public class Calendar {
 					ResultSet contractCourse_rs2 = database
 							.retrieve("select* from contractcourse where idContractCourse = "
 									+ courses_rs2.getString(1));
-					
+
 					if (contractCourse_rs2.next()) {
 
 						location2 = contractCourse_rs2.getString(30);
@@ -1300,18 +1311,18 @@ public class Calendar {
 				// //System.out.println("i am in venue check---2");
 				if (rooms_rs.getDate(8) != null) {
 //					//System.out.println("startDate = "+startDate+" rooms_rs.getDate(5) = "+rooms_rs.getDate(5));
-					
+
 					Date startDate2 = rooms_rs.getDate(5);
 					Date endDate2 = rooms_rs.getDate(8);
-			
+
 					cal.setTime(startDate2);
-				
+
 					while ((startDate2.before(endDate2) || startDate2
 							.equals(endDate2))) {
-						
+
 						String startDate2_string = sdf2.format(startDate2);
 						String EventDate_string = sdf2.format(startDate);
-						
+
 						if(startDate2_string.equals(EventDate_string)){
 
 
@@ -1334,15 +1345,15 @@ public class Calendar {
 								return conflictDay;
 
 							}
-						
-						
+
+
 						}
 
 						cal.add(java.util.Calendar.DATE, 1);
 
 						startDate2 = cal.getTime();
 					}
-					
+
 
 				}
 			}
@@ -1537,8 +1548,8 @@ public class Calendar {
 
 	///////////////////////////////////////////////////////////////////////////////////////////
 	public void changeDisplayColor(int colorNumber) {
-		
+
 		Calendar.colorNumber = colorNumber;
-		
+
 	}
 }

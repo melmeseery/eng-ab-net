@@ -80,6 +80,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	    		cS.setTrainingCoordinateDescription(t.getTrainingCoordinateDescription());
 	    		cS.setTrainingCoordinatorCurrentSalary(t.getTrainingCoordinatorCurrentSalary());
 	    		cS.setTrainingCoordinatorCurrentTitle(t.getTrainingCoordinatorCurrentTitle());
+              cS.setTrainingCoordinatorCV( t.getTrainingCoordinatorCV());
 	    		ArrayList<Integer> ids=HC.getCourseCoordinators(t.getIdTrainingCoordinators(), database);
 	    	//	cS.setManDay(ids.size());
 	    		SimpleDateFormat s=new SimpleDateFormat("dd-MMM-yyyy",Locale.US);
@@ -141,6 +142,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
     		Tc.setTrainingCoordinateMobile(request.getParameter("trainingCoordinateMobile"));
     		Tc.setTrainingCoordinateTelephone(request.getParameter("trainingCoordinateTelephone"));
     		Tc.setTrainingCoordinateDescription(request.getParameter("trainingCoordinateDescription"));
+
     	// Tc.setTrainingCoordinatorCurrentSalary(request.getParameter("trainingCoordinateCurrentSalary"));
     	// Tc.setTrainingCoordinatorCurrentTitle(request.getParameter("trainingCoordinateCurrentTitle"));
     		String trainingCoordinateHireDate=null;
@@ -312,6 +314,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 Tc.setTrainingCoordinatorCurrentSalary(request.getParameter("trainingCoordinateCurrentSalary"));
 				 //
 				 Tc.setTrainingCoordinatorCurrentTitle(request.getParameter("trainingCoordinateCurrentTitle"));
+				 Tc.setTrainingCoordinatorCV( request.getParameter("trainingCoordinatorCV"));
 				 String trainingCoordinateHireDate=null;
 		            if(!request.getParameter("trainingCoordinateHireDate").equals("3000-01-01"))
 		            	trainingCoordinateHireDate=request.getParameter("trainingCoordinateHireDate");

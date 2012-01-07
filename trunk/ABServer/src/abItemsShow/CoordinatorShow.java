@@ -63,9 +63,10 @@ public class CoordinatorShow {
 	 * @es_generated
 	 */
 	private String trainingCoordinatorCurrentTitle;
-	
+
 	private int manDay;
-	
+
+	private String TrainingCoordinatorCV;
 	/**
 	 * @return the manDay
 	 */
@@ -178,5 +179,11 @@ public class CoordinatorShow {
 	public void setTrainingCoordinatorResignationDate(
 			String trainingCoordinatorResignationDate) {
 		this.trainingCoordinatorResignationDate = trainingCoordinatorResignationDate;
+	}
+	public String getTrainingCoordinatorCV() {
+		return TrainingCoordinatorCV;
+	}
+	public void setTrainingCoordinatorCV(String trainingCoordinatorCV) {
+		TrainingCoordinatorCV = trainingCoordinatorCV;
 	}
 }
