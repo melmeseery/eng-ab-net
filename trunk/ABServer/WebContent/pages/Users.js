@@ -20,21 +20,26 @@
 
 
 
-            this.passwordText = 'Passwords must be at least 5 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)';
+            this.passwordText = 'Passwords must be at least 3 characters';
 
-            var hasSpecial = value.match(/[0-9!@#\$%\^&\*\(\)\-_=\+]+/i);
+         //   var hasSpecial = value.match(/[0-9!@#\$%\^&\*\(\)\-_=\+]+/i);
 
-            var hasLength = (value.length >= 5);
+            var hasLength = (value.length >= 3);
 
+//            this.passwordText = 'Passwords must be at least 3 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)';
+//
+//            var hasSpecial = value.match(/[0-9!@#\$%\^&\*\(\)\-_=\+]+/i);
+//
+//            var hasLength = (value.length >= 3);
 
-
-            return (hasSpecial && hasLength);
-
+//            return (hasSpecial && hasLength);
+              return (hasLength);
          },
 
+      // passwordText: 'Passwords must be at least 5 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)',
 
 
-         passwordText: 'Passwords must be at least 5 characters, containing either a number, or a valid special character (!@#$%^&*()-_=+)',
+         passwordText: 'Passwords must be at least 3 characters'
 
       });
 
