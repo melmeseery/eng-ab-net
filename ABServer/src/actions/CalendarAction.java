@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import mypackage.Upload;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import abItems.Calendar;
+import abItems.CalendarData;
 import abItems.Contracts;
 import abItems.pdfCalendarWriter;
 import abItemsShow.Conflicts;
@@ -42,7 +43,7 @@ import com.thoughtworks.xstream.XStream;
  *
  */
 public class CalendarAction extends Action {
-
+	  static Logger logger = Logger.getLogger(CalendarAction.class);
 	/*
 	 * (non-Javadoc)
 	 *
@@ -66,7 +67,7 @@ public class CalendarAction extends Action {
 
 			XStream xstream = new XStream();
 			xstream.alias("ECourse", ECourse.class);
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			String returnText = xstream.toXML(calendar
 					.retreiveContractEmptyCourses(database, request));
 			// ////  //  //  ////System.out.println("return text = "+returnText);
@@ -79,7 +80,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("retreiveContractCourses")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			String returnText = calendar.retreiveContractCourses(database,
 					request);
 			// ////  //  //  ////System.out.println("return text = "+returnText);
@@ -92,7 +93,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("saveContractCourse")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			calendar.saveContractCourse(database, request);
 
 		}
@@ -100,7 +101,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("retreiveGeneralCalendarCourses")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			String returnText = calendar.retreiveGeneralCalendarCourses(database,
 					request);
 			// ////  //  //  ////System.out.println("return text = "+returnText);
@@ -147,7 +148,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("setFilterItems")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			calendar.setFilterItems(request);
 
 		}
@@ -155,7 +156,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("resetCalendar")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			calendar.resetCalendar();
 
 		}
@@ -163,7 +164,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("changeDisplayColor")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			calendar.changeDisplayColor(Integer.parseInt(request.getParameter("colorNumber")));
 
 		}
@@ -171,7 +172,7 @@ public class CalendarAction extends Action {
 		// ////////////////////////////////////////////////////////////
 		else if (request.getParameter("task").equals("checkCalendarConfliction")) {
 
-			Calendar calendar = new Calendar();
+			CalendarData calendar = new CalendarData();
 			XStream xstream = new XStream();
 			xstream.alias("Conflicts", Conflicts.class);
 			String returnText = calendar.checkCalendarConfliction(database,

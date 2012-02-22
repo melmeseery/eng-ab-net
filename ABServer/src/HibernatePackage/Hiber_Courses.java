@@ -271,9 +271,9 @@ public class Hiber_Courses
 //	}
 //
 	/*----------------------------------------------------------------------------------------------------------*/
-	public void insertCourse(Courses c,DataSourceConnection database)
+	public int insertCourse(Courses c,DataSourceConnection database)
 	{
-
+           int id=0 ;
 		try{
 
 			String outlineAr=null;
@@ -300,10 +300,17 @@ public class Hiber_Courses
 				courseDesc="'"+c.getCourseDescription()+"'";
 			if(c.getCourseApp()!=null)
 				courseApp="'"+c.getCourseApp()+"'";
-			String s="insert into courses (courseCode,courseNameEng,courseNameAr,courseOutlineEng,courseOutlineAr,courseDays,CourseCompetenceAddressed,courseColor,Course_idTrainingAreas,Course_idCourseTypes,CourseDescription,CourseCalender,Course_idResources,CourseApp) values("+courseCode+","+courseNameEng+","+courseNameAr+","+outlineEng+","+outlineAr+","+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+","+courseColor+","+c.getIdTrainingArea()+","+c.getIdCourseTypes()+","+courseDesc+",'',"+c.getCourse()+","+courseApp+")";
+			//String s="insert into courses (courseCode,courseNameEng,courseNameAr,courseOutlineEng,courseOutlineAr,courseDays,CourseCompetenceAddressed,courseColor,Course_idTrainingAreas,Course_idCourseTypes,CourseDescription,CourseCalender,Course_idResources,CourseApp) values("+courseCode+","+courseNameEng+","+courseNameAr+","+outlineEng+","+outlineAr+","+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+","+courseColor+","+c.getIdTrainingArea()+","+c.getIdCourseTypes()+","+courseDesc+",'',"+c.getCourse()+","+courseApp+")";
 			////System.out.println("s= "+s);
 
 			database.update("insert into courses (courseCode,courseNameEng,courseNameAr,courseOutlineEng,courseOutlineAr,courseDays,CourseCompetenceAddressed,courseColor,Course_idTrainingAreas,Course_idCourseTypes,CourseDescription,CourseCalender,Course_idResources,CourseApp) values("+courseCode+","+courseNameEng+","+courseNameAr+","+c.getCourseOutlineAr()+","+c.getCourseOutlineAr()+","+c.getCourseDays()+","+c.getCourseCompetenceAddressed()+","+courseColor+","+c.getIdTrainingArea()+","+c.getIdCourseTypes()+","+courseDesc+",'',"+c.getCourse()+","+courseApp+")");
+			ResultSet l =database.retrieve("select idCourses from courses  where courseCode="+courseCode +" And courseNameEng="+courseNameEng +"  And CourseApp="+courseApp);
+			while(l.next())
+		 	{
+		 			id=l.getInt(1);
+		 	}
+		 	l.close();
+
 
 		}
 		  catch (Exception e) { e.printStackTrace();
@@ -311,9 +318,46 @@ public class Hiber_Courses
 	      }  finally {
 
 	      }
+		return id;
 
 	}
+	/*----------------------------------------------------------------------------------------*/
+	public Integer getCourseID(Courses c,DataSourceConnection database)
+	{
+    int id=0 ;
+	try{
 
+		String courseCode=null;
+		String courseNameEng=null;
+
+		String courseApp=null;
+
+		if(c.getCourseCode()!=null)
+			courseCode="'"+c.getCourseCode()+"'";
+
+		if(c.getCourseNameEng()!=null)
+			courseNameEng="'"+c.getCourseNameEng()+"'";
+
+		if(c.getCourseApp()!=null)
+			courseApp="'"+c.getCourseApp()+"'";
+	 	ResultSet l =database.retrieve("select idCourses from courses  where courseCode="+courseCode +" And courseNameEng="+courseNameEng +"  And CourseApp="+courseApp);
+		while(l.next())
+	 	{
+	 			id=l.getInt(1);
+	 	}
+	 	l.close();
+
+
+	}
+	  catch (Exception e) { e.printStackTrace();
+
+     }  finally {
+
+     }
+	return id;
+
+
+	}
 /*----------------------------------------------------------------------------------------------------------*/
 	public void updateCourse(Courses c,DataSourceConnection database)
 	{
@@ -629,28 +673,28 @@ public class Hiber_Courses
 	}
 
 /*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
-	{
-		Integer id=0;
-
-		try{
-
-			ResultSet l =database.retrieve("select idCourses from courses");
-			while(l.next())
-		 	{
-		 			id=l.getInt(1);
-		 	}
-		 	l.close();
-
-
-		}catch(Exception e){
-			// //////System.out.println(e.getMessage());
-		}finally{
-			}
-		return id;
-
-
-	}
+//	public Integer getLastOne(DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idCourses from courses");
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//
+//		}catch(Exception e){
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//
+//
+//	}
 /*------------------------insert Relation-----------------------------------*/
 
 	public void insertMMCTP(Integer id,Integer aId,DataSourceConnection database)

@@ -1,37 +1,27 @@
 package mypackage;
 
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.GNOME.Accessibility.Application;
-import org.apache.catalina.core.ApplicationContext;
-import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.apache.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import tablespackage.Courses;
+import HibernatePackage.Hiber_Courses;
 import abItems.Resources;
-
 import database.DataSourceConnection;
 
-
-import tablespackage.Courses;
-import tablespackage.Resourcefiles;
-
-import HibernatePackage.Hiber_Courses;
-import HibernatePackage.Hiber_ResourcesFiles;
-import org.apache.log4j.Logger;
 
 public class Upload extends Action {
 	static String RootPathForApplication="";
@@ -59,14 +49,10 @@ public class Upload extends Action {
 
 
         tempPath =getPathForUpload()+"resource_files_temp"+File.separator;
-
-
 	//	SessionFactory factory = new Configuration().configure()
 		//		.buildSessionFactory();
-
 		/* Open Hibernate Session */
 	//	Session session = factory.openSession();
-
 	//	Transaction tx = session.beginTransaction();
 		//System.out.println("task= "+arg2.getParameter("task"));
 		if (arg2.getParameter("task") == null) {
@@ -124,21 +110,26 @@ public class Upload extends Action {
 
 		try {
 
+
 			// create and intialize the database connection////////////
 			DataSourceConnection database = new DataSourceConnection();
 			database.initializeConnecton(this.servlet);
 
-
+//			ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
+//			servletFileUpload.setSizeMax(81920); /* the unit is bytes */
 
 			// ////System.out.println("ana fe el execute");
 
-			DiskFileUpload fu = new DiskFileUpload();
-			fu.setSizeMax(4194304);
-			fu.setSizeThreshold(4096);
-			fu.setRepositoryPath(tempPath);
-			// enctype="multipart/form-data";
+
+	//		DiskFileUpload new DiskFileUpload();
+		// enctype="multipart/form-data";
 			// ////////System.out.println("fileDes =
 			// "+arg2.getSession().getValue("fileDes"));
+		    DiskFileItemFactory fu = new 	DiskFileItemFactory();
+			fu.setSizeThreshold(40*1024*1024); //1 MB
+			fu.setRepository(new File(tempPath));
+			ServletFileUpload upload = new ServletFileUpload(fu);
+			upload.setSizeMax(80*1024*1024);
 
 			Integer resId = null;
 
@@ -155,7 +146,7 @@ public class Upload extends Action {
 			Courses c = HC.getCourseById(courseID, database);
 
 			//c.setIdCourses(courseID);
-			List fileItems = fu.parseRequest(arg2);
+			List fileItems = upload.parseRequest(arg2);
 			Iterator i = fileItems.iterator();
 			// //////System.out.println(fileItems.size());
 
@@ -228,7 +219,13 @@ public class Upload extends Action {
 
 						}else if (arg2.getParameter("task").equals("coordinatorCV")){
 							String Coordinatorid=arg2.getParameter("CoordinatorID");
-							String extfile = fileName.substring(fileName 	.indexOf("."));
+							int indexOfDot=fileName.indexOf(".");
+							String extfile ="";
+							if (indexOfDot>0)
+							{
+									  extfile = fileName.substring(indexOfDot);
+							}
+
 							fileName = "cv_Coor_"+Coordinatorid + extfile;
 						}
 						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
@@ -305,11 +302,34 @@ public class Upload extends Action {
       }
 	public static String getmainPath() {
 		return RootPathForApplication;
-
 //		File temp = new File("");
 //		temp.getAbsolutePath();
-//
-//
 //		return temp.getAbsolutePath();
 	}
+
+
+
+
+	public void UploadOutline(){
+
+
+	}
+	public void UploadCoordinatorCV(){
+
+	}
+	public void UploadResourceFiles(){
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 }

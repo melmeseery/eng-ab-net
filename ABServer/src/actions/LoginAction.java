@@ -12,10 +12,16 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.mail.AuthenticationFailedException;
+import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,15 +47,39 @@ public class LoginAction extends org.apache.struts.action.Action {
 	    // Get a Properties object
 	    Properties props = System.getProperties();
 
+
+//	    props.setProperty("mail.pop3.connectionpooltimeout", "50000");
+//	    props.setProperty("mail.pop3.connectiontimeout", "50000");
+//	    props.setProperty("mail.pop3.timeout", "50000");
+
+	      props.put("mail.pop3.starttls.enable", "false");
+	        props.put("mail.pop3.auth", "true");
+
+//
+	    props.setProperty("mail.pop3.connectionpooltimeout", "50000");
+	    props.setProperty("mail.pop3.connectiontimeout", "50000");
+	    props.setProperty("mail.pop3.timeout", "50000");
+
+	   	props.setProperty( "mail.pop3.ssl.enable" , "false");
+
+//		props.setProperty("mail.pop3.ssl.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//   	     props.setProperty("mail.pop3.ssl.socketFactory.fallback", "false");
+    // 	props.setProperty("mail.pop3s.ssl.socketFactory.port", "2525");
+
+
+
 	    // Get a Session object
 	    javax.mail.Session session = Session.getInstance(props, null);
+
+
 	    session.setDebug(debug);
 		// TODO Auto-generated method stub
-		String protocol="pop3s";
+		String protocol="pop3";
 		String host = "mail.ca-eg.com";
 		 String username = Email;
 		 String password = Pass;
-	     logger.info(" the url is "+host+"  user name "+username);
+//	     logger.error(" the url is 3333  "+host+"  user name "+username);
+//	     logger.error(props);
 
 //			String protocol="pop3s";
 //			String host = "pop.gmail.com";
@@ -79,7 +109,12 @@ public class LoginAction extends org.apache.struts.action.Action {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			     logger.info("  LoginCorrectly   "+			LoginCorrectly);
+				catch(Exception  e){
+
+					e.printStackTrace();
+					LoginCorrectly=false;
+				}
+			     logger.error("  LoginCorrectly   "+			LoginCorrectly);
 
              return LoginCorrectly;
 	}
@@ -87,6 +122,9 @@ public class LoginAction extends org.apache.struts.action.Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+//		HttpSession session = request.getSession();
+//		session.setMaxInactiveInterval(40*60);
+
        logger.info("   inside the login action............");
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
@@ -102,8 +140,7 @@ public class LoginAction extends org.apache.struts.action.Action {
 		ResultSet rs = database
 				.retrieve("SELECT * FROM users where UserEmail = '"
 						+ request.getParameter("userEmail")
-						+ "' and UserPassword = '"
-						+ request.getParameter("userPassword") + "';");
+					       + "';");
 		logger.info( "SELECT * FROM users where UserEmail = '"
 						+ request.getParameter("userEmail")
 						+ "' and UserPassword = '"

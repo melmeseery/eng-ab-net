@@ -152,8 +152,8 @@ public class ListCoordinators extends org.apache.struts.action.Action {
             String trainingCoordinateBirthDate=null;
             if(!request.getParameter("trainingCoordinateBirthDate").equals("3000-01-01"))
            	trainingCoordinateBirthDate=request.getParameter("trainingCoordinateBirthDate");
-    		HC.insertCoordinator(Tc,trainingCoordinateHireDate,trainingCoordinateBirthDate, database);
-    		Integer id=HC.getLastOne(database);
+    		Integer id=HC.insertCoordinator(Tc,trainingCoordinateHireDate,trainingCoordinateBirthDate, database);
+    		//Integer id=HC.getLastOne(database);
     		// // //////System.out.println("length= "+l.length);
     		// //////System.out.println("length of types = "+len);
     		if(!Integer.valueOf(request.getParameter("length")).equals(0))
@@ -197,7 +197,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 	        		{
 	        		String s=l[i];
 	        	//	Integer thID=HCH.getLastOne();
-	        		Integer THid=HCH.getLastOne(s,id, database);
+	        		Integer THid=HCH.getCoordinatorID(s,id, database);
 	        		//System.out.println("iddddddddddd= "+THid);
 	        		Trainingcoordinatehistory T=new Trainingcoordinatehistory();
 	        		T.setIdTrainingCoordinateHistory(THid);
@@ -347,7 +347,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 tH.setTrainingCoordinators(id);
 				 tH.setTrainingCoordinateHistoryValue(request.getParameter("trainingCoordinateHistoryValue"));
 				 String s=request.getParameter("trainingCoordinateHistoryType");
-				 Integer THid=HCH.getLastOne(s,id, database);
+				 Integer THid=HCH.getCoordinatorID(s,id, database);
 				 //System.out.println("id= "+THid);
 				 Trainingcoordinatehistory T=new Trainingcoordinatehistory();
 				 T.setIdTrainingCoordinateHistory(THid);
@@ -390,7 +390,7 @@ public class ListCoordinators extends org.apache.struts.action.Action {
 				 d3=request.getParameter("trainingCoordinateHistoryValidFrom");
 			 Tc.setTrainingCoordinators(Tid);
 			 HCH.update(Tc,id, d3,false, database);
-			 Integer THid = HCH.getLastOne(request.getParameter("trainingCoordinateHistoryType"),Tid, database);
+			 Integer THid = HCH.getCoordinatorID(request.getParameter("trainingCoordinateHistoryType"),Tid, database);
 			 Trainingcoordinators t = new Trainingcoordinators();
 			 t.setIdTrainingCoordinators(Tid);
 			 if(THid!=null)

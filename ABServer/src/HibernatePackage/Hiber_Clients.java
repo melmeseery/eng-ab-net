@@ -22,21 +22,21 @@ import tablespackage.Courses;
 import tablespackage.Personals;
 import tablespackage.Pricegrouphistory;
 
-public class Hiber_Clients 
+public class Hiber_Clients
 {
 	public ArrayList<Clients> getClients(DataSourceConnection database, HttpServletRequest request)
 	{
 		ArrayList<Clients> Al=new ArrayList<Clients>();
-		
+
 		try{
-			
+
 			String q = "";
 			for (int s = 0; s < 1; s++) {
 				String[] filterType = request.getParameterValues("filter[" + s
 						+ "][data][type]");
 				// ////  //  //  ////System.out.println(filterType+ " "+s+" "+filterType[0]);
 				if (filterType != null) {
-					
+
 						String[] filter = request.getParameterValues("filter[" + s
 								+ "][field]");
 
@@ -44,7 +44,7 @@ public class Hiber_Clients
 
 							String[] values = request.getParameterValues("filter["
 									+ s + "][data][value]");
-							
+
 
 								if (!q.equals(""))
 									q = q + " and";
@@ -57,11 +57,11 @@ public class Hiber_Clients
 								}
 								String upperCase = firstLetter.toUpperCase();
 								String lowerCase = firstLetter.toLowerCase();
-								
+
 								q = q + " (clientName like '" + upperCase+remain
 										+ "%' or clientName like '" + lowerCase+remain
 										+ "%')";
-						
+
 
 						}
 					//}
@@ -86,20 +86,20 @@ public class Hiber_Clients
 		 		Al.add(DS);
 		 	}
 		 	l.close();
-			
-		 	
+
+
 		}catch(Exception e){
-			
+
 		}finally{
 			}
 		return Al;
 	}
-	/*--------------------------------------------------------------------------------------------------*/	
+	/*--------------------------------------------------------------------------------------------------*/
 	public Personals getClientPersonal(Integer id,DataSourceConnection database)
 	{
 		Personals p=new Personals();
 		try{
-			
+
 			ResultSet l = database.retrieve("select * from personals where idPersonals= "+id);
 		 	while(l.next())
 		 	{
@@ -112,31 +112,32 @@ public class Hiber_Clients
 		 		p.setPersonMobile(l.getString(7));
 		 		p.setPersonAddress(l.getString(8));
 		 	}
-		 		
+
 		 l.close();
-		 
-	     
+
+
 		}catch(Exception e){//e.printStackTrace();
-			
+
 		}finally{
 			}
 		return p;
 	}
-	
-/*--------------------------------------------------------------------------------------------------*/	
 
-	public void insertClient(Clients c,String appDate,String workDate,DataSourceConnection database)
+/*--------------------------------------------------------------------------------------------------*/
+
+	public int insertClient(Clients c,String appDate,String workDate,DataSourceConnection database)
 	{
+		int id=0;
 
 		try{
-			
+
 			String clientName=null;
 			String clientApp=null;
 			String clientColor=null;
 			String ClientApproachPerson=null;
 			String ClientInfo=null;
 			String ClientAddress=null;
-			
+
 			if(c.getClientName()!=null)
 				clientName="'"+c.getClientName()+"'";
 			if(c.getClientApp()!=null)
@@ -153,15 +154,28 @@ public class Hiber_Clients
 				workDate="'"+workDate+"'";
 			if(appDate!=null)
 				appDate="'"+appDate+"'";
-			
+
 			database.update("insert into clients (clientName,clientApp,clientColor,ClientApproachDate,ClientWorkDate,ClientApproachPerson,ClientInfo,ClientAddress) values("+clientName+","+clientApp+","+clientColor+","+appDate+","+workDate+","+ClientApproachPerson+","+ClientInfo+","+ClientAddress+")");
-			
+
+
+
+
+			ResultSet l =database.retrieve("select idClients from clients where clientName="+clientName+" And clientApp="+clientApp);
+			while(l.next())
+		 	{
+		 			id=l.getInt(1);
+		 	}
+		 	l.close();
+
+
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
+		return id;
 
 	}
 /*----------------------------------------------------------------------------------------------------------*/
@@ -169,7 +183,7 @@ public class Hiber_Clients
 	{
 		Clients DS=new Clients();
 		try{
-		
+
 			ResultSet l =database.retrieve("select * from clients where idClients="+id);
 		 	if(l.next())
 		 	{
@@ -183,107 +197,139 @@ public class Hiber_Clients
 		 		DS.setClientApproachPerson(l.getString(8));
 		 		DS.setClientInfo(l.getString(9));
 		 		DS.setClientAddress(l.getString(10));
-				
+
 		 	}
-		 	////System.out.println();	
+		 	////System.out.println();
 		 	l.close();
-			
+
 		}catch(Exception e){e.printStackTrace();
 		}
-	
-		
+
+
 		return DS;
-	}	
-	
+	}
+
 	/*----------------------------------------------------------------------------------------------------------*/
 	public Integer getPer(Integer id,DataSourceConnection database)
 	{
 		Integer ids=0;
 		try{
-			
+
 			ResultSet l =database.retrieve("select Personals_idPersonals from venues where idVenues="+id);
 			while(l.next())
 		 	{
 				ids=l.getInt(1);
-				
+
 		 	}
 		 	l.close();
-		 	
-		 	
+
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return ids;
-	}		
+	}
 /*------------------------insert Relation-----------------------------------*/
-	
+
 	public void insertMMPersonal(Integer id,Integer p,DataSourceConnection database)
 	{
 		try{
-			
-			
+
+
 			database.update("insert into clientpersonal (ClientsPersonal_idClients,ClientPersonals_idPersonals) values("+id+","+p+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
-	
-	/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
-	{
+	/*----------------------------------------------------------------------------------------------------------*/
+
+	public Integer getClientId(DataSourceConnection database, Clients c){
 		Integer id=0;
-		
+
 		try{
-			
-			ResultSet l =database.retrieve("select idClients from clients");
+
+
+			String clientName=null;
+			String clientApp=null;
+
+
+			if(c.getClientName()!=null)
+				clientName="'"+c.getClientName()+"'";
+			if(c.getClientApp()!=null)
+				clientApp="'"+c.getClientApp()+"'";
+
+
+
+			ResultSet l =database.retrieve("select idClients from clients where  clientName="+clientName+" AND clientApp="+clientApp+" ");
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 	
-		 	
+
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return id;
 	}
+	/*----------------------------------------------------------------------------------------*/
+//	public Integer getLastOne(DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idClients from clients");
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//
+//		}catch(Exception e){
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//	}
 /*-------------------------------------------------------------------------------------------*/
 	public void update(Clients c,DataSourceConnection database)
 	{
 		try{
-			
-			
+
+
 			database.update("update clients set ClientMain_idPersonals="+c.getClientMain()+" where idClients="+c.getIdClients());
-			
+
 			////System.out.println("updated successfully"+"update clients set ClientMain_idPersonals="+c.getClientMain()+" where idClients="+c.getIdClients());
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
 	}
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void updateClient(Clients c,String workDate,String appDate,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			String clientName=null;
 			String clientApp=null;
 			String clientColor=null;
 			String ClientApproachPerson=null;
 			String ClientInfo=null;
 			String ClientAddress=null;
-			
+
 			if(c.getClientName()!=null)
 				clientName="'"+c.getClientName()+"'";
 			if(c.getClientApp()!=null)
@@ -300,16 +346,16 @@ public class Hiber_Clients
 				workDate="'"+workDate+"'";
 			if(appDate!=null)
 				appDate="'"+appDate+"'";
-			
-			
+
+
 			database.update("update clients set ClientName="+clientName+", ClientApp="+clientApp+", ClientColor= "+clientColor+", ClientApproachDate= "+appDate+", ClientWorkDate= "+workDate+", ClientApproachPerson= "+ClientApproachPerson+", ClientInfo="+ClientInfo+",ClientAddress="+ClientAddress+" where idClients="+c.getIdClients());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}		
+
+	}
 }

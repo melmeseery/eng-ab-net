@@ -21,16 +21,16 @@ import tablespackage.Personals;
 import tablespackage.Rooms;
 import tablespackage.Venues;
 
-public class Hiber_Rooms 
+public class Hiber_Rooms
 {
 /*----------------------------------------------------------------------------------------------------------*/
-	
+
 	public ArrayList<Rooms> getRoomsById(Integer id,DataSourceConnection database)
 	{
-		
+
 		ArrayList<Rooms> al=new ArrayList<Rooms>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from rooms where Room_idVenues="+id);
 			while(l.next())
 			 {
@@ -44,8 +44,8 @@ public class Hiber_Rooms
 				al.add(r);
 			 }
 			 l.close();
-			 
-		 	
+
+
 		}catch(Exception e){
 		}finally{
 			}
@@ -55,47 +55,47 @@ public class Hiber_Rooms
 	public void insertRoom(Rooms p,String validFrom,DataSourceConnection database)
 	{
 		try{
-			
+
 			if(validFrom!=null)
 				validFrom="'"+validFrom+"'";
 			database.update("insert into rooms (RoomCapacity,RoomNumber,RoomValidFrom,Room_idVenues,RoomValid) values("+p.getRoomCapacity()+","+p.getRoomNumber()+","+validFrom+","+p.getRoom()+","+p.getRoomValid()+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
 
 	}
 	/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
+	public Integer getValidRoomId(int idvenue, DataSourceConnection database)
 	{
 		Integer id=0;
-		
+
 		try{
-			
-			ResultSet l =database.retrieve("select idRooms from rooms");
+
+			ResultSet l =database.retrieve("select idRooms from rooms where RoomValid=true and Room_idVenues="+ idvenue);
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 
-		 	
+
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return id;
-	}	
-/*-----------------------------------------------------------------------------*/	
+	}
+/*-----------------------------------------------------------------------------*/
 	public Rooms getRoomById(Integer id,DataSourceConnection database)
 	{
 		Rooms p=new Rooms();
-		
+
 		try{
-				
+
 				ResultSet l =database.retrieve("select * from rooms where idRooms="+id);
 				while(l.next())
 				 {
@@ -107,7 +107,7 @@ public class Hiber_Rooms
 					p.setRoomValidTo(l.getDate(8));
 				 }
 				 l.close();
-				 
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
@@ -117,38 +117,38 @@ public class Hiber_Rooms
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void update(Integer rid,String validTo,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			database.update("update rooms set RoomValidTo='"+validTo+"',RoomValid=false where idRooms="+rid);
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}	
+
+	}
 /*----------------------------------------------------------------------------------------------------------*/
 	public void updateRoom(Rooms r,String validFrom,String validTo,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			if(validFrom!=null)
 				validFrom="'"+validFrom+"'";
 			if(validTo!=null)
 				validTo="'"+validTo+"'";
 			database.update("update rooms set RoomCapacity="+r.getRoomCapacity()+",RoomNumber="+r.getRoomNumber()+",RoomValidFrom="+validFrom+",RoomValidTo="+validTo+",RoomValid=+"+r.getRoomValid()+" where idRooms="+r.getIdRooms());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}		
-		
+
+	}
+
 }

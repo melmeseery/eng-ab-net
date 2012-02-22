@@ -28,26 +28,26 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListPriceHistory extends org.apache.struts.action.Action {
-    
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListPriceHistory() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_PriceHistory HP=new Hiber_PriceHistory();
     	HttpSession session=request.getSession(true);
     	XStream xstream = new XStream();
-    	
-    	  
+
+
       	// create and intialize the database connection////////////
     		DataSourceConnection database = new DataSourceConnection();
     		database.initializeConnecton(this.servlet);
-    	
+
     	if(request.getParameter("task").equals("list"))
     	{
 	    	ArrayList resources=HP.getPricesHistory(database);
@@ -73,20 +73,20 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
 	        	}
 	        	else
 	        		p.setPriceGroupValidFrom(null);
-	        	
+
 	        	p.setCurrency(pH.getCurrency());
 	        	pS.add(p);
-    			
+
 	        }
 	        String returnText = xstream.toXML(pS);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
     	else if(request.getParameter("task").equals("AddPriceGroup"))
     	{
-    		
+
     	//	// //////System.out.println("haaaa"+request.getParameter("priceGroupValidFrom")+"????? "+request.getParameter("priceGroupValidTo"));
     		Pricegrouphistory p=new Pricegrouphistory();
     		p.setPriceGroupHitoryImcClient(request.getParameter("priceGroupHitoryImcClient"));
@@ -99,14 +99,16 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
             //	// //////System.out.println("valid from= "+request.getParameter("priveValidFrom")+" valid to "+request.getParameter("priceValidTo"));
             if(!request.getParameter("priceGroupValidFrom").equals("3000-01-01"))
             	date=request.getParameter("priceGroupValidFrom");
-            	
+
     		p.setCurrency(request.getParameter("currency"));
     	//	Date d2=new Date();
     	//	d2=parseDate(request.getParameter("priceGroupValidTo"));
     	//	p.setPriceGroupValidTo(d2);
     		// //////System.out.println("date1= "+d+" date2= "+d2);
-    		Integer pid=HP.getLastOne(database);
+    		Integer pid=HP.getValidPriceId(database);
+    		if (pid>0){
     		HP.update(pid, database);
+    		}
     		HP.insertPriceGroup(p,date, database);
     	}
     	 else if(request.getParameter("task").equals("data"))
@@ -120,12 +122,12 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
               xstream.alias("Pricegrouphistory",Pricegrouphistory.class);
               String returnText = xstream.toXML(l);
               // //////System.out.println("return text = "+returnText);
-              response.setContentType("application/xml;charset=UTF-8"); 
+              response.setContentType("application/xml;charset=UTF-8");
               PrintWriter out = response.getWriter();
-      		
+
    			out.write(returnText);
    			// //////System.out.println("ana b3d el out");
-          	
+
          }
          else if(request.getParameter("task").equals("EditPriceGroup"))
          {
@@ -141,7 +143,7 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
                  //	// //////System.out.println("valid from= "+request.getParameter("priveValidFrom")+" valid to "+request.getParameter("priceValidTo"));
                  if(!request.getParameter("priceGroupValidFrom").equals("3000-01-01"))
                  	date=request.getParameter("priceGroupValidFrom");
-                 
+
          		p.setCurrency(request.getParameter("currency"));
          		HP.updatePrice(p,date, database);
 
@@ -151,40 +153,40 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
         	 if (request.getParameterValues("ids").length == 1)
              {
            	  try{
-         			
+
          			database.update("delete from pricegrouphistory where idPriceGroupHistory = "+request.getParameterValues("ids")[0]);
-         			
+
          		}
          		  catch (Exception e) { e.printStackTrace();
-         	          
-         	      }  finally { 
-         	           
+
+         	      }  finally {
+
          	      }
-           	  
+
              }
              else if (request.getParameterValues("ids").length > 1)
              {
            	  try{
-           			
-           			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+           			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                  	  	{
-           				
+
            				database.update("delete from pricegrouphistory where idPriceGroupHistory = "+request.getParameterValues("ids")[i]);
-               			
+
                  	  	}
            	     }
-           			
+
            		  catch (Exception e) { e.printStackTrace();
-           	          
-           	      }  finally { 
-           	           
+
+           	      }  finally {
+
            	      }
-           	  }  
+           	  }
 
          }
 
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -193,12 +195,12 @@ public class ListPriceHistory extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-    	
+
     	return mapping.findForward("success");
 
     }
-    
-    public Date parseDate(String s) 
+
+    public Date parseDate(String s)
     {// //////System.out.println("date= "+s);
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));

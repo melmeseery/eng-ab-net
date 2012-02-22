@@ -46,16 +46,16 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListVenus extends org.apache.struts.action.Action {
-    
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListVenus() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_Venus HV=new Hiber_Venus();
     	Hiber_Rooms HR=new Hiber_Rooms();
@@ -66,11 +66,11 @@ public class ListVenus extends org.apache.struts.action.Action {
     	Hiber_Personals HP=new Hiber_Personals();
     	HttpSession session=request.getSession(true);
     	XStream xstream = new XStream();
-    	
+
       	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-    	
+
     	/*--------------------------------------Venues Functions----------------------------------------*/
     	if(request.getParameter("task").equals("list"))
     	{
@@ -102,11 +102,11 @@ public class ListVenus extends org.apache.struts.action.Action {
 				vS.setPersonLName(p.getPersonLastName());
 	    		al.add(vS);
 	    	}
-	        
+
 	        xstream.alias("Venues", VShow.class);
 	        String returnText = xstream.toXML(al);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -126,13 +126,14 @@ public class ListVenus extends org.apache.struts.action.Action {
     		p.setPersonTelePhone(request.getParameter("personTelePhone").toString());
     		p.setPersonTitle(request.getParameter("personTitle"));
     		HP.insertPersonal(p, database);
-    		Integer pid=HP.getLastOne(database);
+
+    		Integer pid 	=HP.getPersonID(p, database);//HP.getLastOne(database);
     		//	v.setPersonals(p);
     		v.setPersonals(pid);
-    		HV.insertVenue(v, database);
-    		Integer id=HV.getLastOne(database);
+    		Integer id=HV.insertVenue(v, database);
+    		//Integer id=HV.getLastOne(database);
     		HP.insertRelationPersonal(id, pid, database);
-    		
+
     	}
     	else if(request.getParameter("task").equals("listV"))
     	{
@@ -146,13 +147,13 @@ public class ListVenus extends org.apache.struts.action.Action {
         	v.setVenueDistrict(c.getVenueDistrict());
         	v.setVenueName(c.getVenueName());
         	v.setVenuMainContact(c.getVenuMainContact());
-        	
+
         	l.add(v);
             xstream.alias("Venues", VShow.class);
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
  			// //////System.out.println("an ba3d el out");
@@ -173,36 +174,36 @@ public class ListVenus extends org.apache.struts.action.Action {
     		if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
           		database.update("delete from venues where idVenues = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from venues where idVenues = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
+          	  }
+
         }
    /*----------------------------------------Personal Functions-----------------------------------------------*/
     	else if(request.getParameter("task").equals("listP"))
@@ -227,12 +228,12 @@ public class ListVenus extends org.apache.struts.action.Action {
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
- 			
+
     	}
-    	
+
     	else if(request.getParameter("task").equals("AddContact"))
     	{
     			Personals p=new Personals();
@@ -245,7 +246,7 @@ public class ListVenus extends org.apache.struts.action.Action {
 	    		p.setPersonTelePhone(request.getParameter("personTelePhone"));
 	    		p.setPersonTitle(request.getParameter("personTitle"));
 	    		HP.insertPersonal(p, database);
-	    		Integer pid=HP.getLastOne(database);
+	    		Integer pid=HP.getPersonID(p, database);//=HP.getLastOne(database);
 	    		HP.insertRelationPersonal(id, pid, database);
 	    		if(request.getParameter("mainContact1").equals("0"))
 	    		{
@@ -255,8 +256,8 @@ public class ListVenus extends org.apache.struts.action.Action {
 	   		    	Tc.setPersonals(pid);
 	   		    	HV.update(Tc, database);
 	    		}
-	     
-    		
+
+
     	}
     	else if(request.getParameter("task").equals("EditContact"))
     	{
@@ -278,7 +279,7 @@ public class ListVenus extends org.apache.struts.action.Action {
    	        	Tc1.setIdVenues(vID);
    		    	Tc1.setPersonals(id);
    		    	HV.update(Tc1, database);
-   		    		
+
    	        }
     	}
     	else if(request.getParameter("task").equals("DELETECONTACT"))
@@ -287,39 +288,39 @@ public class ListVenus extends org.apache.struts.action.Action {
 	        if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
           		database.update("delete from venuspersonal where Personals_idPersonals = "+request.getParameterValues("ids")[0]+" and Venues_idVenues="+vID);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from venuspersonal where Personals_idPersonals = "+request.getParameterValues("ids")[i]+" and Venues_idVenues="+vID);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
+          	  }
+
         }
   /*--------------------------------------------Rooms Functions--------------------------------------------------*/
-    	
+
     	else if(request.getParameter("task").equals("AddRoom"))
     	{
     		Integer id=(Integer)session.getAttribute("venueID");
@@ -332,14 +333,15 @@ public class ListVenus extends org.apache.struts.action.Action {
     		if(!request.getParameter("roomValidFrom").equals("3000-01-01"))
     		{
     			validFrom=request.getParameter("roomValidFrom");
-    			Integer rid=HR.getLastOne(database);
+    			Integer rid=HR.getValidRoomId(id,database);
     			//System.out.println(validFrom);
-    			
+            if (rid>0){
     			HR.update(rid,validFrom, database);
+            }
     		}
      		r.setRoom(id);
      		HR.insertRoom(r,validFrom, database);
-     		
+
     	}
     	else if(request.getParameter("task").equals("EditRoom"))
     	{
@@ -351,17 +353,17 @@ public class ListVenus extends org.apache.struts.action.Action {
 	    		String validFrom=null;
 	    		if(!request.getParameter("roomValidFrom").equals("3000-01-01"))
 	    			validFrom=request.getParameter("roomValidFrom");
-	    		
+
 	    		String validTo=null;
 	    		if(!request.getParameter("roomValidTo").equals("3000-01-01"))
 	    		{
 	    			validTo=request.getParameter("roomValidTo");
 	    			//r.setRoomValid(false);
 	    		}
-	    		
+
 	    		HR.updateRoom(r,validFrom,validTo, database);
     	}
-    	
+
     	else if(request.getParameter("task").equals("listR"))
     	{
     		Integer id=(Integer)session.getAttribute("venueID");
@@ -384,7 +386,7 @@ public class ListVenus extends org.apache.struts.action.Action {
         		}
         		if(rr.getRoomValidTo() !=null)
         		{
-        			String dat=s.format(rr.getRoomValidTo());    			
+        			String dat=s.format(rr.getRoomValidTo());
         			rS.setRoomValidTo(dat);
         		}
         		else
@@ -396,7 +398,7 @@ public class ListVenus extends org.apache.struts.action.Action {
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
     	}
@@ -406,38 +408,38 @@ public class ListVenus extends org.apache.struts.action.Action {
 	        if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
           		database.update("delete from rooms where idRooms = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from rooms where idRooms = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
-        }	
-/*-------------------------------------------Menues Functions-------------------------------------------------*/    	
+          	  }
+
+        }
+/*-------------------------------------------Menues Functions-------------------------------------------------*/
     	else if(request.getParameter("task").equals("listM"))
     	{
     		Integer id=(Integer)session.getAttribute("venueID");
@@ -452,7 +454,7 @@ public class ListVenus extends org.apache.struts.action.Action {
         		mS.setMenuDescription(mm.getMenuDescription());
         		mS.setMenuName(mm.getMenuName());
         	//	mS.setMenuValid(mm.getMenuValid());
-        		
+
 				if(mm.getMenuValidFrom()!=null)
         		{
         			String dat=s.format(mm.getMenuValidFrom());
@@ -475,7 +477,7 @@ public class ListVenus extends org.apache.struts.action.Action {
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
  			// //////System.out.println("ana b3d el ouuuuuuuuuuut");
@@ -492,11 +494,13 @@ public class ListVenus extends org.apache.struts.action.Action {
     		if(!request.getParameter("menuValidFrom").equals("3000-01-01"))
     		{
     			validFrom=request.getParameter("menuValidFrom");
-    			Integer mid=HM.getLastOne(database);
+    			Integer mid=HM.getValidMenuId(id, database);
     			//System.out.println(validFrom);
-    			HM.update(mid,validFrom, database);
+    			if (mid>0){
+    				HM.update(mid,validFrom, database);
+    			}
     		}
-   		
+
 //    		String validTo=null;
 //    		if(!request.getParameter("menuValidTo").equals("3000-01-01"))
 //    			validTo=request.getParameter("menuValidTo");
@@ -515,7 +519,7 @@ public class ListVenus extends org.apache.struts.action.Action {
 	    		r.setMenuValid(true);
 	    		if(!request.getParameter("menuValidFrom").equals("3000-01-01"))
 	    			validFrom=request.getParameter("menuValidFrom");
-	    		
+
 	    		String validTo=null;
 	    		if(!request.getParameter("menuValidTo").equals("3000-01-01"))
 	    		{
@@ -537,38 +541,38 @@ public class ListVenus extends org.apache.struts.action.Action {
 	        if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
         			////System.out.println("delete from menus where idMenus = "+request.getParameterValues("ids")[0]);
           		database.update("delete from menus where idMenus = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from menus where idMenus = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
-        }	
+          	  }
+
+        }
   /*------------------------------------Menus Items----------------------------------*/
     	else if(request.getParameter("task").equals("check"))
     	{
@@ -594,7 +598,7 @@ public class ListVenus extends org.apache.struts.action.Action {
         			mS.setMenuItemTypePer("Per Person");
         		else if(type.equals(1))
         			mS.setMenuItemTypePer("Per Unit");
-        		
+
         		if(mm.getMenuItemValidFrom()!=null)
         		{
         			String dat=s.format(mm.getMenuItemValidFrom());
@@ -602,7 +606,7 @@ public class ListVenus extends org.apache.struts.action.Action {
         		}
         		else
         			mS.setMenuItemValidFrom(null);
-        		
+
         		if(mm.getMenuItemValidTo()!=null)
         		{
         			String dat=s.format(mm.getMenuItemValidTo());
@@ -617,7 +621,7 @@ public class ListVenus extends org.apache.struts.action.Action {
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
     	}
@@ -653,7 +657,7 @@ public class ListVenus extends org.apache.struts.action.Action {
     			validTo=request.getParameter("menuItemValidTo");
     			r.setMenuItemValid(false);
     		}
-    		
+
      		HMI.insertMenuItem(r,validFrom,validTo, database);
     	}
     	else if(request.getParameter("task").equals("EditMenuItem"))
@@ -667,21 +671,21 @@ public class ListVenus extends org.apache.struts.action.Action {
 	    		r.setMenuItemValid(true);
 	    		if(!request.getParameter("menuItemValidFrom").equals("3000-01-01"))
 	    			validFrom=request.getParameter("menuItemValidFrom");
-	    		
+
 	    		String validTo=null;
 	    		if(!request.getParameter("menuItemValidTo").equals("3000-01-01"))
 	    		{
 	    			validTo=request.getParameter("menuItemValidTo");
 	    		//	r.setMenuItemValid(false);
 	    		}
-	    		
+
 	     		r.setMenuItemPrice(request.getParameter("menuItemPrice"));
 	     		String type=request.getParameter("menuItemTypePer");
 	    		if(type.equals("Per Person"))
 	    			r.setMenuItemTypePer(0);
 	    		else if(type.equals("Per Unit"))
 	    			r.setMenuItemTypePer(1);
-	     		
+
 	    		HMI.updateMenuItem(r,validFrom,validTo, database);
     	}
     	else if(request.getParameter("task").equals("DELETEMENUITEM"))
@@ -690,41 +694,41 @@ public class ListVenus extends org.apache.struts.action.Action {
 	        if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
         		//	//System.out.println("delete from menus where idMenus = "+request.getParameterValues("ids")[0]);
           		database.update("delete from menuitems where idMenuItems = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from menuitems where idMenuItems = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
-        }	
-    	
+          	  }
+
+        }
+
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -733,13 +737,13 @@ public class ListVenus extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-    	
+
     	return mapping.findForward("success");
-  
-    	
-    	
+
+
+
     }
-    public Date parseDate(String s) 
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));

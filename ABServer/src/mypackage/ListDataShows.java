@@ -37,26 +37,26 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListDataShows extends org.apache.struts.action.Action {
-    
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListDataShows() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_DataShows HD=new Hiber_DataShows();
     	Hiber_DatashowsMaintainance HDM=new Hiber_DatashowsMaintainance();
     	XStream xstream = new XStream();
     	HttpSession session=request.getSession(true);
-    	
+
       	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-    	
+
     	if(request.getParameter("task").equals("list"))
     	{
 	    	ArrayList datashows=HD.getDataShows(database);
@@ -85,7 +85,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
 	        String returnText = xstream.toXML(ds);
 	       // ////System.out.println(ds.get(0).getDatashowPurchaseDate());
 	        ////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -101,12 +101,12 @@ public class ListDataShows extends org.apache.struts.action.Action {
     		String datashowPurchaseDate=null;
             if(!request.getParameter("datashowPurchaseDate").equals("3000-01-01"))
             	datashowPurchaseDate=request.getParameter("datashowPurchaseDate");
-            
-    		HD.insertDatashow(d,datashowPurchaseDate, database);
-    		Integer id=HD.getLastOne(database);
+
+    		int id =HD.insertDatashow(d,datashowPurchaseDate, database);
+    		//Integer id=HD.getLastOne(database);
     		 Integer len=Integer.valueOf(request.getParameter("length"));
        		// //////System.out.println("length of costs = "+len);
-       		
+
  	    	for(int i=0;i<len;i++){
     			Datashowsmaintainance DM=new Datashowsmaintainance();
     			//Datashows t=new Datashows();
@@ -115,7 +115,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
     			String maindate=null;
     			if(!x.equals("x"))
     				maindate=request.getParameterValues("dates")[i];
-    			
+
         		//t.setIdDatashows(id);
         		DM.setDatashowsMaintainance(id);
         		DM.setDatashowsMaintainanceReason(request.getParameterValues("reasons")[i]);
@@ -129,7 +129,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
 // 	        String returnText = xstream.toXML(AL);
 // 	      //  // //////System.out.println(AL.size());
 // 	        // //////System.out.println("return text = "+returnText);
-// 	        response.setContentType("application/xml;charset=UTF-8"); 
+// 	        response.setContentType("application/xml;charset=UTF-8");
 // 	        PrintWriter out = response.getWriter();
 // 			out.write(returnText);
 //    	}
@@ -138,73 +138,73 @@ public class ListDataShows extends org.apache.struts.action.Action {
     		if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
-        			
+
+
         			database.update("delete from datashows where idDatashows = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from datashows where idDatashows = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
+          	  }
+
         }
     	else if(request.getParameter("task").equals("DELETE"))
         {
     		if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
           		database.update("delete from datashowsmaintainance where idDatashowsMaintainance = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from datashowsmaintainance where idDatashowsMaintainance = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
-      
+          	  }
+
         }
     	else if(request.getParameter("task").equals("datashows"))
     	{
@@ -217,7 +217,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
  	        String returnText = xstream.toXML(l);
  	        // //////System.out.println(l.size());
  	        // //////System.out.println("return text = "+returnText);
- 	        response.setContentType("application/xml;charset=UTF-8"); 
+ 	        response.setContentType("application/xml;charset=UTF-8");
  	        PrintWriter out = response.getWriter();
  			out.write(returnText);
     	}
@@ -259,7 +259,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
 	        String returnText = xstream.toXML(H);
 	        // //////System.out.println("size= "+H.size());
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -284,7 +284,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
 	    		{
 	       	      Integer len=Integer.valueOf(request.getParameter("length"));
 	      		// //////System.out.println("length of costs = "+len);
-	      		
+
 		    		for(int i=0;i<len;i++)
 		    		{// //////System.out.println("ana goa el for");
 		    			Datashowsmaintainance tH=new Datashowsmaintainance();
@@ -294,12 +294,12 @@ public class ListDataShows extends org.apache.struts.action.Action {
 		    			String maindate=null;
 		    			if(request.getParameterValues("dates")[i]!=null)
 		    				maindate=request.getParameterValues("dates")[i];
-		    			
+
 		        		tH.setDatashowsMaintainance(id);
 		        		HDM.insertDataMaintainance(tH,maindate, database);
 	    		}
 	    	}
-    		
+
     	}
     	else if(request.getParameter("task").equals("AddHistory"))
     	{
@@ -311,7 +311,7 @@ public class ListDataShows extends org.apache.struts.action.Action {
     		String datashowsMaintainanceDate=null;
             if(!x.equals("x"))
             	datashowsMaintainanceDate=request.getParameter("datashowsMaintainanceDate");
-            
+
     		dm.setDatashowsMaintainance(id);
     		HDM.insertDataMaintainance(dm,datashowsMaintainanceDate, database);
     	}
@@ -325,14 +325,14 @@ public class ListDataShows extends org.apache.struts.action.Action {
 	    	  String datashowsMaintainanceDate=null;
 	          if(!request.getParameter("datashowsMaintainanceDate").equals("3000-01-01"))
 	            	datashowsMaintainanceDate=request.getParameter("datashowsMaintainanceDate");
-	          HDM.updateDataHistory(dm,datashowsMaintainanceDate, database);    
-	    		
-	    		
+	          HDM.updateDataHistory(dm,datashowsMaintainanceDate, database);
+
+
     	}
-    	
-        
+
+
         try{
-  			
+
       		database.finalize();
     	  } catch (SQLException e) {
 
@@ -341,12 +341,12 @@ public class ListDataShows extends org.apache.struts.action.Action {
 
   			e.printStackTrace();
   		}
-    	
-    	
+
+
     	return mapping.findForward("success");
 
     }
-    public Date parseDate(String s) 
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));

@@ -21,6 +21,8 @@ import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.xstream.XStream;
 
 import mypackage.Upload;
@@ -32,14 +34,15 @@ import abItemsShow.CoursesShow;
 import abItemsShow.ECourse;
 import abItemsShow.ResourceHolidayShow;
 import actions.GeneralActions;
+import actions.LoginAction;
 import database.DataSourceConnection;
 
 /**
  * @author noha
  *
  */
-public class Calendar {
-
+public class CalendarData {
+	  static Logger logger = Logger.getLogger(CalendarData.class);
 	static String idClient = "";
 
 	static String idContract = "";
@@ -242,7 +245,7 @@ public class Calendar {
 		while (rs.next()) {
 
 			ResultSet courseDays_rs = database
-					.retrieve("select* from eventday where EventDayContractCourseId = "
+					.retrieve("select * from eventday where EventDayContractCourseId = "
 							+ rs.getString(1));
 
 			if (courseDays_rs.next() && rs.getInt(8) != 9) {
@@ -379,6 +382,7 @@ public class Calendar {
 					courseDay.setPeriod(courseDays_rs.getString(2));
 
 					ShowCourseDays.add(courseDay);
+					logger.info("getting the day ..."+courseDay);
 				} while (courseDays_rs.next());
 
 				c.setCourseDays(ShowCourseDays);
@@ -1041,7 +1045,7 @@ boolean existCourse =false;
 		idClient = "";
 		filterStatment = "";
 
-		Calendar.colorNumber = 1;
+		CalendarData.colorNumber = 1;
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -1549,7 +1553,7 @@ boolean existCourse =false;
 	///////////////////////////////////////////////////////////////////////////////////////////
 	public void changeDisplayColor(int colorNumber) {
 
-		Calendar.colorNumber = colorNumber;
+		CalendarData.colorNumber = colorNumber;
 
 	}
 }
