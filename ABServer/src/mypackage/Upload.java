@@ -231,6 +231,14 @@ public class Upload extends Action {
 //
 //							fileName = "cv_Coor_"+Coordinatorid + extfile;
 						}
+						else{  /// all other save with the same name
+							FileItem fi = (FileItem) i.next();
+							String fileName = fi.getName();
+							logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+						    //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+										fi.write(new File(uploadPath + fileName));
+						}
+
 //						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
 //            //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
 //						fi.write(new File(uploadPath + fileName));
@@ -397,7 +405,7 @@ public class Upload extends Action {
 		     Integer coodrdinatorID= Integer.parseInt( arg2.getParameter("CoordinatorID"));
 		     Trainingcoordinators T = HT.getCoordinatorById( coodrdinatorID, database);
 
-          logger.info("changing this  the coordinaotro no.... "+coodrdinatorID);
+          logger.info("changing this  the coordinaotro no "+coodrdinatorID);
 		FileItem fi = (FileItem) i.next();
 		String fileName = fi.getName();
 		//System.out.println("file name= " + fileName);
@@ -415,7 +423,7 @@ public class Upload extends Action {
 					fileName = "cv_Coor_"+Coordinatorid + extfile;
 				}
 				logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
-    //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+              //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
 			 	fi.write(new File(uploadPath + fileName));
 			 	T.setTrainingCoordinatorCV(fileName);
 
@@ -507,7 +515,65 @@ public class Upload extends Action {
 	}
 
 
+    public void UploadOtherResourceFiles(HttpServletRequest arg2, Iterator i , int counter,int counter2,DataSourceConnection database) throws Exception{
 
+
+//    	 if (arg2.getParameter("task").equals("ADDHANDOUT")) {
+//
+//		} else if (arg2.getParameter("task").equals("ADDCERTIFICATE")) {
+//
+//		}
+
+
+
+
+
+
+
+
+     	FileItem fi = (FileItem) i.next();
+		String fileName = fi.getName();
+		//System.out.println("file name= " + fileName);
+		if (fileName != null) {
+			if (!fileName.equals("")) {
+
+					Integer resId = null;
+
+					if (arg2.getParameter("resID") != null) {
+						resId = Integer.parseInt(arg2.getParameter("resID"));
+
+					}
+				//	tx = session.beginTransaction();
+					int indexOfDot=fileName.indexOf(".");
+					String extfile ="";
+					if (indexOfDot>0)
+					{
+							  extfile = fileName.substring(indexOfDot);
+					}
+
+					 if (arg2.getParameter("task").equals("ADDHANDOUT")) {
+						 fileName = resId + "_handout_"+fileName;
+				 		} else if (arg2.getParameter("task").equals("ADDCERTIFICATE")) {
+				 			fileName = resId + "_certificate_"+fileName;
+				 		}
+				 		else if (arg2.getParameter("task").equals("CONTRACTS")) {
+
+
+
+				 			fileName = resId + "_contract_"+fileName;
+				 		}
+
+
+
+				logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+    //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+				fi.write(new File(uploadPath + fileName));
+
+
+
+			}
+		}
+    }
 
 
 
