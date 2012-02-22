@@ -1,4 +1,13 @@
-
+var msg = function(title, msg){
+        Ext.Msg.show({
+            title: title,
+            msg: msg,
+            minWidth: 200,
+            modal: true,
+            icon: Ext.Msg.INFO,
+            buttons: Ext.Msg.OK
+        });
+    };
 Ext.apply(Ext.form.VTypes, {
   daterange: function(val, field) {
     var date = field.parseDate(val);
@@ -755,6 +764,7 @@ TrainCVLink.setVisible(false);
 
 
  var tab2 = new Ext.FormPanel({
+ 	fileUpload: true,
         labelAlign: 'left',
         title: 'Edit Coordinator',
         bodyStyle:'padding:5px',
@@ -777,6 +787,7 @@ TrainCVLink.setVisible(false);
             border:false,
             items:[{
                 columnWidth:.5,
+                    bodyStyle: Ext.isIE ? 'padding:0 0 5px 10px;' : 'padding:5px 5px;',
                 layout: 'form',
                 border:false,
                 items: [FNameField,
@@ -790,6 +801,7 @@ TrainCVLink.setVisible(false);
                 columnWidth:.5,
                 layout: 'form',
                 border:false,
+                    bodyStyle: Ext.isIE ? 'padding:0 0 5px 10px;' : 'padding:5px 5px;',
                 items: [EmailField,
                 BirthDateField,
                 HireDateField,
@@ -916,7 +928,20 @@ TrainCVLink.setVisible(false);
 			 			window.location = redirect;
 
 
-	                    }
+	                    },
+	                         failure: function(response){////console.log("faaaaaaaaaail");
+	                         var errorMsg='Error uploading file!';
+
+                			Ext.Msg.show({
+							         title: 'Error',
+							        msg: errorMsg,
+							        minWidth: 200,
+							        modal: true,
+							        icon: Ext.Msg.ERROR,
+							        buttons: Ext.Msg.OK
+								 });
+						        //	tab2.getForm().reset();
+						       }
                    }
 
                  );

@@ -624,6 +624,9 @@ var Clients  = Ext.data.Record.create([
   var WorkDateField;
   var ClientColorField;
 
+
+
+
   var AppD='3000-01-01';
   var WorkD='3000-01-01';
 
@@ -662,7 +665,7 @@ var Clients  = Ext.data.Record.create([
                // disabledDays: [5, 6],
                 id: 'clientApproachDate',
              //   allowBlank: false,
-        		vtype: 'daterange',
+        		vtype: 'daterange'
         		   //        anchor : '35%',
         	//	endDateField:'clientWorkDate'
             });
@@ -675,7 +678,7 @@ var Clients  = Ext.data.Record.create([
                  //anchor : '35%',
               //  allowBlank: false,
                 id: 'clientWorkDate',
-                vtype: 'daterange',
+                vtype: 'daterange'
             //    startDateField:'clientApproachDate',
              //   disabledDays: [5, 6]
             });
@@ -685,8 +688,8 @@ var Clients  = Ext.data.Record.create([
 	id: 'color',
 	allowBlank: false,
 	name: 'color',
-   value: '123456',
-   //width:320,
+   value: '123456'
+//  width:220
 //	disable:true
 //	allowBlank: false
  });
@@ -807,7 +810,7 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
         {header: "Request Date", width: 100, sortable: true, dataIndex: 'contractDateOfRequest'},
         {header: "Tentative Start Date", width: 150, sortable: true, dataIndex: 'contractFirstStartDate'},
         {header: "Tentative End Date", width: 150, sortable: true, dataIndex: 'contractFirstEndDate'},
-       	{header: "Contract Value", width: 100, sortable: true, locked:false, dataIndex: 'contractFee'},
+       	{header: "Contract Value", width: 100, sortable: true, locked:false, dataIndex: 'contractFee'}
 
     ]);
 
@@ -854,9 +857,10 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
  var simple = new Ext.FormPanel({
         labelAlign: 'left',
         title: 'Edit Client',
-        bodyStyle:'padding:10px',
+        bodyStyle:'padding:5px',
        // width: 980,
-        labelWidth:140,
+        labelWidth:150,
+
         frame:true,
         items: [new Ext.form.FieldSet({
                // title: 'Contact Information',
@@ -866,30 +870,36 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
                 defaultType: 'textfield',
                 items: [{
         //	title:'Personal Information',
-            layout:'column',
+            //layout:'column',
+           layout:'table',
+        layoutConfig: {columns:2},
              xtype: 'container',
             autoEl:{},
             border:false,
             items:[{
         	//title:'Client Details',
             layout:'column',
-            border:false,
+            border:true,
             items:[{
                 columnWidth:.5,
                 layout: 'form',
-                border:false,
+                    bodyStyle: Ext.isIE ? 'padding:0 0 5px 10px;' : 'padding:10px 15px;',
+                border:true,
                 items: [ClientNameField,
   						ClientAddField,
   						ClientAppField,
-  						AppPersonField
+ClientColorField
+
                 		]
             },{
                 columnWidth:.5,
                 layout: 'form',
-                border:false,
-                items: [ClientAppDateField,
-  						WorkDateField,
-  						ClientColorField
+                    bodyStyle: Ext.isIE ? 'padding:0 0 5px 10px;' : 'padding:10px 15px;',
+                border:true,
+                items: [	AppPersonField,
+              		  ClientAppDateField,
+  						WorkDateField
+
                 		]
             }]
         }]},h
@@ -948,7 +958,7 @@ AppPersonField.setValue(clientRec.get('clientApproachPerson'));
 						          clientColor:		  	ClientColorField.getValue(),
 						          clientWorkDate:	  	WorkD,
 						          clientApproachDate: 	AppD,
-						          clientApproachPerson:	AppPersonField.getValue(),
+						          clientApproachPerson:	AppPersonField.getValue()
 
 								},
 						        method:'POST',
