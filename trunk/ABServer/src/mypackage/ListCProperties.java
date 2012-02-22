@@ -112,11 +112,11 @@ public class ListCProperties extends org.apache.struts.action.Action {
         		c.setCourse(null);
         	c.setCourseNameAr(request.getParameter("courseNameAr"));
         	c.setCourseNameEng(request.getParameter("courseNameEng"));
-        	HC.insertCourse(c, database);
+        	int id =HC.insertCourse(c, database);
         	String names=request.getParameter("audienceName");
         	if(names !="")
         	{
-        		Integer id=HC.getLastOne(database);
+        		//Integer id=HC.getLastOne(database);
 	        	String[] TPIds=names.split(",");
 	        	////System.out.println("sizeeeeee= "+TPIds.length);
 	        	for(int i=0;i<TPIds.length;i++)
@@ -158,10 +158,14 @@ public class ListCProperties extends org.apache.struts.action.Action {
 	        		p.setCurrency(request.getParameterValues("currency")[i]);
 	        		//Courses cc=new Courses();
 	        		//cc.setIdCourses(HC.getLastOne());
-	        		p.setCourses(HC.getLastOne(database));
+	        		p.setCourses(id);
+	        		//p.setCourses(HC.getLastOne(database));
 	        	//	p.setPriceValid(true);
-	        		Integer pid=HP.getLastOne(HC.getLastOne(database), database);
+	        	//	Integer pid=HP.getLastOne(HC.getLastOne(database), database);
+	        		Integer pid=HP.getValidPriceID(id, database);
+	        		if (pid>0){  // if found the pervious valid price
 	        		HP.update(pid, database);
+	        		}
 	        		HP.insertPrice(p,request.getParameterValues("validFrom")[i], database);
 	        	}
         	}
@@ -409,8 +413,8 @@ public class ListCProperties extends org.apache.struts.action.Action {
         	Tracks t=new Tracks();
     		t.setTrackCode(request.getParameter("trackCode"));
     		t.setTrackName(request.getParameter("trackName"));
-    		HT.insertTrack(t, database);
-    		Integer id=HT.getLastOne(database);
+    		int id =HT.insertTrack(t, database);
+    		//Integer id=HT.getLastOne(database);
     		// //////System.out.println("ana b3d el insert");
     		for (int i = 0; i < request.getParameterValues("ids").length; i++)
         	{
@@ -484,7 +488,8 @@ public class ListCProperties extends org.apache.struts.action.Action {
         //	Courses c=new Courses();
         //	c.setIdCourses(id);
         	p.setCourses(id);
-        	Integer pid=HP.getLastOne(id, database);
+        	Integer pid=HP.getValidPriceID(id, database);
+        	//Integer pid=HP.getLastOne(id, database);
     		HP.update(pid, database);
         	HP.insertPrice(p,date, database);
         }

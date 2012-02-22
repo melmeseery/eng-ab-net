@@ -94,8 +94,9 @@ public class Hiber_Coordinators
 		return years;
 	}
 /*---------------------------------------------------------------------------------------*/
-	public void insertCoordinator(Trainingcoordinators c,String TrainingCoordinateHireDate,String TrainingCoordinateBirthDate,DataSourceConnection database)
+	public Integer insertCoordinator(Trainingcoordinators c,String TrainingCoordinateHireDate,String TrainingCoordinateBirthDate,DataSourceConnection database)
 	{
+		Integer id=0;
 		try{
 
 			String TrainingCoordinateFirstName=null;
@@ -136,34 +137,45 @@ public class Hiber_Coordinators
 
 			database.update("insert into trainingcoordinators (TrainingCoordinateFirstName,TrainingCoordinateAbb,TrainingCoordinateLastName,TrainingCoordinateDescription,TrainingCoordinateColor,TrainingCoordinateAddress,TrainingCoordinateEmail,TrainingCoordinateTelephone,TrainingCoordinateMobile,TrainingCoordinateHireDate,TrainingCoordinateBirthDate,TrainingCoordinatorCV) values("+TrainingCoordinateFirstName+","+TrainingCoordinateAbb+","+TrainingCoordinateLastName+","+TrainingCoordinateDescription+","+TrainingCoordinateColor+","+TrainingCoordinateAddress+","+TrainingCoordinateEmail+","+TrainingCoordinateTelephone+","+TrainingCoordinateMobile+","+TrainingCoordinateHireDate+","+TrainingCoordinateBirthDate+","+TrainingCoordinateCV+")");
 
-		}
-		  catch (Exception e) { e.printStackTrace();
 
-	      }  finally {
+			ResultSet l =database.retrieve("select idTrainingCoordinators from trainingcoordinators  where TrainingCoordinateFirstName="+TrainingCoordinateFirstName+" And TrainingCoordinateAbb="+TrainingCoordinateAbb+"  And TrainingCoordinateLastName="+TrainingCoordinateLastName);
 
-	      }
-	}
-/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
-	{
-		Integer id=0;
 
-		try{
-
-			ResultSet l =database.retrieve("select idTrainingCoordinators from trainingcoordinators");
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
 
+		}
+		  catch (Exception e) { e.printStackTrace();
 
-		}catch(Exception e){
-			// //////System.out.println(e.getMessage());
-		}finally{
-			}
+	      }  finally {
+
+	      }
 		return id;
 	}
+/*----------------------------------------------------------------------------------------*/
+//	public Integer getLastOne(DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idTrainingCoordinators from trainingcoordinators");
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//
+//		}catch(Exception e){
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//	}
 
 /*----------------------------------------------------------------------------------------------------------*/
 	public ArrayList<Integer> getCourseCoordinators(Integer id,DataSourceConnection database)

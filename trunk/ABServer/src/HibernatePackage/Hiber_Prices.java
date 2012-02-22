@@ -16,16 +16,16 @@ import tablespackage.Courses;
 import tablespackage.Datashowsmaintainance;
 import tablespackage.Prices;
 
-public class Hiber_Prices 
+public class Hiber_Prices
 {
 /*----------------------------------------------------------------------------------------------------------*/
-	
+
 	public ArrayList<Prices> getPricesById(Integer id,DataSourceConnection database)
 	{
 		ArrayList<Prices> al=new ArrayList<Prices>();
-		
+
 		try{
-				
+
 				ResultSet l =database.retrieve("select * from prices where Courses_idCourses="+id);
 				while(l.next())
 				 {
@@ -43,19 +43,21 @@ public class Hiber_Prices
 					al.add(p);
 				 }
 				 l.close();
-				 
+
 		}catch(Exception e){e.printStackTrace();
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
-		
+
 		return al;
 	}
 	/*----------------------------------------------------------------------------------------------------------*/
-	public void insertPrice(Prices d,String validFrom,DataSourceConnection database)
+	public int insertPrice(Prices d,String validFrom,DataSourceConnection database)
 	{
+
+		int id=0;
 		try{
-			
+
 			String comIMC=null;
 			String comPub=null;
 			String clientIMC=null;
@@ -76,48 +78,41 @@ public class Hiber_Prices
 				curr="'"+d.getCurrency()+"'";
 			if(validFrom!=null)
 				validFrom="'"+validFrom+"'";
-			
-			String s="insert into prices (PriceIMC_Company,PricePublic_Company,PriceInternational,PriceValidFrom,PriceValid,PriceValidTo,Courses_idCourses,courseColor,Currency,PriceIMC_Client,PricePublic_Client) values("+comIMC+","+comPub+","+Inter+","+validFrom+","+d.getPriceValid()+","+d.getPriceValidTo()+","+d.getCourses()+","+curr+","+clientIMC+","+clientPub+")";
-			
+
+
 			database.update("insert into prices (PriceIMC_Company,PricePublic_Company,PriceInternational,PriceValidFrom,PriceValid,PriceValidTo,Courses_idCourses,Currency,PriceIMC_Client,PricePublic_Client) values("+comIMC+","+comPub+","+Inter+","+validFrom+","+d.getPriceValid()+","+d.getPriceValidTo()+","+d.getCourses()+","+curr+","+clientIMC+","+clientPub+")");
-			
-		}
-		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
-	      }
-		
-		
-		
-	}	
-	/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(Integer id1,DataSourceConnection database)
-	{
-		Integer id=0;
-		
-		try{
-			
-			ResultSet l =database.retrieve("select idPrices from prices where Courses_idCourses= "+id1);
+
+			String s="PricePublic_Company= "+comPub+"  And PriceValidFrom="+validFrom+
+					" and PriceValid="+d.getPriceValid()+" and PriceValidTo="+d.getPriceValidTo()+" And  Courses_idCourses= " +d.getCourses();
+
+
+			ResultSet l =database.retrieve("select idPrices from prices where "+s);
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 	
-		 	
-		}catch(Exception e){e.printStackTrace();
-			// //////System.out.println(e.getMessage());
-		}finally{
-			}
-		return id;
+//
+		}
+		  catch (Exception e) { e.printStackTrace();
+
+	      }  finally {
+
+	      }
+
+
+       return id;
+
+
 	}
-/*----------------------------------------------------------------------------------------------------------*/
-	public void updatePrice(Prices d,String validFrom,DataSourceConnection database)
+
+
+	public int getPriceID(Prices d,String validFrom,DataSourceConnection database)
 	{
-		
+
+		int id=0;
 		try{
-			
+
 			String comIMC=null;
 			String comPub=null;
 			String clientIMC=null;
@@ -138,33 +133,140 @@ public class Hiber_Prices
 				curr="'"+d.getCurrency()+"'";
 			if(validFrom!=null)
 				validFrom="'"+validFrom+"'";
-			
-			database.update("update prices set PriceIMC_Company="+comIMC+",PricePublic_Company="+comPub+", PriceInternational="+Inter+", PriceValidFrom="+validFrom+", Courses_idCourses="+d.getCourses()+",Currency="+curr+",PriceIMC_Client="+clientIMC+",PricePublic_Client="+clientPub+" where idPrices="+d.getIdPrices());
-			
+
+			String s="PricePublic_Company= "+comPub+"  And PriceValidFrom="+validFrom+
+					" and PriceValid="+d.getPriceValid()+" and PriceValidTo="+d.getPriceValidTo()+" And  Courses_idCourses= " +d.getCourses();
+
+
+			ResultSet l =database.retrieve("select idPrices from prices where "+s);
+			while(l.next())
+		 	{
+		 			id=l.getInt(1);
+		 	}
+		 	l.close();
+//
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}	
+
+
+       return id;
+
+
+	}
+
+
+
+
+	public int getValidPriceID(int courseId,DataSourceConnection database)
+	{
+
+		int id=0;
+		try{
+
+
+
+			String s="  PriceValid="+true+" And  Courses_idCourses= " +courseId;
+
+
+			ResultSet l =database.retrieve("select idPrices from prices where "+s);
+			while(l.next())
+		 	{
+		 			id=l.getInt(1);
+		 	}
+		 	l.close();
+//
+		}
+		  catch (Exception e) { e.printStackTrace();
+
+	      }  finally {
+
+	      }
+
+
+       return id;
+
+
+	}
+
+
+	/*----------------------------------------------------------------------------------------*/
+//	public Integer getLastOne(Integer id1,DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idPrices from prices where Courses_idCourses= "+id1);
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//
+//		}catch(Exception e){e.printStackTrace();
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//	}
+/*----------------------------------------------------------------------------------------------------------*/
+	public void updatePrice(Prices d,String validFrom,DataSourceConnection database)
+	{
+
+		try{
+
+			String comIMC=null;
+			String comPub=null;
+			String clientIMC=null;
+			String clientPub=null;
+			String Inter=null;
+			String curr=null;
+			if(d.getPriceImcCompany()!=null)
+				comIMC="'"+d.getPriceImcCompany()+"'";
+			if(d.getPricePublicCompany()!=null)
+				comPub="'"+d.getPricePublicCompany()+"'";
+			if(d.getPriceImcClient()!=null)
+				clientIMC="'"+d.getPriceImcClient()+"'";
+			if(d.getPricePublicClient()!=null)
+				clientPub="'"+d.getPricePublicClient()+"'";
+			if(d.getPriceInternational()!=null)
+				Inter="'"+d.getPriceInternational()+"'";
+			if(d.getCurrency()!=null)
+				curr="'"+d.getCurrency()+"'";
+			if(validFrom!=null)
+				validFrom="'"+validFrom+"'";
+
+			database.update("update prices set PriceIMC_Company="+comIMC+",PricePublic_Company="+comPub+", PriceInternational="+Inter+", PriceValidFrom="+validFrom+", Courses_idCourses="+d.getCourses()+",Currency="+curr+",PriceIMC_Client="+clientIMC+",PricePublic_Client="+clientPub+" where idPrices="+d.getIdPrices());
+
+		}
+		  catch (Exception e) { e.printStackTrace();
+
+	      }  finally {
+
+	      }
+
+	}
 /*----------------------------------------------------------------------------------------------------------*/
 	public void update(Integer id,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			boolean b=false;
-		
+
 			database.update("update prices set PriceValid="+b+" where idPrices="+id);
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}		
+
+	}
 }

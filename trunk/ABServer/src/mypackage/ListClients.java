@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -22,6 +23,7 @@ import org.apache.struts.action.ActionMapping;
 import abItemsShow.ClientShow;
 import abItemsShow.ContractsShow;
 import abItemsShow.PersonalShow;
+import actions.CalendarAction;
 
 import com.mysql.jdbc.Statement;
 import com.thoughtworks.xstream.XStream;
@@ -41,16 +43,18 @@ import HibernatePackage.Hiber_Personals;
 ////import HibernatePackage.HibernateUtil;
 
 public class ListClients extends org.apache.struts.action.Action {
-    
+	  static Logger logger = Logger.getLogger(ListClients.class);
+
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListClients() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
       Hiber_Clients HC=new Hiber_Clients();
       Hiber_Contracts HCon=new Hiber_Contracts();
@@ -58,12 +62,12 @@ public class ListClients extends org.apache.struts.action.Action {
       HttpSession session=request.getSession(true);
       SimpleDateFormat s=new SimpleDateFormat("dd-MMM-yyyy",Locale.US);
   	  XStream xstream = new XStream();
-  	  
+
   	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-  	  
-  	  
+
+
       if(request.getParameter("task").equals("list"))
       {
 	      ArrayList<Clients> c=HC.getClients(database,request);
@@ -82,7 +86,7 @@ public class ListClients extends org.apache.struts.action.Action {
 				  cs.setPersonMobile(p.getPersonMobile());
 				  cs.setPersonTelePhone(p.getPersonTelePhone());
 				  cs.setPersonTitle(p.getPersonTitle());
-				  cs.setPersonEmail(p.getPersonEmail());	    	  
+				  cs.setPersonEmail(p.getPersonEmail());
 		    	  cs.setClientAddress(cc.getClientAddress());
 		    	  cs.setClientApp(cc.getClientApp());
 		    	  cs.setPersonDep(p.getPersonAddress());
@@ -128,7 +132,7 @@ public class ListClients extends org.apache.struts.action.Action {
 	      xstream.alias("Clients", ClientShow.class);
 	        String returnText = xstream.toXML(al);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
       }
@@ -151,10 +155,10 @@ public class ListClients extends org.apache.struts.action.Action {
 	        String returnText = xstream.toXML(l);
 	        // //////System.out.println(l.size());
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
-			
+
 	}
   	else if(request.getParameter("task").equals("listC"))
   	{
@@ -191,7 +195,7 @@ public class ListClients extends org.apache.struts.action.Action {
 	        String returnText = xstream.toXML(l);
 	        // //////System.out.println(l.size());
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
 			// //////System.out.println("an ba3d el out");
@@ -209,7 +213,10 @@ public class ListClients extends org.apache.struts.action.Action {
           String appDate=null;
           if(!request.getParameter("clientApproachDate").equals("3000-01-01"))
         	  appDate=request.getParameter("clientApproachDate");
-          
+          logger.warn("  in the clients adding code  ");
+          logger.warn(c);
+          logger.warn("");
+
     	  Personals p=new Personals();
     	  p.setPersonAddress(request.getParameter("personAddress"));
     	  p.setPersonEmail(request.getParameter("personEmail"));
@@ -219,15 +226,22 @@ public class ListClients extends org.apache.struts.action.Action {
     	  p.setPersonTelePhone(request.getParameter("personTelePhone").toString());
     	  p.setPersonTitle(request.getParameter("personTitle"));
     	  HC.insertClient(c,workDate,appDate, database);
-    	  Integer id=HC.getLastOne(database);
+    	  logger.warn(" in the person... ");
+    	  logger.info(p);
+
+    	 // Integer id=HC.getLastOne(database);
+    	  Integer id=HC.getClientId(database, c);
     	  HP.insertPersonal(p, database);
-    	  Integer pId=HP.getLastOne(database);
+    	  logger.info( " get last client in db is "+id);
+    	  //Integer pId=HP.getLastOne(database);
+    	  Integer pId=HP.getPersonID(p, database);
+    	  logger.info( " get last personal in db is "+pId);
     	  HC.insertMMPersonal(id, pId, database);
     	  Clients Tc=new Clients();
     	  Tc.setIdClients(id);
     	  Tc.setClientMain(pId);
     	  HC.update(Tc, database);
-		    	
+
       }
       else if(request.getParameter("task").equals("EditClient"))
   		{
@@ -245,7 +259,7 @@ public class ListClients extends org.apache.struts.action.Action {
 	          String appDate=null;
 	          if(!request.getParameter("clientApproachDate").equals("3000-01-01"))
 	        	  appDate=request.getParameter("clientApproachDate");
-	          
+
 	      	  HC.updateClient(c,workDate,appDate, database);
   		}
       else if(request.getParameter("task").equals("DELETESELECTIONS"))
@@ -253,8 +267,8 @@ public class ListClients extends org.apache.struts.action.Action {
     	  if (request.getParameterValues("ids").length == 1)
           {
         	  try{
-        			
-      			
+
+
         			database.update("delete from clients where idClients = "+request.getParameterValues("ids")[0]);
         			database.finalize();
         	  } catch (SQLException e) {
@@ -264,26 +278,26 @@ public class ListClients extends org.apache.struts.action.Action {
 
       			e.printStackTrace();
       		}
-        	  
+
           }
           else if (request.getParameterValues("ids").length > 1)
           {
         	  try{
-        		
-        			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+        			for (int i = 0; i < request.getParameterValues("ids").length; i++)
               	  	{
-        				
+
         				database.update("delete from clients where idClients = "+request.getParameterValues("ids")[i]);
-            			
+
               	  	}
         	     }
-        			
+
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-        	  }  
+        	  }
 
       }
       else if(request.getParameter("task").equals("AddContact"))
@@ -298,7 +312,7 @@ public class ListClients extends org.apache.struts.action.Action {
 	    		p.setPersonTelePhone(request.getParameter("personTelePhone"));
 	    		p.setPersonTitle(request.getParameter("personTitle"));
 	    		HP.insertPersonal(p, database);
-	      	    Integer pId=HP.getLastOne(database);
+	      	    Integer pId=HP.getPersonID(p, database);
 	      	    HC.insertMMPersonal(id, pId, database);
 	      	    if(request.getParameter("mainContact").equals("0"))
 	    		{
@@ -307,10 +321,10 @@ public class ListClients extends org.apache.struts.action.Action {
 	   	        	Tc.setIdClients(cID);
 	   	        	Tc.setClientMain(pId);
 	   		    	//	Tc.setClientMain(p);
-	   		    	HC.update(Tc, database);	
+	   		    	HC.update(Tc, database);
 	    		}
-	     
-  		
+
+
   	}
       else if(request.getParameter("task").equals("EditContact"))
   		{
@@ -364,7 +378,7 @@ public class ListClients extends org.apache.struts.action.Action {
     			e.setContractProactiveType("Proactive");
     		else
     			e.setContractProactiveType("Reactive");
-    		
+
     		if(c.getContractDateOfRequest()!=null)
     		{
         		String dat=s.format(c.getContractDateOfRequest());
@@ -372,7 +386,7 @@ public class ListClients extends org.apache.struts.action.Action {
     		}
     		else
     			e.setContractDateOfRequest(null);
-    		
+
     		if(c.getContractFirstStartDate()!=null)
     		{
         		String dat=s.format(c.getContractFirstStartDate());
@@ -380,7 +394,7 @@ public class ListClients extends org.apache.struts.action.Action {
     		}
     		else
     			e.setContractFirstStartDate(null);
-    		
+
     		if(c.getContractFirstEndDate()!=null)
     		{
     			String dat=s.format(c.getContractFirstEndDate());
@@ -388,7 +402,7 @@ public class ListClients extends org.apache.struts.action.Action {
     		}
     		else
     			e.setContractFirstEndDate(null);
-    		
+
     		e.setContractDealPerson(c.getContractDealPerson());
       		cShow.add(e);
       	}
@@ -396,7 +410,7 @@ public class ListClients extends org.apache.struts.action.Action {
 	        String returnText = xstream.toXML(cShow);
 	        // //////System.out.println(cShow.size());
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
       }
@@ -406,43 +420,43 @@ public class ListClients extends org.apache.struts.action.Action {
 	        if (request.getParameterValues("ids").length == 1)
           {
         	  try{
-      			
+
         		  database.update("delete from clientpersonal where ClientPersonals_idPersonals = "+request.getParameterValues("ids")[0]+" and ClientsPersonal_idClients="+vID);
-      			
+
       		}
       		  catch (Exception e) { e.printStackTrace();
-      	          
-      	      }  finally { 
-      	           
+
+      	      }  finally {
+
       	      }
-        	  
+
           }
           else if (request.getParameterValues("ids").length > 1)
           {
         	  try{
-        			
-        			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+        			for (int i = 0; i < request.getParameterValues("ids").length; i++)
               	  	{
-        				
+
         				database.update("delete from clientpersonal where ClientPersonals_idPersonals = "+request.getParameterValues("ids")[i]+" and ClientsPersonal_idClients="+vID);
-            			
+
               	  	}
         	     }
-        			
+
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-        	  }  
-    
-	        
-	     
-	        
+        	  }
+
+
+
+
       }
-      
+
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -451,10 +465,10 @@ public class ListClients extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-      
+
       return mapping.findForward("success");
     }
-    public Date parseDate(String s) 
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));

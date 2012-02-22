@@ -15,14 +15,14 @@ import tablespackage.Courses;
 import tablespackage.Datashows;
 import tablespackage.Trainingcoordinators;
 
-public class Hiber_DataShows 
+public class Hiber_DataShows
 {
 	public ArrayList getDataShows(DataSourceConnection database)
 	{
 		ArrayList Al=new ArrayList();
-		
+
 		try{
-		
+
 			ResultSet l =database.retrieve("select * from datashows");
 		 	while(l.next())
 		 	{
@@ -35,22 +35,23 @@ public class Hiber_DataShows
 		 		DS.setDatashowInfo(l.getString(7));
 		 		Al.add(DS);
 		 	}
-		 		
-		 	
+
+
 		}catch(Exception e){
 		}finally{
 			}
 		return Al;
 	}
 	/*----------------------------------------------------------------------------------------------------------*/
-	public void insertDatashow(Datashows c,String DatashowPurchaseDate,DataSourceConnection database)
+	public int  insertDatashow(Datashows c,String DatashowPurchaseDate,DataSourceConnection database)
 	{
+		int id=0;
 		try{
-			
+
 			String DatashowName=null;
 			String DatashowPrice=null;
 			String DatashowInfo=null;
-		
+
 			if(c.getDatashowName()!=null)
 				DatashowName="'"+c.getDatashowName()+"'";
 			if(c.getDatashowPrice()!=null)
@@ -59,45 +60,56 @@ public class Hiber_DataShows
 				DatashowInfo="'"+c.getDatashowInfo()+"'";
 			if(DatashowPurchaseDate!=null)
 				DatashowPurchaseDate="'"+DatashowPurchaseDate+"'";
-			
-			
-			database.update("insert into datashows (DatashowName,DatashowPrice,DatashowPurchaseDate,DatashowInfo) values("+DatashowName+","+DatashowPrice+","+DatashowPurchaseDate+","+DatashowInfo+")");
-			
-		}
-		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
-	      }
 
-	}
-	public Integer getLastOne(DataSourceConnection database)
-	{
-		Integer id=0;
-		
-		try{
-			
-			ResultSet l =database.retrieve("select idDatashows from datashows");
+
+			database.update("insert into datashows (DatashowName,DatashowPrice,DatashowPurchaseDate,DatashowInfo) values("+DatashowName+","+DatashowPrice+","+DatashowPurchaseDate+","+DatashowInfo+")");
+
+
+			ResultSet l =database.retrieve("select idDatashows from datashows  where DatashowName"+DatashowName+" And  DatashowPrice"+DatashowPrice+" And DatashowPurchaseDate="+DatashowPurchaseDate);
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
-		 	l.close();
-		 	
-		 	
-		}catch(Exception e){
-			// //////System.out.println(e.getMessage());
-		}finally{
-			}
+
+
+
+		}
+		  catch (Exception e) { e.printStackTrace();
+
+	      }  finally {
+
+	      }
+
 		return id;
+
 	}
-	
+//	public Integer getLastOne(DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idDatashows from datashows");
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//
+//		}catch(Exception e){
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//	}
+
 /*----------------------------------------------------------------------------------------------------------*/
 	public Datashows getDatashowById(Integer id,DataSourceConnection database)
 	{
 		Datashows DS=new Datashows();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from datashows where idDatashows="+id);
 			while(l.next())
 			 {
@@ -109,7 +121,7 @@ public class Hiber_DataShows
 		 		DS.setDatashowInfo(l.getString(7));
 			 }
 			 l.close();
-			 
+
 	}catch(Exception e){
 		// //////System.out.println(e.getMessage());
 	}finally{
@@ -119,13 +131,13 @@ public class Hiber_DataShows
 /*----------------------------------------------------------------------------------------------------------*/
 	public void updateDataShow(Datashows c,String datashowSalvageDate,String DatashowPurchaseDate,DataSourceConnection database)
 	{
-		
+
 		try{
-		
+
 			String DatashowName=null;
 			String DatashowPrice=null;
 			String DatashowInfo=null;
-		
+
 			if(c.getDatashowName()!=null)
 				DatashowName="'"+c.getDatashowName()+"'";
 			if(c.getDatashowPrice()!=null)
@@ -136,15 +148,15 @@ public class Hiber_DataShows
 				DatashowPurchaseDate="'"+DatashowPurchaseDate+"'";
 			if(datashowSalvageDate!=null)
 				datashowSalvageDate="'"+datashowSalvageDate+"'";
-			
+
 			database.update("update datashows set DatashowName="+DatashowName+",DatashowPrice="+DatashowPrice+",DatashowPurchaseDate="+DatashowPurchaseDate+",DatashowSalvageDate="+datashowSalvageDate+",DatashowInfo="+DatashowInfo+" where idDatashows="+c.getIdDatashows());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}		
+
+	}
 }

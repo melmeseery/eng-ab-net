@@ -32,33 +32,33 @@ import com.thoughtworks.xstream.XStream;
 import database.DataSourceConnection;
 
 public class ListExpCategories extends org.apache.struts.action.Action {
-    
+
     // Global Forwards
-    public static final String GLOBAL_FORWARD_start = "start"; 
+    public static final String GLOBAL_FORWARD_start = "start";
 
     // Local Forwards
 
-    
+
     public ListExpCategories() {
     }
-    
+
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Hiber_Expensescategories HE=new Hiber_Expensescategories();
     	Hiber_ExpensesItems HEI=new Hiber_ExpensesItems();
     	XStream xstream = new XStream();
     	HttpSession session=request.getSession(true);
-    	
+
       	// create and intialize the database connection////////////
 		DataSourceConnection database = new DataSourceConnection();
 		database.initializeConnecton(this.servlet);
-    	
+
     	if(request.getParameter("task").equals("list"))
     	{
 	    	ArrayList categories=HE.getExCategories(database);
 	        xstream.alias("Expensescategories", Expensescategories.class);
 	        String returnText = xstream.toXML(categories);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -75,7 +75,7 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	        xstream.alias("Expensescategories", Expensescategories.class);
 	        String returnText = xstream.toXML(categories);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -145,15 +145,15 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	    			l.add(eS);
 	    		}
     		}
-    		
+
     		// //////System.out.println("size of arraaaaaaaaay is "+al.size());
     		xstream.alias("Expensesitem", ExItemShow.class);
 	        String returnText = xstream.toXML(l);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
-			
+
     	}
     	else if(request.getParameter("task").equals("listItems"))
 		{
@@ -176,7 +176,7 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 			xstream.alias("Expensesitem", ExItemShow.class);
 	        String returnText = xstream.toXML(eShow);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
 		}
@@ -203,7 +203,7 @@ public class ListExpCategories extends org.apache.struts.action.Action {
     		xstream.alias("Expensescategories", CatShow.class);
 	        String returnText = xstream.toXML(al);
 	        // //////System.out.println("return text = "+returnText);
-	        response.setContentType("application/xml;charset=UTF-8"); 
+	        response.setContentType("application/xml;charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 			out.write(returnText);
     	}
@@ -215,11 +215,11 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	    	  s.setCategoryName(request.getParameter("categoryName"));
 	    	  s.setCategoryType(request.getParameter("categoryType"));
 	    	  //System.out.println(request.getParameter("categoryParentId"));
-	    	  
+
 	    	  if(request.getParameter("categoryType").equals("Parent"))
 	    	  {
 	    		  s.setCategoryParentId(null);
-	    		  s.setCategoryParentName(null); 
+	    		  s.setCategoryParentName(null);
 	    	  }
 	    	  else if(request.getParameter("categoryParentId")!=null)
 	    	  {//System.out.println(request.getParameter("categoryParentId"));
@@ -229,7 +229,7 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	    		//	e.setIdExpensesCategories(Integer.valueOf(request.getParameter("categoryParentId")));
 	    			s.setCategoryParentId(Integer.valueOf(request.getParameter("categoryParentId")));
 	    		//	e=HE.getCatById(Integer.valueOf(request.getParameter("categoryParentId")));
-	    			s.setCategoryParentName(e.getCategoryName()); 
+	    			s.setCategoryParentName(e.getCategoryName());
 	    	  }
 	    	 HE.updateCat(s, database);
     	}
@@ -256,9 +256,9 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	    	  String date1=null;
 	    	  if(!request.getParameter("expenseItemValidTo").equals("3000-01-01"))
 	    		  date1=request.getParameter("expenseItemValidTo");
-	    	  
+
 	    	  HEI.updateItem(s,date,date1, database);
-	    	  
+
     	}
     	else if(request.getParameter("task").equals("AddExItem"))
     	{
@@ -282,10 +282,12 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 	    	  if(request.getParameter("expenseItemValidFrom")!=null)
 	    	  {
 	    		  date=request.getParameter("expenseItemValidFrom");
-	    		  Integer eid=HEI.getLastOne(database);
+	    		  Integer eid=HEI.getValidExpenseItem(id, database);
+	    		  if (eid>0){
 	    		  HEI.update(eid,date, database);
+	    		  }
 	    	  }
-    		
+
     		e.setExpensesItem(id);
     		HEI.insertExItem(e,date, database);
     	}
@@ -294,36 +296,36 @@ public class ListExpCategories extends org.apache.struts.action.Action {
     		if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        		
-        			
+
+
         			database.update("delete from expensescategories where idExpensesCategories = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from expensescategories where idExpensesCategories = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
+          	  }
 
         }
     	else if(request.getParameter("task").equals("DELETE"))
@@ -331,41 +333,41 @@ public class ListExpCategories extends org.apache.struts.action.Action {
     		if (request.getParameterValues("ids").length == 1)
             {
           	  try{
-        			
+
         			////System.out.println("delete from expensesitem where idExpensesItem = "+request.getParameterValues("ids")[0]);
         			database.update("delete from expensesitem where idExpensesItem = "+request.getParameterValues("ids")[0]);
-        			
+
         		}
         		  catch (Exception e) { e.printStackTrace();
-        	          
-        	      }  finally { 
-        	           
+
+        	      }  finally {
+
         	      }
-          	  
+
             }
             else if (request.getParameterValues("ids").length > 1)
             {
           	  try{
-          			
-          			for (int i = 0; i < request.getParameterValues("ids").length; i++) 
+
+          			for (int i = 0; i < request.getParameterValues("ids").length; i++)
                 	  	{
-          				
+
           				database.update("delete from expensesitem where idExpensesItem = "+request.getParameterValues("ids")[i]);
-              			
+
                 	  	}
           	     }
-          			
+
           		  catch (Exception e) { e.printStackTrace();
-          	          
-          	      }  finally { 
-          	           
+
+          	      }  finally {
+
           	      }
-          	  }  
+          	  }
 
         }
-    	
+
       try{
-			
+
     		database.finalize();
   	  } catch (SQLException e) {
 
@@ -374,11 +376,11 @@ public class ListExpCategories extends org.apache.struts.action.Action {
 
 			e.printStackTrace();
 		}
-    	
+
     	return mapping.findForward("success");
-    	
+
     }
-    public Date parseDate(String s) 
+    public Date parseDate(String s)
     {
     	 Calendar cal = Calendar.getInstance();
     	 cal.set(cal.YEAR,Integer.parseInt(s.substring(0,4)) );// //////System.out.println(s.substring(0,4));

@@ -16,14 +16,14 @@ import tablespackage.Menus;
 import tablespackage.Rooms;
 import tablespackage.Venues;
 
-public class Hiber_Menus 
+public class Hiber_Menus
 {
 	public ArrayList<Menus> getMenuById(Integer id,DataSourceConnection database)
 	{
-		
+
 		ArrayList<Menus> al=new ArrayList<Menus>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from menus where Menu_idVenues="+id);
 			while(l.next())
 			 {
@@ -36,8 +36,8 @@ public class Hiber_Menus
 				al.add(m);
 			 }
 			 l.close();
-			
-		 	
+
+
 		}catch(Exception e){
 		}finally{
 			}
@@ -47,10 +47,10 @@ public class Hiber_Menus
 	public void insertMenu(Menus p,String validFrom,DataSourceConnection database)
 	{
 		try{
-			
+
 			String MenuName=null;
 			String MenuDescription=null;
-			
+
 			if(p.getMenuName()!=null)
 				MenuName="'"+p.getMenuName()+"'";
 			if(p.getMenuDescription()!=null)
@@ -58,59 +58,59 @@ public class Hiber_Menus
 			if(validFrom!=null)
 				validFrom="'"+validFrom+"'";
 			database.update("insert into menus (MenuName,MenuDescription,MenuValidFrom,Menu_idVenues,MenuValid) values("+MenuName+","+MenuDescription+","+validFrom+","+p.getMenu()+","+p.getMenuValid()+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-	}	
+	}
 	/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
+	public Integer getValidMenuId(int idvenus,DataSourceConnection database)
 	{
 		Integer id=0;
-		
+
 		try{
-			
-			ResultSet l =database.retrieve("select idMenus from menus");
+
+			ResultSet l =database.retrieve("select idMenus from menus where MenuValid=true And Menu_idVenue="+idvenus);
 			while(l.next())
 		 	{
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 	
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return id;
-	}		
+	}
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void update(Integer mid,String validTo,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			database.update("update menus set MenuValidTo='"+validTo+"',MenuValid=false where idMenus="+mid);
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void updateMenu(Menus p,String validFrom,String validTo,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			String MenuName=null;
 			String MenuDescription=null;
-			
+
 			if(p.getMenuName()!=null)
 				MenuName="'"+p.getMenuName()+"'";
 			if(p.getMenuDescription()!=null)
@@ -120,14 +120,14 @@ public class Hiber_Menus
 			if(validTo!=null)
 				validTo="'"+validTo+"'";
 			database.update("update menus set MenuName="+MenuName+",MenuDescription="+MenuDescription+",MenuValidFrom="+validFrom+",MenuValidTo="+validTo+",MenuValid="+p.getMenuValid()+" where idMenus="+p.getIdMenus());
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}		
-			
+
+	}
+
 }

@@ -16,14 +16,14 @@ import tablespackage.Courses;
 import tablespackage.Trainingcoordinatehistory;
 import tablespackage.Trainingcoordinators;
 
-public class Hiber_CoordinateHistory 
+public class Hiber_CoordinateHistory
 {
 //	public ArrayList getCoordinateHistory()
 //	{
 //		Trainingcoordinatehistory TC=new Trainingcoordinatehistory();
 //		ArrayList Al=new ArrayList();
 //		Session session = null;
-//	
+//
 //		try{
 //			// This step will read hibernate.cfg.xml and prepare hibernate for use
 //			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -40,13 +40,13 @@ public class Hiber_CoordinateHistory
 //					TC = (Trainingcoordinatehistory) row;
 //					Al.add(TC);
 //					// //////System.out.println(Al.size());
-//					
+//
 //				}
-//		 		
-//		 		
+//
+//
 //		 	}
-//		 		
-//		 		
+//
+//
 //	        session.close();
 //		}catch(Exception e){
 //			// //////System.out.println(e.getMessage());
@@ -54,40 +54,40 @@ public class Hiber_CoordinateHistory
 //			}
 //		return Al;
 //	}
-//	
+//
 	/*----------------------------------------------------------------------------------------------------------*/
 	public void insertCoordHistory(Trainingcoordinatehistory c,String TrainingCoordinateHistoryValidFrom,DataSourceConnection database)
 	{
 		try{
-			
+
 			String TrainingCoordinateHistoryType=null;
 			String TrainingCoordinateHistoryValue=null;
-			
+
 			if(c.getTrainingCoordinateHistoryType()!=null)
 				TrainingCoordinateHistoryType="'"+c.getTrainingCoordinateHistoryType()+"'";
 			if(c.getTrainingCoordinateHistoryValue()!=null)
 				TrainingCoordinateHistoryValue="'"+c.getTrainingCoordinateHistoryValue()+"'";
 			if(TrainingCoordinateHistoryValidFrom!=null)
 				TrainingCoordinateHistoryValidFrom="'"+TrainingCoordinateHistoryValidFrom+"'";
-			
+
 			database.update("insert into trainingcoordinatehistory (TrainingCoordinateHistoryType,TrainingCoordinateHistoryValidFrom,TrainingCoordinateHistoryValue,TrainingCoordinators_idTrainingCoordinators) values("+TrainingCoordinateHistoryType+","+TrainingCoordinateHistoryValidFrom+","+TrainingCoordinateHistoryValue+","+c.getTrainingCoordinators()+")");
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
+
 	}
 /*----------------------------------------------------------------------------------------------------------*/
-	
+
 	public ArrayList<Trainingcoordinatehistory> getCoordinatorById(Integer id,DataSourceConnection database)
 	{
-		
+
 		ArrayList<Trainingcoordinatehistory> al=new ArrayList<Trainingcoordinatehistory>();
 		try{
-			
+
 			ResultSet l =database.retrieve("select * from trainingcoordinatehistory where TrainingCoordinators_idTrainingCoordinators="+id);
 			while(l.next())
 		 	{
@@ -101,20 +101,20 @@ public class Hiber_CoordinateHistory
 		 			al.add(t);
 		 	}
 		 	l.close();
-		 	
+
 		}catch(Exception e){
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return al;
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	
-	public Integer getLastOne(String s,Integer Tid,DataSourceConnection database)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public Integer getCoordinatorID(String s,Integer Tid,DataSourceConnection database)
 	{
 		Integer id=0;
 		try{
-			
+
 			////System.out.println("select idTrainingCoordinateHistory from Trainingcoordinatehistory where trainingCoordinateHistoryType='"+s+"' and TrainingCoordinators_idTrainingCoordinators="+Tid);
 			ResultSet l =database.retrieve("select idTrainingCoordinateHistory from trainingcoordinatehistory where trainingCoordinateHistoryType='"+s+"' and TrainingCoordinators_idTrainingCoordinators="+Tid);
 			while(l.next())
@@ -122,21 +122,21 @@ public class Hiber_CoordinateHistory
 		 			id=l.getInt(1);
 		 	}
 		 	l.close();
-		 	
-		 	
+
+
 		}catch(Exception e){e.printStackTrace();
 			// //////System.out.println(e.getMessage());
 		}finally{
 			}
 		return id;
 	}
-	
+
 /*----------------------------------------------------------------------------------------------------------*/
 	public void update(Trainingcoordinatehistory t,Integer id,String date,boolean b,DataSourceConnection database)
 	{
-		
+
 		try{
-			
+
 			String type = null;
 			String value = null;
 			if(date!=null)
@@ -150,39 +150,39 @@ public class Hiber_CoordinateHistory
 				database.update("update trainingcoordinatehistory set TrainingCoordinateHistoryValidTo="+date+" where idTrainingCoordinateHistory="+id);
 			else
 				database.update("update trainingcoordinatehistory set TrainingCoordinateHistoryValidFrom="+date+", TrainingCoordinateHistoryType="+type+", TrainingCoordinateHistoryValue="+value+" where idTrainingCoordinateHistory="+id);
-			
+
 		}
 		  catch (Exception e) { e.printStackTrace();
-	          
-	      }  finally { 
-	           
+
+	      }  finally {
+
 	      }
-		
-	}
-	/*----------------------------------------------------------------------------------------*/
-	public Integer getLastOne(DataSourceConnection database)
-	{
-		Integer id=0;
-	
-		try{
-			
-			ResultSet l =database.retrieve("select idTrainingCoordinateHistory from trainingcoordinatehistory");
-			while(l.next())
-		 	{
-		 			id=l.getInt(1);
-		 	}
-		 	l.close();
-		 	
-		}catch(Exception e){
-			// //////System.out.println(e.getMessage());
-		}finally{
-			}
-		return id;
-		
 
 	}
-	
-	
+	/*----------------------------------------------------------------------------------------*/
+//	public Integer getLastOne(DataSourceConnection database)
+//	{
+//		Integer id=0;
+//
+//		try{
+//
+//			ResultSet l =database.retrieve("select idTrainingCoordinateHistory from trainingcoordinatehistory");
+//			while(l.next())
+//		 	{
+//		 			id=l.getInt(1);
+//		 	}
+//		 	l.close();
+//
+//		}catch(Exception e){
+//			// //////System.out.println(e.getMessage());
+//		}finally{
+//			}
+//		return id;
+//
+//
+//	}
+
+
 }
 
 

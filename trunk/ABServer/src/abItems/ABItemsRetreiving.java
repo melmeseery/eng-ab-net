@@ -229,7 +229,7 @@ public class ABItemsRetreiving {
 				.retrieve("Select idResources,ResourceFirstName,ResourceLastName from resources where Deleted = 0;");
 
 		ResultSet courses_rs = database
-				.retrieve("Select Courses_idCourses from ContractCourse where idContractCourse = "
+				.retrieve("Select Courses_idCourses from contractcourse where idContractCourse = "
 						+ courseId);
 		if(courses_rs.next())
 		while (rs.next()) {

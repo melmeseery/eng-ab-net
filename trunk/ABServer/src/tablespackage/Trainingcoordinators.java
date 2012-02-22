@@ -87,6 +87,8 @@ public class Trainingcoordinators {
 	 * @es_generated
 	 */
 	private String  TrainingCoordinatorCV;
+
+
 	public String getTrainingCoordinatorCV() {
 		return TrainingCoordinatorCV;
 	}
