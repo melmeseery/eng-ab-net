@@ -321,7 +321,7 @@ Ext.onReady(function() {
 		width : 180,
 		// disabledDays: [5, 6],
 		id : 'clientApproachDate'
-		,
+
 			// allowBlank: false,
 			// vtype: 'daterange',
 			// endDateField:'clientWorkDate'
@@ -333,7 +333,7 @@ Ext.onReady(function() {
 		minValue : '1960-01-01',
 		width : 180,
 		id : 'clientWorkDate'
-		,
+
 			// allowBlank: false,
 			// vtype: 'daterange',
 			// startDateField:'clientApproachDate',
@@ -389,7 +389,7 @@ Ext.onReady(function() {
 				// allowBlank: false,
 				width : 180,
 				id : 'personTelePhone'
-				,
+
 			});
 	CAddField = new Ext.form.TextField({
 				fieldLabel : 'Department <html><font color=red> *</font></html> ',
@@ -397,7 +397,7 @@ Ext.onReady(function() {
 				width : 180,
 
 				id : 'personAddress'
-				,
+
 			});
 	var WorkD = '3000-01-01';
 	var AppD = '3000-01-01';

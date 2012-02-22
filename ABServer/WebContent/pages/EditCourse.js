@@ -789,7 +789,7 @@ myGrid.getView().refresh();
                 		CourseTAField,
                 		CourseDescField,
                 		checkField,
-                ResourcesField
+               			 ResourcesField
 
                 		]
 

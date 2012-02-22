@@ -432,7 +432,7 @@ var Resources  = Ext.data.Record.create([
 		  //  maxLength: 4,
 		    width:250,
 		    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		  //  anchor : '95%'
 		//   maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
@@ -450,7 +450,7 @@ var Resources  = Ext.data.Record.create([
 	id: 'color',
 	allowBlank: false,
 	name: 'color',
-   value: '123456',
+   value: '123456'
 //	disable:true
 //	allowBlank: false
  });
@@ -622,21 +622,21 @@ var Resources  = Ext.data.Record.create([
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceImc_comp',
+    		id:'priceImc_comp'
     	//	maskRe: /([0-9\s]+)$/
      		});
    var ImcField_Client = new Ext.form.NumberField({
       		fieldLabel: 'IMC Funded Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceImc_client',
+    		id:'priceImc_client'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var InternationalField = new Ext.form.NumberField({
       		fieldLabel: 'International Rate <html><font color=red> *</font></html>',
       		allowBlank: false,
       		width:200,
-    		id:'priceInternational',
+    		id:'priceInternational'
     	//	maskRe: /([0-9\s]+)$/
      		});
      var PuplicField_Comp = new Ext.form.NumberField({
@@ -645,7 +645,7 @@ var Resources  = Ext.data.Record.create([
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var PuplicField_Client = new Ext.form.NumberField({
@@ -654,7 +654,7 @@ var Resources  = Ext.data.Record.create([
 		//    maxLength: 20,
 		    width:200,
 		//    allowNegative: false,
-		    allowBlank: false,
+		    allowBlank: false
 		 //   maskRe: /([0-9\s]+)$/
 		      });
 	 var ValidFromField = new Ext.form.DateField({
@@ -664,7 +664,7 @@ var Resources  = Ext.data.Record.create([
                 width:220,
                 id:'priceValidFrom',
                 allowBlank: false,
-                vtype: 'daterange',
+                vtype: 'daterange'
               //  disabledDays: [5, 6],
                // endDateField:'priceValidTo'
             });
@@ -908,8 +908,27 @@ var Resources  = Ext.data.Record.create([
 			 			window.location = redirect;
 
 
-	                    }
+	                    },
 
+ 						failure: function(response){
+						        	//////console.log("faaaaaaaaaail");
+						        		var errorMsg='Error uploading files!';
+
+                			Ext.Msg.show({
+							         title: 'Error',
+							        msg: errorMsg,
+							        minWidth: 200,
+							        modal: true,
+							        icon: Ext.Msg.ERROR,
+							        buttons: Ext.Msg.OK
+								 });
+
+	                      	//addTab();
+	                    var redirect = '../pages/cources.jsp';
+			 			window.location = redirect;
+
+
+						       }
                    }
 
                  );
@@ -935,7 +954,8 @@ var Resources  = Ext.data.Record.create([
 
                 		}
                 }
-            },{text:'Cancel',
+            },
+            	{text:'Cancel',
             	handler:function(){window.location='cources.jsp';}
             	}
            ]});
