@@ -548,6 +548,56 @@ public class Hiber_Coordinators
 	      }
 
 	}
+
+
+
+	public void updateCoordinatorCV(Trainingcoordinators c,DataSourceConnection database)
+	{
+
+		try{
+
+			String TrainingCoordinateFirstName=null;
+			String TrainingCoordinateAbb=null;
+			String TrainingCoordinateLastName=null;
+			String TrainingCoordinateDescription=null;
+			String TrainingCoordinateColor=null;
+			String TrainingCoordinateAddress=null;
+			String TrainingCoordinateEmail=null;
+			String TrainingCoordinateTelephone=null;
+			String TrainingCoordinateMobile=null;
+			String TrainingCoordinateCV=null;
+			if(c.getTrainingCoordinateFirstName()!=null)
+				TrainingCoordinateFirstName="'"+c.getTrainingCoordinateFirstName()+"'";
+			if(c.getTrainingCoordinateAbb()!=null)
+				TrainingCoordinateAbb="'"+c.getTrainingCoordinateAbb()+"'";
+			if(c.getTrainingCoordinateLastName()!=null)
+				TrainingCoordinateLastName="'"+c.getTrainingCoordinateLastName()+"'";
+			if(c.getTrainingCoordinateDescription()!=null)
+				TrainingCoordinateDescription="'"+c.getTrainingCoordinateDescription()+"'";
+			if(c.getTrainingCoordinateColor()!=null)
+				TrainingCoordinateColor="'"+c.getTrainingCoordinateColor()+"'";
+			if(c.getTrainingCoordinateAddress()!=null)
+				TrainingCoordinateAddress="'"+c.getTrainingCoordinateAddress()+"'";
+			if(c.getTrainingCoordinateEmail()!=null)
+				TrainingCoordinateEmail="'"+c.getTrainingCoordinateEmail()+"'";
+			if(c.getTrainingCoordinateTelephone()!=null)
+				TrainingCoordinateTelephone="'"+c.getTrainingCoordinateTelephone()+"'";
+			if(c.getTrainingCoordinateMobile()!=null)
+				TrainingCoordinateMobile="'"+c.getTrainingCoordinateMobile()+"'";
+
+			if(c.getTrainingCoordinatorCV()!=null)
+				TrainingCoordinateCV="'"+c.getTrainingCoordinatorCV()+"'";
+			database.update("update trainingcoordinators set TrainingCoordinateFirstName="+TrainingCoordinateFirstName+",TrainingCoordinateAbb="+TrainingCoordinateAbb+",TrainingCoordinateLastName="+TrainingCoordinateLastName+",TrainingCoordinateDescription="+TrainingCoordinateDescription+",TrainingCoordinateColor="+TrainingCoordinateColor+",TrainingCoordinateAddress="+TrainingCoordinateAddress+",TrainingCoordinateEmail="+TrainingCoordinateEmail+",TrainingCoordinateTelephone="+TrainingCoordinateTelephone+",TrainingCoordinateMobile="+TrainingCoordinateMobile+", TrainingCoordinatorCV="+	TrainingCoordinateCV+" where idTrainingCoordinators="+c.getIdTrainingCoordinators());
+
+		}
+		  catch (Exception e) { e.printStackTrace();
+
+	      }  finally {
+
+	      }
+
+	}
+
 /*-------------------------------------------------------------------------------------------*/
 	public void updateTeams(Teams t,DataSourceConnection database)
 	{
