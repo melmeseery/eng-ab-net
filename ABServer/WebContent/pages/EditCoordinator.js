@@ -179,17 +179,20 @@ EmailField.setValue(coordinateRec.get('trainingCoordinateEmail'));
 ColorField.setValue(coordinateRec.get('trainingCoordinateColor'));
 DescField.setValue(coordinateRec.get('trainingCoordinateDescription'));
 c=coordinateRec.get('trainingCoordinateColor');
+ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationDate'));
 SalaryField.setValue(coordinateRec.get('trainingCoordinatorCurrentSalary'));
 TitleField.setValue(coordinateRec.get('trainingCoordinatorCurrentTitle'));
-ResignationDateField.setValue(coordinateRec.get('trainingCoordinatorResignationDate'));
 
-
-testout=coordinateRec.get('trainingCoordinatorCV');
-TrainCV+=coordinateRec.get('trainingCoordinatorCV');
-if(testout == '')
+testout=coordinateRec.get('TrainingCoordinatorCV');
+TrainCV+=coordinateRec.get('TrainingCoordinatorCV');
+//Console.Log(testout);
+console.log(testout);
+if(testout == ''){
 	TrainCVLink.setVisible(false);
-else
+	}
+else{
 	TrainCVLink.setVisible(true);
+	}
 
 	TrainCVLink.setText('<font size=2><a href="'+TrainCV+'" target="_blank">Open/Download CV</a></font>',false);
 
@@ -818,9 +821,9 @@ TrainCVLink.setVisible(false);
            //    width: 350,
               //  defaultType: 'textfield',
                 items: [
-                {width:350,layout: 'form',
+                {width:380,layout: 'form',
                 items: [ uploadCVField]},
-                {width:100,layout: 'form',
+                {width:80,layout: 'form',
                 items: [ TrainCVLink]}
 		                   ]
             })
@@ -916,9 +919,11 @@ TrainCVLink.setVisible(false);
 								},
 						        method:'POST',
 						        success:function(response){
+
 		                           tab2.getForm().submit({
 
 	              		url: '../upload.do?task=coordinatorCV&CoordinatorID='+TCid,
+
 	                    waitMsg: 'Uploading your File...',
 
 	                    success: function(fp, o){
