@@ -51,6 +51,18 @@
 <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
 <link rel="stylesheet" type="text/css" href="../pages/Multiselect.css" />
 
+
+
+      <link rel='stylesheet' type='text/css' href='../ext/resources/css/ext-all.css' />
+		<link rel="stylesheet" type="text/css" href="../colorpicker/colorpicker.css" />
+
+
+
+		<script type="text/javascript" src="../fieldpanel/fieldpanel.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpicker.js"></script>
+		<script type="text/javascript" src="../colorpicker/colorpickerfield.js"></script>
+
+
 <script type="text/javascript" src="../JS/resourceDetails.js"></script>
 <script type="text/javascript" src="../JS/radiogroup.js"></script>
 
@@ -61,8 +73,7 @@
 <script type="text/javascript" src="../JS/DDView.js"></script>
 <script type="text/javascript" src="../JS/FileUploadField.js"></script>
 
-<script src="jquery-1.2.2.js" type="text/javascript"></script>
-<script src="ColorPicker.js" type="text/javascript"></script>
+
 
 
 <script type="text/javascript" src="../JS/SwfUpload.js"></script>
