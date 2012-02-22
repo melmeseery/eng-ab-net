@@ -11,7 +11,7 @@ Ext.apply(Ext.form.VTypes, {
             start.maxValue = date;
             //start.validate();
             this.dateRangeMax = date;
-        } 
+        }
         else if (field.endDateField && (!this.dateRangeMin || (date.getTime() != this.dateRangeMin.getTime()))) {
             var end = Ext.getCmp(field.endDateField);
             end.minValue = date;
@@ -43,13 +43,13 @@ Ext.onReady(function() {
     Ext.form.Field.prototype.msgTarget = 'side';
 
     var bd = Ext.getBody();
-    
+
     var resourceid = '';
 	var resourceName = '';
- 
+
     var Resource  = Ext.data.Record.create([
-                                        
-        {name: 'resourceId', type: 'int'},                                  
+
+        {name: 'resourceId', type: 'int'},
       {name: 'resourceName', type: 'string'},
 	  {name: 'resourceLastName', type: 'string'},
 	  {name: 'resNationality', type: 'string'},
@@ -65,12 +65,12 @@ Ext.onReady(function() {
 	  {name: 'resourceType', type: 'string'},
 	  {name: 'seniority', type: 'string'},
 	  {name: 'resourceHiegherDegree', type: 'string'},
-	  {name: 'resAddress', type: 'string'}, 
+	  {name: 'resAddress', type: 'string'},
 	  {name: 'resCity', type: 'string'},
 	  {name: 'gender', type: 'int'},
 	  {name: 'country', type: 'string'},
 	  {name: 'idNumber', type: 'string'},
-	  {name: 'taxId', type: 'string'},     
+	  {name: 'taxId', type: 'string'},
 	  {name: 'taxDestrict', type: 'string'},
 	  {name: 'taxPayment', type: 'string'},
 	  {name: 'resourcePhotoName', type: 'string'},
@@ -84,12 +84,12 @@ Ext.onReady(function() {
       {name: 'contractingStatus', type: 'string'},
       {name: 'resColor', type: 'string'},
       {name: 'age', type: 'int'}
-        
 
-       ]); 
+
+       ]);
     dataProxy = new Ext.data.HttpProxy({
      	url: '../ResourcesAction.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
       });
 
@@ -97,7 +97,7 @@ Ext.onReady(function() {
     var resourceDS = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-      baseParams:{task:'retreiveResource'},  
+      baseParams:{task:'retreiveResource'},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results",// The element which contains the total dataset size (optional)
@@ -106,24 +106,24 @@ Ext.onReady(function() {
         },Resource
         )
       });
-      
+
    //     //console.log("befor load");
-      
+
     resourceDS.load();
-    
+
     resourceDS.on('load', function(){
   		var resourceRec = resourceDS.getAt(0);
-  		
-  		
-  		
+
+
+
   		resourceid = resourceRec.get('resourceId');
   		resourcetype = resourceRec.get('resourceType');
-  		
+
   		if(resourceRec.get('resColor') != '')
   		ColorField.setValue(resourceRec.get('resColor'));
-  		
+
   		resourceName = resourceRec.get('resourceName')+' '+resourceRec.get('resourceLastName');
-  		  		
+
   		if(resourcetype == 1){
   			consultingManDayFeeRadio.enable();
   			consultingManDayPercentageRadio.enable();
@@ -132,7 +132,7 @@ Ext.onReady(function() {
   			consultingManDayPercentageField.enable();
 
 			trainingManDayRateField.disable();
-			trainingCurrFields.disable();		
+			trainingCurrFields.disable();
   		}
   		else if(resourcetype == 2){
   			consultingManDayFeeRadio.disable();
@@ -142,10 +142,10 @@ Ext.onReady(function() {
   			consultingManDayPercentageField.disable();
 
 			trainingManDayRateField.enable();
-			trainingCurrFields.enable();		
+			trainingCurrFields.enable();
   		}
   		else if(resourcetype == 3){
-  			
+
   			consultingManDayFeeRadio.enable();
   			consultingManDayPercentageRadio.enable();
   			consultingManDayFeeField.enable();
@@ -154,11 +154,11 @@ Ext.onReady(function() {
 
 			trainingManDayRateField.enable();
 			trainingCurrFields.enable();
-  			
+
   		}
   		 Courses_ds.load({params:{task:'remainCoursesByResourceId',res_id: resourceid}});
   		tabs.getTopToolbar().add('<DIV style="color:'+"black"+'"><h4>Details Of: '+resourceName+'</h4></DIV>');
-  		
+
   		jQuery(function($)
 	        {
 	            $("#picker1").attachColorPicker(resourceRec.get('resColor'));
@@ -176,40 +176,40 @@ Ext.onReady(function() {
 //	            	}
 //	            }
 	            if(flag == true){
-	            	
-	            	Ext.Ajax.request({  
+
+	            	Ext.Ajax.request({
 			            waitMsg: 'Please Wait',
 			            url: '../ResourcesAction.do',
 			        	params: {
 			          		task: "editResourceColor",
 			               color:  ColorField.getValue(),
 			               resId :resourceid
-			              }, 
+			              },
 			            method:'POST',
 			            success: function(response){
-			
-			                
-			            
+
+
+
 			            },
 			            failure: function(response){
 			              var result=response.responseText;
-			              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+			              Ext.MessageBox.alert('error','could not connect to the database. retry later');
 			              }
 		         });
-	            	
+
 	            }
 	            });
-	            
+
 	        });
-  		
-  		
+
+
        addTabs();
       });
-    
-    
+
+
 var retreivingDataProxy = new Ext.data.HttpProxy({
      	url: '../GeneralRetreivingAction.do',
-     	method: 'POST', 
+     	method: 'POST',
         headers:{'request-type':'ajax' }
   });
 
@@ -217,60 +217,60 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
   var Courses_ds = new Ext.data.Store({
        // load using HTTP
       proxy: retreivingDataProxy,
-    //   baseParams:{task: "remainCoursesByResourceId"},   
+    //   baseParams:{task: "remainCoursesByResourceId"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Course",
    		id:'courseId'},        // The repeated element which contains row information
    		[{name: 'courseId', type: 'int'},{name: 'courseName', type: 'string'}]
-        
+
         )
       });
 
- 
- 
+
+
  var resource_Courses_ds = new Ext.data.Store({
        // load using HTTP
       proxy: retreivingDataProxy,
-     //  baseParams:{task: "coursesByResourceId"},   
+     //  baseParams:{task: "coursesByResourceId"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
-   		record: "Course", 
+   		record: "Course",
    		id:'courseId'},          // The repeated element which contains row information
    		[{name: 'courseId', type: 'int'},{name: 'courseName', type: 'string'},{name: 'resourceAbility', type: 'int'}]
-        
+
         )
       });
  //resource_Courses_ds.load();
- 
- 
+
+
  var resource_future_Courses_ds = new Ext.data.Store({
        // load using HTTP
       proxy: retreivingDataProxy,
-     //  baseParams:{task: "coursesByResourceId"},   
+     //  baseParams:{task: "coursesByResourceId"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Course",
    		id:'courseId'},           // The repeated element which contains row information
    		[{name: 'courseId', type: 'int'},{name: 'courseName', type: 'string'},{name: 'resourceAbility', type: 'int'}]
-        
+
         )
       });
 
- 
 
- 
- 
+
+
+
  ////////////////////////////////////add course cababilities///////////////////////////////////////////
- 
-  
-  /**---------------------------------------Add form------------------------------------------*/  
+
+
+  /**---------------------------------------Add form------------------------------------------*/
        var CourseNameEngField = new Ext.form.TextField({
       		fieldLabel: 'Course Name',
       		allowBlank: false,
@@ -283,17 +283,17 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
  var Tds = new Ext.data.Store({
        // load using HTTP
       proxy: retreivingDataProxy,
-       baseParams:{task: "trainingAreas"},   
+       baseParams:{task: "trainingAreas"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "TrainingArea"},           // The repeated element which contains row information
    		[{name: 'trainingAreaName', type: 'string'},{name: 'trainingAreaId', type: 'int'}]
-        
+
         )
       });
-     		
+
   var CourseTAField = new Ext.form.ComboBox({
                        store: Tds,
                        id: 'trainArea',
@@ -306,8 +306,8 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 					    triggerAction: 'all',
 					    emptyText:'Select Training Area...',
 					    selectOnFocus:true
-		    });   			
-     var typeDs=[['Group','Group'],['Individual','Individual'],['Both','Both']];		
+		    });
+     var typeDs=[['Group','Group'],['Individual','Individual'],['Both','Both']];
      var CourseTypeField = new Ext.form.ComboBox({
                        store: typeDs,
                        id: 'courseType',
@@ -320,7 +320,7 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 					    triggerAction: 'all',
 					    emptyText:'Select a Type...',
 					    selectOnFocus:true
-		    });	
+		    });
 	 var CourseDaysField = new Ext.form.TextField({
 		    id: 'courseDays',
 		    fieldLabel: 'Course Days',
@@ -329,10 +329,10 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 		    allowNegative: false,
 		    allowBlank: false,
 		    maskRe: /([0-9\s]+)$/
-		 //   anchor : '95%'    
-		   
+		 //   anchor : '95%'
+
 		      });
-		      
+
 	  var CourseCodeField = new Ext.form.TextField({
 		    id: 'courseCode',
 		    fieldLabel: 'Course Code',
@@ -340,14 +340,14 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 		    width:220,
 		    allowNegative: false,
 		    allowBlank: false,
-		  //  anchor : '95%'    
+		  //  anchor : '95%'
 		   maskRe: /([a-zA-Z0-9\s]+)$/
 		      });
- 
- 
-   
-  
- 
+
+
+
+
+
     //////////////************adding form****************/////////////////
   //  var valid='Salary';
  //   var flag=true;
@@ -371,17 +371,17 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
-                handler:addNewCourse 
+                formBind: true,
+                // Function that fires when user clicks the button
+                handler:addNewCourse
             },{text:'Cancel',
             	handler:function(){AddNewCourseWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddNewCourseWindow= new Ext.Window({
       id: 'AddNewCourseWindow',
@@ -394,8 +394,8 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
       items: fs
     });
 
- //////////////********display form functions********************/////////////////   
-    
+ //////////////********display form functions********************/////////////////
+
    // reset the Form before opening it
   function resetCourseForm(){
     CourseNameEngField.reset();
@@ -403,14 +403,14 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
     CourseCodeField.reset();
     CourseTypeField.reset();
     CourseDaysField.reset();
-   
+
   }
-  
+
   // check if the form is valid
   function isCourseFormValid(){
   return(CourseNameEngField.isValid() && CourseCodeField.isValid() && CourseDaysField.isValid() && CourseTAField.isValid());
   }
-  
+
   // display or bring forth the form
   function displayNewCourseWindow(){
   if(!AddNewCourseWindow.isVisible()){
@@ -419,14 +419,14 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
   } else {
     AddNewCourseWindow.toFront();
   }
-  
-  
+
+
   }
      /////////////////adding course function/////////////////////
   function addNewCourse(){
-  
+
    if(isCourseFormValid()){
-      Ext.Ajax.request({   
+      Ext.Ajax.request({
         waitMsg: 'Please wait...',
         url: '../listTraingAreas.do',
         params: {
@@ -437,40 +437,40 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 		courseCode:	       CourseCodeField.getValue(),
 		courseDays:	       CourseDaysField.getValue()
 								       },
-        method:'POST', 
-        success: function(response){ 
+        method:'POST',
+        success: function(response){
 
-				Courses_ds.load({params:{task:'remainCoursesByResourceId',res_id: resourceid}}); 
-		 
-				   //console.log('data store modified records = '+Courses_ds.getModifiedRecords());    
-			
+				Courses_ds.load({params:{task:'remainCoursesByResourceId',res_id: resourceid}});
+
+				   //console.log('data store modified records = '+Courses_ds.getModifiedRecords());
+
             AddNewCourseWindow.hide();
         },
         failure: function(response){
           var result=response.responseText;
-          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-        }                      
+          Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+        }
       });
     } else {
       Ext.MessageBox.alert('Warning', 'Your Form is not valid!');
     }
-  
-  
+
+
   }
  /////////////////////////////////////////////////////////////////////////////////////////
- 
+
  var allCourses=new Ext.ux.Multiselect({
-    
+
      fieldLabel:"All Courses",
             name:"multiselect1",
-            dataFields:["courseId", "courseName"], 
+            dataFields:["courseId", "courseName"],
             valueField:"courseId",
             displayField:"courseName",
             width:250,
             height:370,
             autoScroll:true,
             store:Courses_ds
-            
+
             ,
             tbar:[{
                 text:"Add Course",
@@ -488,15 +488,15 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 	            }
             }]
     });
-    
-    
-    
-    
+
+
+
+
     var currentCourses=new Ext.ux.Multiselect({
-    
+
      fieldLabel:"Resource Courses",
             name:"multiselect2",
-            dataFields:["courseId", "courseName"], 
+            dataFields:["courseId", "courseName"],
             valueField:"courseId",
             displayField:"courseName",
             width:250,
@@ -513,38 +513,38 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 					  for(i = 0; i< resource_Courses_ds.getCount(); i++){
 					    selectedCourses.push(resource_Courses_ds.getAt(i).get('courseId'));
 					  }
-                	
-                	  Ext.Ajax.request({   
+
+                	  Ext.Ajax.request({
 	        			waitMsg: 'Please wait...',
-	        			url: '../ResourcesAction.do',	
-	        			
+	        			url: '../ResourcesAction.do',
+
 	        			params: {
 	          				task: "addCourseToResource",
 	          				resId:resourceid,
 	          				ability:1,
 	          				resourceCourses: selectedCourses
 	        			},
-	        			method:'POST', 
+	        			method:'POST',
 	        			success: function(response){
-	        			
-	              
+
+
 	                    },
 	        			failure: function(response){
 	          				var result=response.responseText;
-	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-	        			}                      
+	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+	        			}
 	      			});
 
 	            }
             }]
-            
-    }); 
-    
+
+    });
+
      var futureCourses=new Ext.ux.Multiselect({
-    
+
      fieldLabel:"Resource Future Courses",
             name:"multiselect3",
-            dataFields:["courseId", "courseName"], 
+            dataFields:["courseId", "courseName"],
             valueField:"courseId",
             displayField:"courseName",
             width:250,
@@ -561,113 +561,113 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
 					  for(i = 0; i< resource_future_Courses_ds.getCount(); i++){
 					    selectedFutureCourses.push(resource_future_Courses_ds.getAt(i).get('courseId'));
 					  }
-                	
-                	  Ext.Ajax.request({   
+
+                	  Ext.Ajax.request({
 	        			waitMsg: 'Please wait...',
-	        			url: '../ResourcesAction.do',	
-	        			
+	        			url: '../ResourcesAction.do',
+
 	        			params: {
 	          				task: "addCourseToResource",
 	          				resId:resourceid,
 	          				ability:0,
 	          				resourceCourses: selectedFutureCourses
 	        			},
-	        			method:'POST', 
+	        			method:'POST',
 	        			success: function(response){
-	        			
-	              
+
+
 	                    },
 	        			failure: function(response){
 	          				var result=response.responseText;
-	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-	        			}                      
+	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+	        			}
 	      			});
-                	
+
 
 	            }
             }]
-           
-    }); 
-    
-   
+
+    });
+
+
    	var addCourse = new Ext.Button({
 		text: 'Add Course',
 		minWidth:100,
-		
+
 		cls:"x-btn-text-icon",
         icon:'../images/icons/forward.gif',
 		handler:function(){
-			
+
 			  //console.log(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue());
-			
+
 			resource_Courses_ds.add(Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue()));
 			Courses_ds.remove(Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue()));
 		}
 
 		});
-   
-   
+
+
    var removeCourse = new Ext.Button({
 		text: 'Remove Course',
 		minWidth:100,
-		
+
 		cls:"x-btn-text-icon",
         icon:'../images/icons/backward.gif',
 		handler:function(){
-			
+
 			  //console.log(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue());
-			
+
 			Courses_ds.add(resource_Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect2").getValue()));
 			resource_Courses_ds.remove(resource_Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect2").getValue()));
 		}
 
 		});
-		
-		
+
+
 		var addFutureCourse = new Ext.Button({
 		text: 'Add Course',
 		minWidth:100,
-		
+
 		cls:"x-btn-text-icon",
         icon:'../images/icons/forward.gif',
 		handler:function(){
-			
+
 			  //console.log(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue());
-			
+
 			resource_future_Courses_ds.add(Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue()));
 			Courses_ds.remove(Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue()));
 		}
 
 		});
-   
-   
+
+
    var removeFutureCourse = new Ext.Button({
 		text: 'Remove Course',
 		minWidth:100,
-		
+
 		cls:"x-btn-text-icon",
         icon:'../images/icons/backward.gif',
 		handler:function(){
-			
+
 			  //console.log(addTrainingCapabilitiesform.getForm().findField("multiselect1").getValue());
-			
+
 			Courses_ds.add(resource_future_Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect3").getValue()));
 			resource_future_Courses_ds.remove(resource_future_Courses_ds.getById(addTrainingCapabilitiesform.getForm().findField("multiselect3").getValue()));
 		}
 
 		});
-   
-   
-     
+
+
+
  var addTrainingCapabilitiesform = new Ext.form.FormPanel({
-        
-        
+
+
         labelAlign: 'left',
         labelWidth: 75,
         frame: true,
-    autoWidth : true, 
+    autoWidth : true,
     autoHeight : true,
-   
+
     	title:'Training Capabilities',
     	//defaultType: 'fieldset',
 		layout:'table',
@@ -702,54 +702,67 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
     },{
         items: removeFutureCourse
     }]
-    
+
     });
  //////////////////////////////////////////////////////////////////////////////////////////////////
- 
+
  var col = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-       baseParams:{task: "colors"},   
+       baseParams:{task: "colors"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
-       
+
        // totalRecords: "results", // The element which contains the total dataset size (optional)
    		record: "Resource"},           // The repeated element which contains row information
    		[{name: 'resourceColor', type: 'string'}]
-        
+
         )
       });
-   
+
     col.on('load', function(){
   //	alert('????????');
-  	
+
 
 });
- 
- var ColorField =new Ext.form.TextField({
-	fieldLabel: 'Color',
+
+// var ColorField =new Ext.form.TextField({
+//	fieldLabel: 'Color',
+//	id: 'picker1',
+//	width:300
+//});
+
+
+ var ColorField =new Ext.ux.form.ColorPickerField ({
+ 	fieldLabel: 'Color <html><font color=red> *</font></html>',
+	id: 'color',
+	allowBlank: false,
 	id: 'picker1',
-	width:300
-});    
- 
+	name: 'color',
+   value: '123456'
+//	disable:true
+//	allowBlank: false
+ });
+
+
   var resourceColorform = new Ext.form.FormPanel({
-        
-        
+
+
     labelAlign: 'left',
     labelWidth: 75,
     frame: true,
-    autoWidth : true, 
+    autoWidth : true,
     height : 400,
-   
+
     title:'Resource Color',
     items: [
-    
+
     ColorField
     ]
-    
+
     });
- 
- 
+
+
  /////////////////////////////////////////////////////////////////////////////////////////////////
  var Resourcefiles  = Ext.data.Record.create([
       {name: 'resourceFileLocation', type: 'string'},
@@ -761,14 +774,14 @@ var retreivingDataProxy = new Ext.data.HttpProxy({
       {name: 'idResourceFiles',type:'int'}
 
      ]);
- 
+
 
     var ds = new Ext.data.GroupingStore({
        // load using HTTP
       proxy: dataProxy,
       groupField:'courseName',
       sortInfo:{field: 'courseName', direction: "ASC"},
-     //  baseParams:{task: "list"},   
+     //  baseParams:{task: "list"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
@@ -810,10 +823,10 @@ function renderTopic(value, p, record){
         stripeRows: true,
         colspan:2,
         autoExpandColumn: 'resourceFileUploadDate',
-      
+
       	 height: 400,
          autoHeight: false,
-        
+
          border: true,
          region: 'center',
          autoScroll: true,
@@ -835,16 +848,16 @@ function renderTopic(value, p, record){
               iconCls:'remove',
               handler:confirmDeleteCourseHandout
               })]
-              
+
 
 		    ,
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 //////////////////////////////////////delete handout from courses grid//////////////////////////////////////////////////////////
 
- 
- //confirm delete function 
+
+ //confirm delete function
   function confirmDeleteCourseHandout(){
     if(myGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -855,7 +868,7 @@ function renderTopic(value, p, record){
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected');
     }
   }
-  
+
   function deleteCourseHandout(btn){
     if(btn=='yes'){
          var selections = myGrid.getSelections();
@@ -863,47 +876,47 @@ function renderTopic(value, p, record){
          for(i = 0; i< selections.length; i++){
           selectedCourseHandout.push(selections[i].get('idResourceFiles'));
         //	contractPriceValue = contractTotalPrice.getValue()-selections[i].get('courseTotalPrice');
-   	
+
          }
-        
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
             url: '../ResourcesAction.do',
         	params: {
           		task: "deleteResourceHandout",
                courseHandoutIds:  selectedCourseHandout
-              }, 
+              },
             method:'POST',
             success: function(response){
 
                 ds.load({params:{task:'resourceHandouts',res_id: resourceid}});
-            
+
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-       
-      }  
+
+      }
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
- 
+
     var handoutsDs = new Ext.data.Store({
        // load using HTTP
       proxy: dataProxy,
-    //   baseParams:{task: "listHistory"},  
+    //   baseParams:{task: "listHistory"},
       // the return will be XML, so lets set up a reader
       reader: new Ext.data.XmlReader({
         totalRecords: "results", // The element which contains the total dataset size (optional)
-   		
+
    		record: "Resourcefiles",           // The repeated element which contains row information
    		id: "idResourceFiles"
         },Resourcefiles
         )
       });
-  
+
 
 
     // the DefaultColumnModel expects this blob to define columns. It can be extended to provide
@@ -911,10 +924,10 @@ function renderTopic(value, p, record){
       var colModel = new Ext.grid.ColumnModel([
         {header: "Handout", width: 150, sortable: true, dataIndex: 'resourceFileName'},
         {header: "Date", width: 150, sortable: true, dataIndex: 'resourceFileUploadDate'}
-		
+
     ]);
 
- 
+
     var handoutsGrid = new Ext.grid.GridPanel({
         ds: handoutsDs,
         cm: colModel,
@@ -933,45 +946,45 @@ function renderTopic(value, p, record){
               })
               ],
         selModel: new Ext.grid.RowSelectionModel({singleSelect:false})
- 
+
     });
 /////////////////////////////delete handout////////////////////////////////////////
 
-  
+
   function deleteHandouts(){
-    
+
          var selections = handoutsGrid.getSelections();
          var selectedHandout = [];
          for(i = 0; i< selections.length; i++){
           handoutsGrid.getStore().remove(selections[i]);
-       
-   	
+
+
          }
-       
+
   }
 /////////////////////////////////////////////////////////////////////////////////////
 
-    
-  /**---------------------------------------Add form------------------------------------------*/  
-    
+
+  /**---------------------------------------Add form------------------------------------------*/
+
  var CourseDescField = new Ext.form.TextField({
       		fieldLabel: 'Handout Description',
       		allowBlank: false,
     		id: 'courseDescription',
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
+     		});
    var uploadHandoutField = new Ext.form.TextField({
       		fieldLabel: 'Handout File',
       		width:200,
     		inputType: 'file'
 
      		});
- 
- 
-   
+
+
+
   var fullDate;
- 
+
  //////////////************adding form****************/////////////////
 
     var addHandoutForm = new Ext.FormPanel({
@@ -990,33 +1003,33 @@ function renderTopic(value, p, record){
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){
                 	  addHandoutForm.getForm().submit({
-	                	
-	                    url: '../upload.do?task='+'ADDHANDOUT',
+
+	                    url: '../upload.do?task=ADDHANDOUT&resID='+resourceid,
 	                    waitMsg: 'Uploading your Files...',
-	                   
+
 	                    success: function(fp, o){
 	                       AddHandout();
-	                        
-	                        
+
+
 	                    }
                    }
-	              
+
                  );
-                	
-                	
+
+
                 	}
             },{text:'Cancel',
             	handler:function(){AddTAWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddTAWindow= new Ext.Window({
       id: 'AddTAWindow',
@@ -1031,7 +1044,7 @@ function renderTopic(value, p, record){
 function resetHandoutForm(){
 	uploadHandoutField.reset();
 	CourseDescField.reset();
-}		    
+}
 function displayFormWindow(){
   if(!AddTAWindow.isVisible()){
     resetHandoutForm();
@@ -1039,9 +1052,9 @@ function displayFormWindow(){
   } else {
     AddTAWindow.toFront();
   }
-  
-  
-  }		  
+
+
+  }
 
 var CoursesField = new Ext.form.ComboBox({
                        store: resource_Courses_ds,
@@ -1056,9 +1069,9 @@ var CoursesField = new Ext.form.ComboBox({
 					    triggerAction: 'all',
 					    emptyText:'Select Course...',
 					    selectOnFocus:true
-					    
-		    }); 
- 	    
+
+		    });
+
     /*=================================================================*/
     var addCoursePanel = new Ext.FormPanel({
         labelWidth: 150, // label settings here cascade unless overridden
@@ -1067,7 +1080,7 @@ var CoursesField = new Ext.form.ComboBox({
      //   title: 'Add Course',
         bodyStyle:'padding:5px 5px 0',
         width: 500,
-         
+
         defaults: {width: 400},
         defaultType: 'textfield',
 		height:400,
@@ -1079,28 +1092,28 @@ var CoursesField = new Ext.form.ComboBox({
         		   CoursesField]}),
         		   handoutsGrid
         		] ,
-        		
-        		buttons:[{ 
+
+        		buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){
-                	
-                	
+
+
                 var files=[];
                 var names=[];
                 	for(i=0;i<handoutsDs.getCount();i++)
                 	{
                 		var fileRec = handoutsDs.getAt(i);
-                		
+
                 		files.push(fileRec.get('resourceFileLocation'));
                 		names.push(fileRec.get('resourceFileName'));
                 	}
-                    	      Ext.Ajax.request({   
+                    	      Ext.Ajax.request({
         						waitMsg: 'Please wait...',
         						url: '../ResourcesAction.do',
-        						
+
 								params: {
 								  task: "AddHandoutToResource",
 								  courseId:CoursesField.getValue(),
@@ -1110,26 +1123,26 @@ var CoursesField = new Ext.form.ComboBox({
 								  files:files,
 								  ability:'1'
 								  },
-						        method:'POST', 
-						        success: function(response){ 
+						        method:'POST',
+						        success: function(response){
 						        	ds.load({params:{task:'resourceHandouts',res_id: resourceid}});
 	                     			//AddCourseWindow.hide();
-						
-      
+
+
 						        },
 						        failure: function(response){  //console.log("faaaaaaaaaail");
-						        	addCoursePanel.getForm().reset(); 
-						       }                      
-						      }); 
+						        	addCoursePanel.getForm().reset();
+						       }
+						      });
                AddCourseWindow.hide();
                 	}
-                	
-                
+
+
             },{text:'Cancel',
             	handler:function(){AddCourseWindow.hide();
-            	
+
                 	}
-       			}]   
+       			}]
             });
 
       AddCourseWindow= new Ext.Window({
@@ -1142,12 +1155,12 @@ var CoursesField = new Ext.form.ComboBox({
       layout: 'fit',
       items: addCoursePanel
     });
-   
+
    function resetCourseForm(){
-	addCoursePanel.getForm().reset(); 
+	addCoursePanel.getForm().reset();
 	handoutsGrid.getStore().removeAll();
 }
-     
+
   function displayCourseWindow(){
   	resource_Courses_ds.filter('resourceAbility',1);
   if(!AddCourseWindow.isVisible()){
@@ -1156,42 +1169,42 @@ var CoursesField = new Ext.form.ComboBox({
   } else {
     AddCourseWindow.toFront();
   }
-  
-  
-  }	   
-      
+
+
+  }
+
  function AddHandout(){
- 
+
     				 var d=new Date();//alert(d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate());
-	                       
+
 			 		var d1=d.getMonth();
 			 		if(d1<10)
 			 			d1='0'+d1;
-			 		
+
 			 		var d2=d.getDate();
 			 		if(d2<10)
-			 			d2='0'+d2	
-			 			
-			 		fullDate=d.getFullYear()+'-'+d1+'-'+d2;	
+			 			d2='0'+d2
+
+			 		fullDate=d.getFullYear()+'-'+d1+'-'+d2;
 			 		 var record = new Ext.data.Record({
 						    	  resourceFileLocation:			uploadHandoutField.getValue(),
 						    	  resourceFileName:         CourseDescField.getValue(),
 								  resourceFileUploadDate:   fullDate
-								  
-								  
-						    });  
+
+
+						    });
 						    handoutsDs.add(record);
-	                  		AddTAWindow.hide();      
-	                        
-	                    }      
-   
+	                  		AddTAWindow.hide();
+
+	                    }
+
 
 
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
- 
+
  var consultingDS = new Ext.data.Store({
        // load using HTTP
       proxy: retreivingDataProxy,
@@ -1215,13 +1228,13 @@ var CoursesField = new Ext.form.ComboBox({
         },[{name: 'consultingAreaId', type: 'int'},{name: 'consultingAreaName', type: 'string'}]
         )
       });
- 
+
 
  var consultingItemSelect = new Ext.ux.ItemSelector({
-           
+
             name:"itemselector",
           //  iconCls: 'demo-ct',
-            
+
             title:"Consulting Capabilities",
             frame: true,
             dataFields:["consultingAreaId", "consultingAreaName"],
@@ -1234,7 +1247,7 @@ var CoursesField = new Ext.form.ComboBox({
             imagePath:"images/",
             toLegend:"Selected",
             fromLegend:"Available",
-         
+
             toTBar:[{
                 text:"Clear",
                 handler:function(){
@@ -1243,7 +1256,7 @@ var CoursesField = new Ext.form.ComboBox({
 						consultingDS.add(selectedConsultingDS.getAt(index));
 					}
 					selectedConsultingDS.removeAll();
-                   
+
                 }
             },{
                 text:"Save",
@@ -1254,48 +1267,48 @@ var CoursesField = new Ext.form.ComboBox({
 					  for(i = 0; i< selectedConsultingDS.getCount(); i++){
 					    selectedConsultingAreas.push(selectedConsultingDS.getAt(i).get('consultingAreaId'));
 					  }
-                	
-                	  Ext.Ajax.request({   
+
+                	  Ext.Ajax.request({
 	        			waitMsg: 'Please wait...',
-	        			url: '../ResourcesAction.do',	
-	        			
+	        			url: '../ResourcesAction.do',
+
 	        			params: {
 	          				task: "addConsultingAreaToResource",
 	          				resId: resourceid,
 	          				selectedconsultingareas: selectedConsultingAreas
 	        			},
-	        			method:'POST', 
+	        			method:'POST',
 	        			success: function(response){
-	        			
-	              
-	                        
-	                        
+
+
+
+
 	                    },
 	        			failure: function(response){
 	          				var result=response.responseText;
-	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');          
-	        			}                      
+	          				Ext.MessageBox.alert('error',result+'  could not connect to the database. retry later');
+	        			}
 	      			});
-                	
+
                 }
             }]
         } );
- 
 
-                
- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- 
+
+
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //  var certificatesDataProxy = new Ext.data.HttpProxy({
-//  	
+//
 //  	url: '../listResourceCertificates.do',
-//     	method: 'POST', 
+//     	method: 'POST',
 //        headers:{'request-type':'ajax' }
-//     
+//
 //      });
-  
+
   var sm2 = new Ext.grid.CheckboxSelectionModel();
-  
-  
+
+
     var certificatesGrid = new Ext.grid.GridPanel({
        title:'Certificates',
         store: new Ext.data.Store({
@@ -1314,7 +1327,7 @@ var CoursesField = new Ext.form.ComboBox({
         cm: new Ext.grid.ColumnModel([
             sm2,
             {id:'idResourceFiles',header: "Certification Name", width: 300, sortable: true, renderer:renderTopic, dataIndex: 'resourceFileName'},
-         
+
             {header: "Upload Date", width: 280, sortable: true, dataIndex: 'resourceFileUploadDate'}
         ]),
         sm: sm2,
@@ -1339,12 +1352,12 @@ var CoursesField = new Ext.form.ComboBox({
         width:600,
         height: 400,
         frame:true
-     
+
     });
 //////////////////////////////////////delete Certificate//////////////////////////////////////////////////////////
 
- 
- //confirm delete function 
+
+ //confirm delete function
   function confirmDeleteCertificate(){
     if(certificatesGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -1355,7 +1368,7 @@ var CoursesField = new Ext.form.ComboBox({
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected');
     }
   }
-  
+
   function deleteCertificate(btn){
     if(btn=='yes'){
          var selections = certificatesGrid.getSelections();
@@ -1363,31 +1376,31 @@ var CoursesField = new Ext.form.ComboBox({
          for(i = 0; i< selections.length; i++){
           selectedCertificate.push(selections[i].get('idResourceFiles'));
         //	contractPriceValue = contractTotalPrice.getValue()-selections[i].get('courseTotalPrice');
-   	
+
          }
-        
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
             url: '../ResourcesAction.do',
         	params: {
           		task: "deleteResourceCertificate",
                certificateIds:  selectedCertificate
-              }, 
+              },
             method:'POST',
             success: function(response){
-             
-             
+
+
                 certificatesGrid.getStore().load({params:{task:'resourceCertificates',res_id: resourceid}});
-				
-              
+
+
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-       
-      }  
+
+      }
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
  var certificateNameField = new Ext.form.TextField({
@@ -1396,7 +1409,7 @@ var CoursesField = new Ext.form.ComboBox({
     		id: 'ResourceFileName',
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
+     		});
    var uploadCertificationField = new Ext.form.TextField({
       		fieldLabel: 'Certification Photo Copy',
       		width:200,
@@ -1422,33 +1435,33 @@ var addCertificateForm = new Ext.FormPanel({
 		                   ]
             })
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){
-                	
+
                 	 addCertificateForm.getForm().submit({
-	                	
-	                    url: '../upload.do?task=ADDCERTIFICATE',
+
+	                    url: '../upload.do?task=ADDCERTIFICATE&resID='+resourceid,
 	                    waitMsg: 'Uploading your Files...',
-	                   
+
 	                    success: function(fp, o){
 	                    	AddCertification();
 	                      //  msg('Success', 'Processed your files on the server');
-	                       
+
 	                    }
                    }
-	              
+
                  );
-                	
+
                 }
             },{text:'Cancel',
             	handler:function(){AddCertificationWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
   AddCertificationWindow= new Ext.Window({
       id: 'AddCertificationWindow',
@@ -1463,7 +1476,7 @@ var addCertificateForm = new Ext.FormPanel({
 function resetCertificationForm(){
 	uploadCertificationField.reset();
 	certificateNameField.reset();
-}		    
+}
 function displayCertificationWindow(){
   if(!AddCertificationWindow.isVisible()){
     resetCertificationForm();
@@ -1471,20 +1484,20 @@ function displayCertificationWindow(){
   } else {
     AddCertificationWindow.toFront();
   }
-  
-  
-  }		  
-  
-  
+
+
+  }
+
+
   function AddCertification(){
-  	
-  	
-  	
-  	
-  	 Ext.Ajax.request({   
+
+
+
+
+  	 Ext.Ajax.request({
 			waitMsg: 'Please wait...',
 			url: '../ResourcesAction.do',
-			
+
 			params: {
 			  task: "AddResourceCertificate",
 			  resId:resourceid,
@@ -1492,26 +1505,26 @@ function displayCertificationWindow(){
 			  resourceFileName:			certificateNameField.getValue(),
 	    	  resourceFileLocation:     uploadCertificationField.getValue()
 			  },
-	        method:'POST', 
-	        success: function(response){ 
+	        method:'POST',
+	        success: function(response){
 	        	certificatesGrid.getStore().load({params:{task:'resourceCertificates',res_id: resourceid}});
-     			
+
 			 },
 			failure: function(response){  //console.log("faaaaaaaaaail");
-	        	
-	       }                      
-	      });  
-		    
-      	AddCertificationWindow.hide();   
-  	      
-  	
+
+	       }
+	      });
+
+      	AddCertificationWindow.hide();
+
+
   };
-        
-                
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
- 
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   var sm3 = new Ext.grid.CheckboxSelectionModel();
-  
+
   var holidayDS = new Ext.data.Store({
              // load using HTTP
       		proxy: dataProxy,
@@ -1524,7 +1537,7 @@ function displayCertificationWindow(){
         	)
         });
 
-  
+
     var holidaysGrid = new Ext.grid.GridPanel({
        title:'Resource Availability',
         store: holidayDS,
@@ -1559,8 +1572,8 @@ function displayCertificationWindow(){
     });
 //////////////////////////////////////delete Holiday//////////////////////////////////////////////////////////
 
- 
- //confirm delete function 
+
+ //confirm delete function
   function confirmDeleteHoliday(){
     if(holidaysGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -1571,7 +1584,7 @@ function displayCertificationWindow(){
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected');
     }
   }
-  
+
   function deleteHoliday(btn){
     if(btn=='yes'){
          var selections = holidaysGrid.getSelections();
@@ -1579,32 +1592,32 @@ function displayCertificationWindow(){
          for(i = 0; i< selections.length; i++){
           selectedHoliday.push(selections[i].get('holidayId'));
         //	contractPriceValue = contractTotalPrice.getValue()-selections[i].get('courseTotalPrice');
-   	
+
          }
-        
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
             url: '../ResourcesAction.do',
         	params: {
           		task: "deleteResourceHoliday",
           		resId:resourceid,
                holidayIds:  selectedHoliday
-              }, 
+              },
             method:'POST',
             success: function(response){
-             
-             
+
+
                 holidaysGrid.getStore().load({params:{task:'resourceHolidays',res_id: resourceid}});
-				
-              
+
+
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-       
-      }  
+
+      }
   }
 //////////////////////////////////////////////////////////////////////////////////////////////
 var holidayNameField = new Ext.form.TextArea({
@@ -1613,7 +1626,7 @@ var holidayNameField = new Ext.form.TextArea({
     		id: 'HolidayName',
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
+     		});
    var fromDateField = new Ext.form.DateField({
 			fieldLabel: 'From',
             format: 'd-M-Y',
@@ -1623,8 +1636,8 @@ var holidayNameField = new Ext.form.TextArea({
         	id: 'startdt',
         	 vtype: 'daterange',
         	 endDateField: 'enddt'
-            });	
-            
+            });
+
      var toDateField = new Ext.form.DateField({
 	fieldLabel: 'To',
     format: 'd-M-Y',
@@ -1634,7 +1647,7 @@ var holidayNameField = new Ext.form.TextArea({
 	id: 'enddt',
     vtype: 'daterange',
     startDateField: 'startdt' // id of the start date field
-    });			    
+    });
 
 var addHolidayForm = new Ext.FormPanel({
         frame: true,
@@ -1646,21 +1659,21 @@ var addHolidayForm = new Ext.FormPanel({
         autoHeight: true,
         items: [
 					   fromDateField,toDateField,holidayNameField
-		     
+
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:AddHoliday
             },{text:'Cancel',
             	handler:function(){AddHolidayWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
-    
+
   AddHolidayWindow= new Ext.Window({
       id: 'AddHolidayWindow',
       title: 'Adding a Holiday',
@@ -1675,7 +1688,7 @@ function resetHolidayForm(){
 	holidayNameField.reset();
 	fromDateField.reset();
 	toDateField.reset();
-}		    
+}
 function displayHolidayWindow(){
   if(!AddHolidayWindow.isVisible()){
     resetHolidayForm();
@@ -1683,17 +1696,17 @@ function displayHolidayWindow(){
   } else {
     AddHolidayWindow.toFront();
   }
-  
-  
-  }		  
-  
-  
+
+
+  }
+
+
   function AddHoliday(){
-  
-	Ext.Ajax.request({   
+
+	Ext.Ajax.request({
 		waitMsg: 'Please wait...',
 		url: '../ResourcesAction.do',
-		
+
 		params: {
 		  task: "addResourceHoliday",
 		  resId:           resourceid,
@@ -1701,22 +1714,22 @@ function displayHolidayWindow(){
 		  from:            fromDateField.getValue().format('Y-m-d'),
 		  to:              toDateField.getValue().format('Y-m-d')
 		  },
-        method:'POST', 
-        success: function(response){ 
+        method:'POST',
+        success: function(response){
         	holidayDS.load({params:{task:'resourceHolidays',res_id: resourceid}});
-      		AddHolidayWindow.hide();  
+      		AddHolidayWindow.hide();
 		},
 			failure: function(response){  //console.log("faaaaaaaaaail");
-        	//addCertificateForm.getForm().reset(); 
-       }                      
+        	//addCertificateForm.getForm().reset();
+       }
       });
 
-		        
-  	
+
+
   };
 
   /*-----------------------------resource rates------------------------------------------------*/
- 
+
  function pctChange(val){
         if(val > 50){
             return '<span style="color:green;">' + val + '%</span>';
@@ -1725,11 +1738,11 @@ function displayHolidayWindow(){
         }
         return val;
     }
- 
+
  function renderRateLink(value, p, record){
  	if(record.get('contractCopy')!='')
  	{
- 		
+
 	 	var s=record.get('contractCopy');
 	 	var link= '<b><a href="'+s+'" target="_blank">'+'Contract Copy_'+record.get('resourceRateId')+'</a></b>'
 	        return String.format(
@@ -1742,8 +1755,8 @@ function displayHolidayWindow(){
     }
 
   var sm4 = new Ext.grid.CheckboxSelectionModel();
-  
-  
+
+
     var ratesGrid = new Ext.grid.GridPanel({
        	title:'Rates and Contracting Status',
         store: new Ext.data.Store({
@@ -1758,13 +1771,13 @@ function displayHolidayWindow(){
         	{name: 'resourceContractualType', type: 'string'},
         	{name: 'contractCopy', type: 'string'},
         	{name: 'validFrom', type: 'string'},
-        	{name: 'developmentRate', type: 'int'},      	
-        	{name: 'consultingMDFee', type: 'int'},      	
-        	{name: 'consultingCurrency', type: 'string'},      	
-        	{name: 'consultingMDPercentage', type: 'int'},      	
-        	{name: 'trainingMDRate', type: 'int'},      	
-        	{name: 'trainingCurrency', type: 'string'},      	
-        	{name: 'taxExempted', type: 'string'},      	
+        	{name: 'developmentRate', type: 'int'},
+        	{name: 'consultingMDFee', type: 'int'},
+        	{name: 'consultingCurrency', type: 'string'},
+        	{name: 'consultingMDPercentage', type: 'int'},
+        	{name: 'trainingMDRate', type: 'int'},
+        	{name: 'trainingCurrency', type: 'string'},
+        	{name: 'taxExempted', type: 'string'},
         	{name: 'comment', type: 'string'}]
         	)
         }),
@@ -1774,8 +1787,8 @@ function displayHolidayWindow(){
             {header: "Valid From", width: 300, sortable: true, dataIndex: 'validFrom'},
             {header: "Consulting MD Fee", width: 300, sortable: true, dataIndex: 'consultingMDFee'},
             {header: "Consulting MD %", width: 300, sortable: true, renderer: pctChange, dataIndex: 'consultingMDPercentage'},
-            {header: "Training MD Rate", width: 300, sortable: true, dataIndex: 'trainingMDRate'},       
-            {header: "Business Development Rate", width: 300, sortable: true, renderer: pctChange, dataIndex: 'developmentRate'},           
+            {header: "Training MD Rate", width: 300, sortable: true, dataIndex: 'trainingMDRate'},
+            {header: "Business Development Rate", width: 300, sortable: true, renderer: pctChange, dataIndex: 'developmentRate'},
             {header: "Tax Exempted", width: 300, sortable: true, dataIndex: 'taxExempted'},
             {header: "Comment", width: 300, sortable: true, dataIndex: 'comment'}
         ]),
@@ -1805,8 +1818,8 @@ function displayHolidayWindow(){
 
 //////////////////////////////////////delete Holiday//////////////////////////////////////////////////////////
 
- 
- //confirm delete function 
+
+ //confirm delete function
   function confirmDeleteRate(){
     if(ratesGrid.selModel.getCount() == 1) // only one president is selected here
     {
@@ -1817,7 +1830,7 @@ function displayHolidayWindow(){
       Ext.MessageBox.alert('Uh oh...','You can\'t really delete something you haven\'t selected');
     }
   }
-  
+
   function deleteRate(btn){
     if(btn=='yes'){
          var selections = ratesGrid.getSelections();
@@ -1825,44 +1838,44 @@ function displayHolidayWindow(){
          for(i = 0; i< selections.length; i++){
           selectedRate.push(selections[i].get('resourceRateId'));
         //	contractPriceValue = contractTotalPrice.getValue()-selections[i].get('courseTotalPrice');
-   	
+
          }
-        
-         Ext.Ajax.request({  
+
+         Ext.Ajax.request({
             waitMsg: 'Please Wait',
             url: '../ResourcesAction.do',
         	params: {
           		task: "deleteResourceRate",
                rateIds:  selectedRate
-              }, 
+              },
             method:'POST',
             success: function(response){
-             
-             
+
+
                 ratesGrid.getStore().load({params:{task:'resourceRates',res_id: resourceid}});
-				
-              
+
+
             },
             failure: function(response){
               var result=response.responseText;
-              Ext.MessageBox.alert('error','could not connect to the database. retry later');      
+              Ext.MessageBox.alert('error','could not connect to the database. retry later');
               }
          });
-       
-      }  
+
+      }
   }
 //////////////////////add resource rate/////////////////////////////////////////////////////
 	  var resourceContractualTypeData = [
         ['1','Associate'],
         ['2','freelancer'],
         ['3','Not Yet']];
-        
+
 	  var resourceContractualTypeDS = new Ext.data.SimpleStore({
         fields: ['id','name'],
         data: resourceContractualTypeData
     	});
-	
-	  var resourceContractualTypeCombo = new Ext.form.ComboBox({            	
+
+	  var resourceContractualTypeCombo = new Ext.form.ComboBox({
 		    store: resourceContractualTypeDS,
 		    fieldLabel: 'Contractual Type',
 		    displayField:'name',
@@ -1872,19 +1885,19 @@ function displayHolidayWindow(){
 		    typeAhead: true,
 		    editable: false,
 		    triggerAction: 'all',
-	
+
 		    emptyText:'Select Contractual Type...',
          listeners: {
          select: function (combo, record, index) {
     	    this.selectedIndex = index;
-    	    
+
     	    if(index == 0){
     	    	devRateField.enable();
     	    }
-    	    
+
          }}
 	  });
-	  
+
 
  	var contractCopyField = new Ext.form.TextField({
       		fieldLabel: 'Contract Copy',
@@ -1893,12 +1906,12 @@ function displayHolidayWindow(){
     		inputType: 'file'
 
      		});
-     	
+
      		contractCopyField.on('valid',function(){
-		
+
 		contractCopyUploadButton.enable();
 		});
-     		
+
  		var contractCopyUploadButton = new Ext.Button({
   		text: 'Upload Contract',
   		minWidth:100,
@@ -1906,20 +1919,20 @@ function displayHolidayWindow(){
   		disabled:true
   		,
   		handler:function(){
-  			
+
   			 addRateForm.getForm().submit({
-	                	
-	                    url: '../upload.do?task='+'CONTRACTS'+'&contract='+contractCopyField.getValue(),
+
+	                    url: '../upload.do?task='+'CONTRACTS'+'&contract='+contractCopyField.getValue()+'&resID='+resourceid,
 	                    waitMsg: 'Uploading your Files...',
-	                   
+
 	                    success: function(fp, o){
 	                        msg('Success', 'Processed your files on the server');
-	                       
+
 	                    }
                    }
-	              
+
                  );
-  			
+
   		}
 
  		});
@@ -1928,7 +1941,7 @@ function displayHolidayWindow(){
 			fieldLabel: 'Valid From',
             format: 'd-M-Y',
             width:200
-            });	
+            });
 
 
 
@@ -1938,27 +1951,27 @@ function displayHolidayWindow(){
         	columns:1,
         	name:'n1',
         	value:1,
-        	
+
         	boxLabel:'Fee',
 	         listeners: {
 	         check: function () {
-	    	  if(this.checked == true){  
+	    	  if(this.checked == true){
 	    	consultingManDayFeeField.enable();
 			CurrFields.enable();
-			consultingManDayPercentageField.disable()    	
+			consultingManDayPercentageField.disable()
 	    	  }
 	    	  else{
 	    	  	consultingManDayPercentageField.enable();
 	    	  	consultingManDayFeeField.disable();
 				CurrFields.disable();
-	    	  }    
+	    	  }
 			         }}
-		        	
-        	
+
+
         });
        var consultingManDayPercentageRadio = new Ext.form.Radio({
         	//xtype: 'radiogroup',
-        	
+
         	hideLabel:true,
         	columns:1,
         	name:'n1',
@@ -1966,50 +1979,50 @@ function displayHolidayWindow(){
             boxLabel:'% of Invoicing Rate',
 	         listeners: {
 	         check: function () {
-	    	  if(this.checked == true){  
+	    	  if(this.checked == true){
 	    	consultingManDayFeeField.disable();
 			CurrFields.disable();
-			consultingManDayPercentageField.enable()    	
+			consultingManDayPercentageField.enable()
 	    	  }
 	    	  else{
 	    	  	consultingManDayPercentageField.disable();
 	    	  	consultingManDayFeeField.enable();
 				CurrFields.enable();
-	    	  }    
+	    	  }
 			         }}
         });
-        
-        
-         
-      /******************get value***********************************/  
+
+
+
+      /******************get value***********************************/
 	 function getConsultingManDayValue() {
 	 	  //console.log(consultingManDayFeeRadio.checked);
 	 	var v = 0;
 	 	if(consultingManDayFeeRadio.checked == true)
-	 	
+
 	 	 v = 1;
 	 	else if(consultingManDayPercentageRadio.checked == true)
-	 	
+
 	 	 v = 2;
-	 	 
-	 	 
-	 	
+
+
+
 	 	return v;
-	 	
+
 
 	  };
-	  
-	  
+
+
 			var consultingManDayFeeField = new Ext.form.NumberField({
       		fieldLabel: 'Fee',
       		disabled:true,
       		width:110
-      		
-     		});	
-     		
-     		
+
+     		});
+
+
      		var Currds=[['EGP','EGP'],['USD','USD']];
-       
+
     		var CurrFields = new Ext.form.ComboBox({
 	           store: Currds,
 	           id: 'currency1',
@@ -2023,22 +2036,22 @@ function displayHolidayWindow(){
 			    triggerAction: 'all',
 			    emptyText:'Select Currency ...',
 			    selectOnFocus:true
-		    });	
-     		
+		    });
+
      		var consultingManDayPercentageField = new Ext.form.NumberField({
       		fieldLabel: '% of Invoicing Rate',
       		width:170,
       		maxValue:100,
       		disabled:true,
-      		minValue:0 
-     		});	
+      		minValue:0
+     		});
 
 
 var trainingManDayRateField = new Ext.form.NumberField({
       		fieldLabel: 'Training Man Day Rate',
       		disabled:true,
       		width:200
-      		
+
      		});
 
 
@@ -2056,19 +2069,19 @@ var trainingCurrFields = new Ext.form.ComboBox({
 			    emptyText:'Select Currency ...',
 			    selectOnFocus:true
 		    });
-	
+
 
 var devRateField = new Ext.form.NumberField({
 		fieldLabel: 'Business Development Rate',
 		width:200,
 		disabled:true,
       	maxValue:100,
-      	minValue:0 
-		});	
+      	minValue:0
+		});
 
 
  var taxExemptedRadio = new Ext.form.RadioGroup({
-        	
+
         	fieldLabel: 'Tax Exempted',
         	columns: [100, 100],
         vertical: true,
@@ -2076,11 +2089,11 @@ var devRateField = new Ext.form.NumberField({
                     {boxLabel: 'Yes', name: 'rb-auto', inputValue: 1},
                     {boxLabel: 'No', name: 'rb-auto', inputValue: 2}
                 ]
-        	
-        	
+
+
         });
-        
-        
+
+
  function getTaxExemptedRadioValue() {
     var v;
 
@@ -2095,14 +2108,14 @@ var devRateField = new Ext.form.NumberField({
 var rateComment = new Ext.form.TextArea({
       		fieldLabel: 'Comment',
       		allowBlank: false,
-    		
+
     		width:200,
     		maskRe: /([a-zA-Z0-9\s]+)$/
-     		});	
-     		
-     		
-     		
-     		
+     		});
+
+
+
+
 
 var addRateForm = new Ext.FormPanel({
         frame: true,
@@ -2142,40 +2155,40 @@ var addRateForm = new Ext.FormPanel({
 		                items: [consultingManDayPercentageField]}]
             			}),
             			trainingManDayRateField,trainingCurrFields,
-            			
+
 					   devRateField,
 					   taxExemptedRadio,rateComment
-		                 
+
         ],
-         buttons:[{ 
+         buttons:[{
                 text:'Save',
                 iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){
-                	
+
                 	 addRateForm.getForm().submit({
-	                	
-	                    url: '../upload.do?task=CONTRACTS',
+
+	                    url: '../upload.do?task=CONTRACTS&resID='+resourceid,
 	                    waitMsg: 'Uploading your Files...',
-	                   
+
 	                    success: function(fp, o){
 	                    	AddRate();
 	                      //  msg('Success', 'Processed your files on the server');
-	                       
+
 	                    }
                    }
-	              
+
                  );
-                	
+
                 }
             },{text:'Cancel',
             	handler:function(){AddRateWindow.hide();}
             	}
-           ] 
-  
+           ]
+
     });
-    
+
   AddRateWindow= new Ext.Window({
       id: 'AddRateWindow',
       title: 'Adding a Resource Rate',
@@ -2188,8 +2201,8 @@ var addRateForm = new Ext.FormPanel({
     });
 function resetRateForm(){
 	addRateForm.getForm().reset();
-	
-}		    
+
+}
 function displayRateWindow(){
   if(!AddRateWindow.isVisible()){
     resetRateForm();
@@ -2197,26 +2210,26 @@ function displayRateWindow(){
   } else {
     AddRateWindow.toFront();
   }
-  
-  
-  }		  
-  
-  
+
+
+  }
+
+
   function AddRate(){
 
 
 
-	Ext.Ajax.request({   
+	Ext.Ajax.request({
 		waitMsg: 'Please wait...',
 		url: '../ResourcesAction.do',
-		
+
 		params: {
 		  task: "AddResourceRate",
 		  resId:                        resourceid,
 		  contractualType:              resourceContractualTypeCombo.getValue(),
 		  contractCopy:                 contractCopyField.getValue(),
 		  validFrom:                    validFromDateField.getValue().format('Y-m-d'),
-		  
+
 		  consultingManDayFee:          consultingManDayFeeField.getValue(),
 		  consultingCurrency:           CurrFields.getValue(),
 		  consultingManDayPercentage:   consultingManDayPercentageField.getValue(),
@@ -2226,60 +2239,60 @@ function displayRateWindow(){
 		  taxExempted:                  getTaxExemptedRadioValue(),
 		  rateComment:                  rateComment.getValue()
 		  },
-        method:'POST', 
-        success: function(response){ 
+        method:'POST',
+        success: function(response){
         	ratesGrid.getStore().load({params:{task:'resourceRates',res_id: resourceid}});
-      		AddRateWindow.hide();    
+      		AddRateWindow.hide();
 		},
 			failure: function(response){  //console.log("faaaaaaaaaail");
-        	//addCertificateForm.getForm().reset(); 
-       }                      
+        	//addCertificateForm.getForm().reset();
+       }
       });
- 
-		      
-  	
+
+
+
   };
-            
+
   var addRatesform = new Ext.form.FormPanel({
-        
+
         fileUpload: true,
         labelAlign: 'left',
         labelWidth: 75,
         frame: true,
      	height : 450,
-   
+
     	title:'Rates and Contracting Status',
     	//defaultType: 'fieldset',
 		bodyStyle:'padding:5px 5px 0',
-		
 
-    items: [ 
+
+    items: [
            ratesGrid
            ],buttons:[{text: 'Save',
            iconCls:'save',
-                formBind: true,  
-                // Function that fires when user clicks the button 
+                formBind: true,
+                // Function that fires when user clicks the button
                 handler:function(){
                 	// add Certification to database
-                	
-                	
-                	var redirect = '../JSP/resourceslist.jsp'; 
+
+
+                	var redirect = '../JSP/resourceslist.jsp';
 			 		window.location = redirect;
-                	
-                } 
-            },{text: 'Cancel',  
-                // Function that fires when user clicks the button 
+
+                }
+            },{text: 'Cancel',
+                // Function that fires when user clicks the button
                 handler:function(){
-                	var redirect = '../JSP/resourceslist.jsp'; 
+                	var redirect = '../JSP/resourceslist.jsp';
 			 		window.location = redirect;
-                	
+
                 } }]});
- 
- 
+
+
  /*--------------------------------------------------------------------------------------------**/
 
 //function addConsultingTab(){
-// 	 	
+//
 //        tabs.add(consultingItemSelect);
 //    };
 //
@@ -2287,12 +2300,12 @@ function displayRateWindow(){
 // 	 //	certificatesGrid.getStore().removeAll();
 //        tabs.add(certificatesGrid);
 //    };
-//    
+//
 //function addHolidaysTab(){
 // 	 	//holidaysGrid.getStore().removeAll();
 //        tabs.add(holidaysGrid);
 //    };
-//    
+//
 //function addRatesTab(){
 // 	//ratesGrid.getStore().removeAll();
 //    tabs.add(ratesGrid);
@@ -2301,11 +2314,11 @@ function displayRateWindow(){
 function addTabs(){
 
 //	//	addConsultingTab();
-//	
+//
 //	addCertificatesTab();
 //	addHolidaysTab();
 //	addRatesTab();
-//	
+//
 	if(resourcetype == 1){
 		tabs.getComponent(0).disable();
 	tabs.getComponent(1).disable();
@@ -2313,88 +2326,88 @@ function addTabs(){
 	}
 	else if(resourcetype == 2){
 		tabs.getComponent(2).disable();
-	
+
 	}
-	
+
 }
 //
 
 //ds.load();
 
 	  Courses_ds.on('load',function(){
-	
+
 	resource_Courses_ds.load({params:{task:'coursesByResourceId',res_id: resourceid}});
-	
+
 });
  resource_Courses_ds.on('load',function(){
-	
+
 	resource_Courses_ds.each(function(record){
-		
+
 		if(record.get('resourceAbility') == 0)
 		resource_Courses_ds.remove(record);
-		
+
 	});
-	
-	
+
+
 	//resource_Courses_ds.filter('resourceAbility',1);
-	
+
 	resource_future_Courses_ds.load({params:{task:'coursesByResourceId',res_id: resourceid}});
-	
+
 });
 
 resource_future_Courses_ds.on('load',function(){
-	
+
 	resource_future_Courses_ds.each(function(record){
-		
+
 		if(record.get('resourceAbility') == 1)
 		resource_future_Courses_ds.remove(record);
-		
+
 	});
-	
+
 //resource_future_Courses_ds.filter('resourceAbility',0);
  consultingDS.load({params:{task:'remainConsultingAreasByResourceId',res_id: resourceid}});
-});	
+});
 
 consultingDS.on('load',function(){
-	
+
 	selectedConsultingDS.load({params:{task:'consultingAreasByResourceId',res_id: resourceid}});
-	
+
 });
 selectedConsultingDS.on('load',function(){
-	
+
 	ds.load({params:{task:'resourceHandouts',res_id: resourceid}});
-	
+
 });
 
 ds.on('load',function(){
-	
+
 	certificatesGrid.getStore().load({params:{task:'resourceCertificates',res_id: resourceid}});
-	
+
 });
 
 certificatesGrid.getStore().on('load',function(){
-	
+
 	holidayDS.load({params:{task:'resourceHolidays',res_id: resourceid}});
-	
+
 });
 holidayDS.on('load',function(){
-	
+
 	ratesGrid.getStore().load({params:{task:'resourceRates',res_id: resourceid}});
-	
+
 });
 
 ratesGrid.getStore().on('load',function(){
-	
-	 col.load();
-	
-});
-  
 
-  
- 
+	 col.load();
+
+});
+
+
+
+
 var tabs=  new Ext.TabPanel({
                    region:'center',
-                    height:495, 
+                    height:495,
                            /* width:980,*/
                            autoHeight : true,
         			renderTo: 'binding-example',
@@ -2406,16 +2419,16 @@ var tabs=  new Ext.TabPanel({
                     ,tbar: [
             			''
             			]
-                    
-                    
+
+
                     });
-                    
-                    
+
+
 // tabs.on('beforeshow',function(){
-// 	
-// 	
-// 	
-// });                   
+//
+//
+//
+// });
 
 });
-    
+
