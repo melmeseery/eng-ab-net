@@ -207,7 +207,7 @@ public class ABItemsRetreiving {
 		while (rs.next()) {
 
 			ResultSet course_rs = database
-					.retrieve("select idCourses,CourseNameEng from Courses where idCourses = "
+					.retrieve("select idCourses,CourseNameEng from courses where idCourses = "
 							+ rs.getString(1) + ";");
 
 			if (course_rs.next()) {
