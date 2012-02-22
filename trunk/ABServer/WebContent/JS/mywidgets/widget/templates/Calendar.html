@@ -25,50 +25,55 @@
 						<td class="selecticon todayicon" dojoAttachPoint="todayLabelNode"
 							dojoAttachEvent="onClick: onMoveToDate;"></td>
 
-						
-							
-							
-							
+
+
+
+
 						    <td class="selecticon AddCourseicon"
 							dojoAttachPoint="multiLabelNode"
 							dojoAttachEvent="onClick: onSetCalendarType;">
 							</td>
-							
+
 							<td class="selecticon Conflicticon"
 							dojoAttachPoint="ConflictIconNode"
 							dojoAttachEvent="onClick: checkConflict"></td>
-							
+
 							<td class="selecticon colorresource"
 							dojoAttachPoint="ResourceColloringLabelNode"
 							dojoAttachEvent="onClick: changeColorToResourceState"></td>
-							
+
 							<td class="selecticon colorcoordinator"
 							dojoAttachPoint="CoordinatorColloringLabelNode"
 							dojoAttachEvent="onClick: changeColorToCoordinatorState"></td>
-							
+
 							<td class="selecticon colorclient"
 							dojoAttachPoint="ClientColloringLabelNode"
 							dojoAttachEvent="onClick: changeColorToClientState"></td>
-							
+
 							<td class="selecticon colorfunding"
 							dojoAttachPoint="FundingColloringLabelNode"
 							dojoAttachEvent="onClick: changeColorToFundingState"></td>
-							
+
 							<td class="selecticon colorcourses"
 							dojoAttachPoint="CoursesColloringLabelNode"
 							dojoAttachEvent="onClick: changeColorToCourseState"></td>
 
+
+						   <td class="selecticon printPdficon"
+							dojoAttachPoint="PrintPdfLabelNode"
+							dojoAttachEvent="onClick:  printIconClick;"></td>
+
 						   <td class="selecticon timezoneicon"
 							dojoAttachPoint="timezoneLabelNode"
 							dojoAttachEvent="onClick: showTimeZone;"></td>
-							
+
 						    <td class="selecticon newentryicon"
 							dojoAttachPoint="newEntryLabelNode"
 							dojoAttachEvent="onClick: createNewEntry;"></td>
-							
-							
-							
-							
+
+
+
+
 					</tr>
 				</tbody>
 			</table>
@@ -118,7 +123,7 @@
 		</tr>
 		<tr>
 		   <td colspan="6" align="center"  dojoAttachPoint="ConflictLegendNode" class="LegendContainer"  >
-		   
+
 		   	 <table   >
 		   	 <tr   class="LegendTitle" >
 		   	 <td colspan="3" >
@@ -126,12 +131,12 @@
 		   	 </td>
 		   	 </tr>
 		 <tr>
-		 
+
 		 <td class="ResourceConflictL ConflictLegend"  ><div  >  Resource Conflicts   </div></td>
 		<td class="VenueConflictL ConflictLegend"  ><div >    Venue Conflicts    </div></td>
-		
+
 		<td   class="ResourceVenueConflictL ConflictLegend"><div>    Resource and Venue Conflicts       </div></td>
- 
+
 		 </tr>
 		 </table>
 		       </td>

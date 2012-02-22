@@ -1,11 +1,11 @@
-/******  This is the log of changes done to this file . 
+/******  This is the log of changes done to this file .
  * Maha
- * Edit and change made on 9 and 10 -8 
- * 1. 
+ * Edit and change made on 9 and 10 -8
+ * 1.
  *
  *
  **/ /**
-General 
+General
 
 TABLE OF CONTENTS
 
@@ -14,29 +14,29 @@ SIDEBAR - Submenu, searchbar, shortlists
 MAINCONTENT - Articles, search results
 FOOTER - Copyright
 
-CALENDAR HEADER 
+CALENDAR HEADER
 CALENDAR BODY
 	EVENTS LIST
-	   
+
 	TOOL TIP BODY
-	MONTH VIEW 
-	WEEK VIEW 
-	ICAL ITEMS	
-COURSE LIST 
+	MONTH VIEW
+	WEEK VIEW
+	ICAL ITEMS
+COURSE LIST
 
 
 
 **/ /*
 COLOR PALETTE
 
-#FF6103    cadmiumorange   ==> user message 
-#4E9FFE  - bright blue ==> for selected days 
-#6782a8  - dark blue ==> nexxt or previous month 
-	#CAE1FF        lightsteelblue 1  ==>  courses  
-  	#BCD2EE          lightsteelblue 2 ==> selected courses  
- 
+#FF6103    cadmiumorange   ==> user message
+#4E9FFE  - bright blue ==> for selected days
+#6782a8  - dark blue ==> nexxt or previous month
+	#CAE1FF        lightsteelblue 1  ==>  courses
+  	#BCD2EE          lightsteelblue 2 ==> selected courses
+
 */ /*******************************************
-CALENDAR HEADER 
+CALENDAR HEADER
 **/
 .calendarContainer {
 	font-family: arial;
@@ -55,7 +55,7 @@ CALENDAR HEADER
 }
 
 .labelsRow {
-	
+
 }
 
 .labelsRow td { /*    width:20%;*/
@@ -130,7 +130,9 @@ background: url(calimages/course.gif) no-repeat center;
 	width: 26px;
 	height: 26px;
 }
-
+.printPdficon {
+	background: url(calimages/print.gif) no-repeat center;
+}
 .dayicon {
 	background: url(calimages/calendar_view_day.gif) no-repeat center;
 }
@@ -193,17 +195,17 @@ CALENDAR BODY
 
 .calendarBodyContainer   td:hover{
 		/*color: yellow;
-		background: white; 
+		background: white;
 
 }*/ /*.calendarBodyContainer tbody tr td {
 
-	
+
 }
 .calendarBodyContainer:hover{
 	color: yellow;
 		background: white;
 }*/ /*******************************
-EVENT LIST 
+EVENT LIST
 **********************************/
 .calendarItems { /**for multi month view **/ /*clear: both;*/
 	/*padding: 0px 0px 0px 3px;*/
@@ -212,7 +214,7 @@ EVENT LIST
 	width: 90%;
 	min-width: 35px;
 	/*clip: rect(auto, auto, auto, auto);
-	
+
 	overflow: hide;*/
 }
 
@@ -227,7 +229,7 @@ EVENT LIST
 .calendarItemsWeek { /*clear: both;*/
 	padding: 0px 0px 0px 3px;
 	height: auto;
-	/*	max-height:190px;	
+	/*	max-height:190px;
 	/*height: 90px;*/
 	width: 100%;
 	clip: rect(auto, auto, auto, auto);
@@ -242,7 +244,7 @@ EVENT LIST
 	width: 100%;
 	min-width: 180px;
 	/*	clip: rect(auto, auto, auto, auto);
-	
+
 	overflow: hide;*/
 }
 
@@ -254,7 +256,7 @@ EVENT LIST
 }
 
 .MultiDay { /*  position: absolute;*/
-	
+
 }
 
 .UpperEventLabel {
@@ -270,7 +272,7 @@ EVENT LIST
 }
 
 .listItems { /*height:10%;*/
-	
+
 }
 
 ul.listItems { /*font-size:0.5em;*/ /*margin: 0;
@@ -333,7 +335,7 @@ li.listItem span a:hover {
 .EventSmallDiv { /*clip: rect(auto, auto, auto, auto);
  	 /* height:25%;
  	 overflow:hidden;
- 	 
+
  	 */ /*width:90%;*/
 	border: 1px solid #6782a8;
 	/*	-moz-border-radius: 10px 10px 10px 10px;*/
@@ -366,7 +368,7 @@ li.listItem span a:hover {
 
 .eventText { /*font-weight: bold;
  white-space:nowrap;*/
-	
+
 }
 
 .lightfont {
@@ -412,11 +414,11 @@ TOOL TIP BODY
 }
 .toolkitattributes2 {
 	font-style: italic;
- 
+
 	width: 300px;
 }
 /***************************
-MONTH VIEW 
+MONTH VIEW
 *******************************************/
 .clickDate { /*border: 1px solid #6782a8;*/
 	cursor: pointer;
@@ -443,7 +445,7 @@ td.MultiView:hover {
 }
 
 .MonthDay { /*background-color: #E2EEFC;*/
-	
+
 }
 
 .currentMonth {
@@ -485,7 +487,7 @@ td.weekDay:hover {
 }
 
 /*
-this is the class for set of selected days 
+this is the class for set of selected days
 **/
 .TrainerBusyDay {
 	background-color: #E1D8C0;
@@ -514,7 +516,7 @@ td.SelectedDay:hover {
 
 /**************
 
-WEEK VIEW 
+WEEK VIEW
 ***************/
 .weekRow {
 	vertical-align: top;
@@ -544,14 +546,14 @@ WEEK VIEW
 }
 
 /**********
-ICAL ITEMS 
+ICAL ITEMS
 
 *******/ /*.weekDay {
 	vertical-align: top;
 	width: 50%;
 	height:33%;
 }*/ /******************
-COURSE LIST 
+COURSE LIST
 
 ***********************************/
 .CoursesContainer {
@@ -561,7 +563,7 @@ COURSE LIST
 
 .CoursesContainer thead tr td { /*color:#000000;
 	font-size: 0.75em;
-	
+
 	padding:0.25em;
 	height:10px;*/
 	border: 0px;
@@ -569,7 +571,7 @@ COURSE LIST
 	text-align: center;
 }
 
-/*replaced with cell pading 
+/*replaced with cell pading
 .CoursesContainer tbody{
 	border-collapse: collapse;
 	border-width: 0px 0px 0px 0px;
@@ -683,10 +685,10 @@ li.courseDisplay span {
 }
 
 /**
-the display info for the legend 
+the display info for the legend
 */
 .LegendContainer {
-	
+
 }
 
 #UserMessage {
@@ -700,7 +702,7 @@ the display info for the legend
 	color: #FF6103;
 	/*
 	background-color: Red;
-	     
+
 	      **/
 }
 
@@ -717,7 +719,7 @@ the display info for the legend
 }
 
 /****************************
-DOJO TOOLTIP will be replaced 
+DOJO TOOLTIP will be replaced
 ************************************/
 .dojoTooltip { /* We override the class from the tooltip template */
 	border: solid #6782a8 2px;
@@ -787,18 +789,18 @@ background:red;
 
 }
 .VenueConflict{
-	
+
 	/*color: white
 	background: yellow;
-	*/	
+	*/
 	background:  #FF7F24;/*yellow;  FFA500 orange*/
-	 
+
 }
 .ResourceVenueConflict{
 
 	background: grey;
- 
- 
+
+
 }
 
 
@@ -811,18 +813,18 @@ color: white;
 
 }
 .VenueConflictL{
-	
+
 	/*color: white
 	background: yellow;
-	*/	
+	*/
 	background: #FF7F24;/*yellow;  FFA500  orange*/
 	color: white;
-	 
+
 }
 .ResourceVenueConflictL{
 
 	background: grey;
 	color: white;
- 
- 
+
+
 }
