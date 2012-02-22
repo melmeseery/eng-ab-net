@@ -18,6 +18,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import tablespackage.Courses;
+import tablespackage.Trainingcoordinators;
+import HibernatePackage.Hiber_Coordinators;
 import HibernatePackage.Hiber_Courses;
 import abItems.Resources;
 import database.DataSourceConnection;
@@ -131,19 +133,16 @@ public class Upload extends Action {
 			ServletFileUpload upload = new ServletFileUpload(fu);
 			upload.setSizeMax(80*1024*1024);
 
-			Integer resId = null;
 
-			if (arg2.getParameter("resID") != null) {
-				resId = Integer.parseInt(arg2.getParameter("resID"));
 
-			} else
-				resId = Resources.getTheLastResourceId(database) + 1;
 
-			Hiber_Courses HC = new Hiber_Courses();
-        	Integer courseID=(Integer)arg2.getSession().getAttribute("courseID");
-			//Integer courseID = HC.getLastOne(database);
 
-			Courses c = HC.getCourseById(courseID, database);
+
+//			Hiber_Courses HC = new Hiber_Courses();
+//        	Integer courseID=(Integer)arg2.getSession().getAttribute("courseID");
+//			//Integer courseID = HC.getLastOne(database);
+//
+//			Courses c = HC.getCourseById(courseID, database);
 
 			//c.setIdCourses(courseID);
 			List fileItems = upload.parseRequest(arg2);
@@ -154,108 +153,112 @@ public class Upload extends Action {
 			int counter2 = 1;
 			while (i.hasNext()) {
 
-				FileItem fi = (FileItem) i.next();
-				String fileName = fi.getName();
-				//System.out.println("file name= " + fileName);
-				if (fileName != null) {
-					if (!fileName.equals("")) {
-											// el
-						// ifff");
-
+//				FileItem fi = (FileItem) i.next();
+//				String fileName = fi.getName();
+//				//System.out.println("file name= " + fileName);
+//				if (fileName != null) {
+//					if (!fileName.equals("")) {
+//											// el
+//						// ifff");
+//
 						if (arg2.getParameter("task") == null) {
-						//	tx = session.beginTransaction();
-							String extfile = fileName.substring(fileName.indexOf("."));
-							 ////System.out.println("file name is: " + fileName+" counter = "+counter);
-							if (counter == 7 || counter == 8) {
+							 UploadResourceFiles( arg2,   i ,  counter,  counter2, database);
 
-								fileName = resId + "_photo" + extfile;
-
-							} else if (counter == 4) {
-								fileName = resId + "_company_cv" + extfile;
-
-							}
-
-							else if (counter == 5) {
-								fileName = resId + "_cv" + extfile;
-
-							} else if (counter == 6) {
-
-								if(arg2.getParameter("brief") != null)
-
-								fileName = resId + "_brief" + extfile;
-
-								else
-
-									fileName = resId + "_idphoto" + extfile;
-
-
-							}
-							else if (counter == 2) {
-								fileName = resId + "_contract_"+fileName;
-
-							}
-							//
-							// SimpleDateFormat fmt = new SimpleDateFormat(
-							// "yyyyMMddHHmmssSSS");
-							// String pfileName =
-							// fmt.format(now).toString().trim();
-							//System.out.println("file name = "+fileName);
+//						//	tx = session.beginTransaction();
+//							String extfile = fileName.substring(fileName.indexOf("."));
+//							 ////System.out.println("file name is: " + fileName+" counter = "+counter);
+//							if (counter == 7 || counter == 8) {
+//
+//								fileName = resId + "_photo" + extfile;
+//
+//							} else if (counter == 4) {
+//								fileName = resId + "_company_cv" + extfile;
+//
+//							}
+//
+//							else if (counter == 5) {
+//								fileName = resId + "_cv" + extfile;
+//
+//							} else if (counter == 6) {
+//
+//								if(arg2.getParameter("brief") != null)
+//
+//								fileName = resId + "_brief" + extfile;
+//
+//								else
+//
+//									fileName = resId + "_idphoto" + extfile;
+//
+//
+//							}
+//							else if (counter == 2) {
+//								fileName = resId + "_contract_"+fileName;
+//
+//							}
+//							//
+//							// SimpleDateFormat fmt = new SimpleDateFormat(
+//							// "yyyyMMddHHmmssSSS");
+//							// String pfileName =
+//							// fmt.format(now).toString().trim();
+//							//System.out.println("file name = "+fileName);
 						} else if (arg2.getParameter("task").equals("outline")) {
-							logger.info(" upload the outline............");
-						//	tx = session.beginTransaction();
-							System.out.println("file name = "+fileName);
-							String extfile = fileName.substring(fileName
-									.indexOf("."));
-							////System.out.println("counter= "+counter2);
-							if (counter2 == 7) {//System.out.println("counter AR= "+counter2);
-								fileName = courseID + "_outlineAr" + extfile;
-								// fi.write(new File(uploadPath + fileName));
-
-							} else if (counter2 == 8) {//System.out.println("counter Eng= "+counter2);
-								fileName = courseID + "_outlineEng" + extfile;
-								// fi.write(new File(uploadPath + fileName));
-
-							}
-
+							UploadOutline(arg2, i, counter, counter2, database);
+//							logger.info(" upload the outline............");
+//						//	tx = session.beginTransaction();
+//							System.out.println("file name = "+fileName);
+//							String extfile = fileName.substring(fileName
+//									.indexOf("."));
+//							////System.out.println("counter= "+counter2);
+//							if (counter2 == 7) {//System.out.println("counter AR= "+counter2);
+//								fileName = courseID + "_outlineAr" + extfile;
+//								// fi.write(new File(uploadPath + fileName));
+//
+//							} else if (counter2 == 8) {//System.out.println("counter Eng= "+counter2);
+//								fileName = courseID + "_outlineEng" + extfile;
+//								// fi.write(new File(uploadPath + fileName));
+//
+//							}
+//
 						}else if (arg2.getParameter("task").equals("coordinatorCV")){
-							String Coordinatorid=arg2.getParameter("CoordinatorID");
-							int indexOfDot=fileName.indexOf(".");
-							String extfile ="";
-							if (indexOfDot>0)
-							{
-									  extfile = fileName.substring(indexOfDot);
-							}
-
-							fileName = "cv_Coor_"+Coordinatorid + extfile;
+							UploadCoordinatorCV(arg2, i, counter, counter2, database);
+//							String Coordinatorid=arg2.getParameter("CoordinatorID");
+//							int indexOfDot=fileName.indexOf(".");
+//							String extfile ="";
+//							if (indexOfDot>0)
+//							{
+//									  extfile = fileName.substring(indexOfDot);
+//							}
+//
+//							fileName = "cv_Coor_"+Coordinatorid + extfile;
 						}
-						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
-            //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
-						fi.write(new File(uploadPath + fileName));
-
-
-						if (counter2 == 7) {
-							if(c.getCourseOutlineAr()!=null)
-							{
-								if(!c.getCourseOutlineAr().equals(fileName) && fileName!=null)
-									c.setCourseOutlineAr(fileName);
-							}
-							else
-								c.setCourseOutlineAr(fileName);
-
-						} else if (counter2 == 8) {
-							if(c.getCourseOutlineEng()!=null)
-							{
-								if(!c.getCourseOutlineEng().equals(fileName) && fileName!=null)
-									c.setCourseOutlineEng(fileName);
-							}
-							else
-								c.setCourseOutlineEng(fileName);
-
-						}
-						HC.updateCourse(c, database);
-					}
-				}
-
+//						logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+//            //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+//						fi.write(new File(uploadPath + fileName));
+//
+//
+//						if (counter2 == 7) {
+//							if(c.getCourseOutlineAr()!=null)
+//							{
+//								if(!c.getCourseOutlineAr().equals(fileName) && fileName!=null)
+//									c.setCourseOutlineAr(fileName);
+//							}
+//							else
+//								c.setCourseOutlineAr(fileName);
+//
+//						} else if (counter2 == 8) {
+//							if(c.getCourseOutlineEng()!=null)
+//							{
+//								if(!c.getCourseOutlineEng().equals(fileName) && fileName!=null)
+//									c.setCourseOutlineEng(fileName);
+//							}
+//							else
+//								c.setCourseOutlineEng(fileName);
+//
+//						}
+//						HC.updateCourse(c, database);
+//					}
+//				}
+//
 				counter++;
 				counter2++;
 				//System.out.println("uploadPath="+uploadPath+fileName);
@@ -310,14 +313,196 @@ public class Upload extends Action {
 
 
 
-	public void UploadOutline(){
+	public void UploadOutline(HttpServletRequest arg2, Iterator i , int counter,int counter2,DataSourceConnection database )throws Exception{
+		        Hiber_Courses HC = new Hiber_Courses();
+			     Integer courseID=(Integer)arg2.getSession().getAttribute("courseID");
+			     Courses c = HC.getCourseById(courseID, database);
+
+			FileItem fi = (FileItem) i.next();
+			String fileName = fi.getName();
+			//System.out.println("file name= " + fileName);
+			if (fileName != null) {
+				if (!fileName.equals("")) {
+										// elcounter2
+					// ifff");
+
+					 if (arg2.getParameter("task").equals("outline")) {
+
+
+
+						//Integer courseID = HC.getLastOne(database);
+
+
+
+						logger.info(" upload the outline............");
+					//	tx = session.beginTransaction();
+						System.out.println("file name = "+fileName);
+//						String extfile = fileName.substring(fileName
+//								.indexOf("."));
+
+
+						int indexOfDot=fileName.indexOf(".");
+						String extfile ="";
+						if (indexOfDot>0)
+						{
+								  extfile = fileName.substring(indexOfDot);
+						}
+						////System.out.println("counter= "+counter2);
+						if (counter2 == 7) {//System.out.println("counter AR= "+counter2);
+							fileName = courseID + "_outlineAr" + extfile;
+							// fi.write(new File(uploadPath + fileName));
+
+						} else if (counter2 == 8) {//System.out.println("counter Eng= "+counter2);
+							fileName = courseID + "_outlineEng" + extfile;
+							// fi.write(new File(uploadPath + fileName));
+
+						}
+
+					}
+					logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+        //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+					fi.write(new File(uploadPath + fileName));
+
+
+					if (counter2 == 7) {
+						if(c.getCourseOutlineAr()!=null)
+						{
+							if(!c.getCourseOutlineAr().equals(fileName) && fileName!=null)
+								c.setCourseOutlineAr(fileName);
+						}
+						else
+							c.setCourseOutlineAr(fileName);
+
+					} else if (counter2 == 8) {
+						if(c.getCourseOutlineEng()!=null)
+						{
+							if(!c.getCourseOutlineEng().equals(fileName) && fileName!=null)
+								c.setCourseOutlineEng(fileName);
+						}
+						else
+							c.setCourseOutlineEng(fileName);
+
+					}
+					HC.updateCourse(c, database);
+				}
+			}
+
 
 
 	}
-	public void UploadCoordinatorCV(){
+	public void UploadCoordinatorCV(HttpServletRequest arg2, Iterator i , int counter,int counter2,DataSourceConnection database)throws Exception{
+		Hiber_Coordinators HT=new Hiber_Coordinators();
+
+
+		     Integer coodrdinatorID= Integer.parseInt( arg2.getParameter("CoordinatorID"));
+		     Trainingcoordinators T = HT.getCoordinatorById( coodrdinatorID, database);
+
+          logger.info("changing this  the coordinaotro no.... "+coodrdinatorID);
+		FileItem fi = (FileItem) i.next();
+		String fileName = fi.getName();
+		//System.out.println("file name= " + fileName);
+		if (fileName != null) {
+			if (!fileName.equals("")) {
+				  if (arg2.getParameter("task").equals("coordinatorCV")){
+					String Coordinatorid=arg2.getParameter("CoordinatorID");
+					int indexOfDot=fileName.indexOf(".");
+					String extfile ="";
+					if (indexOfDot>0)
+					{
+							  extfile = fileName.substring(indexOfDot);
+					}
+
+					fileName = "cv_Coor_"+Coordinatorid + extfile;
+				}
+				logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+    //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+			 	fi.write(new File(uploadPath + fileName));
+			 	T.setTrainingCoordinatorCV(fileName);
+
+               HT.updateCoordinatorCV(T, database);
+
+
+			}
+		}
+
 
 	}
-	public void UploadResourceFiles(){
+	public void UploadResourceFiles(HttpServletRequest arg2, Iterator i , int counter,int counter2,DataSourceConnection database) throws Exception{
+
+
+
+
+		FileItem fi = (FileItem) i.next();
+		String fileName = fi.getName();
+		//System.out.println("file name= " + fileName);
+		if (fileName != null) {
+			if (!fileName.equals("")) {
+									// elcounter2
+				// ifff");
+
+				if (arg2.getParameter("task") == null) {
+					Integer resId = null;
+
+					if (arg2.getParameter("resID") != null) {
+						resId = Integer.parseInt(arg2.getParameter("resID"));
+
+					} else
+						resId = Resources.getTheLastResourceId(database) + 1;
+				//	tx = session.beginTransaction();
+					int indexOfDot=fileName.indexOf(".");
+					String extfile ="";
+					if (indexOfDot>0)
+					{
+							  extfile = fileName.substring(indexOfDot);
+					}
+					//String extfile = fileName.substring(fileName.indexOf("."));
+					 ////System.out.println("file name is: " + fileName+" counter = "+counter);
+					if (counter == 7 || counter == 8) {
+
+						fileName = resId + "_photo" + extfile;
+
+					} else if (counter == 4) {
+						fileName = resId + "_company_cv" + extfile;
+
+					}
+
+					else if (counter == 5) {
+						fileName = resId + "_cv" + extfile;
+
+					} else if (counter == 6) {
+
+						if(arg2.getParameter("brief") != null)
+
+						fileName = resId + "_brief" + extfile;
+
+						else
+
+							fileName = resId + "_idphoto" + extfile;
+
+
+					}
+					else if (counter == 2) {
+						fileName = resId + "_contract_"+fileName;
+
+					}
+					//
+					// SimpleDateFormat fmt = new SimpleDateFormat(
+					// "yyyyMMddHHmmssSSS");
+					// String pfileName =
+					// fmt.format(now).toString().trim();
+					//System.out.println("file name = "+fileName);
+				}
+
+
+				logger.info(" uploading the "+fileName+"   to the path "+uploadPath);
+    //System.out.println(" uploading the "+fileName+"   to the path "+uploadPath);
+				fi.write(new File(uploadPath + fileName));
+
+
+
+			}
+		}
+
 
 	}
 
